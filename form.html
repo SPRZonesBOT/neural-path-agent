@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Neural Path 2.0 - Reload after submit</title>
+    <title>Neural Path 2.0 - Parent Details</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -38,8 +38,7 @@
             font-size: 14px;
             cursor: pointer;
         }
-        input, input[type="text"], input[type="number"], input[type="email"] { width: 100%; padding: 12px; border-radius: 24px; border: none; background: #334155; color: white; font-size: 14px; outline: none; }
-        select { width: 100%; padding: 12px; border-radius: 24px; background: #334155; color: white; border: none; }
+        input, input[type="text"], input[type="number"], input[type="email"], select { width: 100%; padding: 12px; border-radius: 24px; border: none; background: #334155; color: white; font-size: 14px; outline: none; }
         .stars { display: flex; gap: 10px; font-size: 32px; cursor: pointer; justify-content: center; margin: 10px 0; }
         .star { color: #475569; transition: 0.1s; }
         .star.selected { color: #fbbf24; text-shadow: 0 0 4px gold; }
@@ -141,9 +140,20 @@
 <body>
 <div class="container">
     <h1>🧠 NEURAL PATH 2.0</h1>
-    <div class="sub">POPUP + EMAIL REPORT</div>
+    <div class="sub">COMPLETE CAREER AGENT</div>
 
     <form id="parentForm">
+        <!-- Parent Details -->
+        <div class="form-group"><label class="main-label">👨‍👩 PARENT/GUARDIAN NAME</label><input type="text" id="parentName" required placeholder="e.g., Rajesh Sharma or Neha Sharma"></div>
+        <div class="form-group"><label class="main-label">RELATIONSHIP TO CHILD</label>
+            <select id="relationship" required>
+                <option value="">SELECT</option>
+                <option value="Father">Father</option>
+                <option value="Mother">Mother</option>
+                <option value="Guardian">Guardian</option>
+            </select>
+        </div>
+
         <!-- Child Name -->
         <div class="form-group"><label class="main-label">👶 CHILD'S FULL NAME</label><input type="text" id="childName" required placeholder="e.g., Aryan Sharma"></div>
         
@@ -229,22 +239,22 @@
             <input type="hidden" id="goal" value="">
         </div>
 
-        <!-- Question 14 Simplified -->
-        <div class="form-group"><label class="main-label">14. PARENT & CHILD AGREEMENT LEVEL (1-10)</label>
+        <!-- Question 14: English only -->
+        <div class="form-group"><label class="main-label">14. PARENT-CHILD AGREEMENT LEVEL (1-10)</label>
             <select id="alignment" required>
                 <option value="">SELECT</option>
-                <option value="1">1 – Bahut zyada disagreement (bilkul nahi maante)</option>
-                <option value="2">2 – Mostly disagree</option>
-                <option value="3">3 – Thoda disagreement</option>
-                <option value="4">4 – Thoda agree lekin confuse</option>
-                <option value="5">5 – Neutral / half-half</option>
-                <option value="6">6 – Slightly agree</option>
-                <option value="7">7 – Mostly agree</option>
-                <option value="8">8 – Strongly agree</option>
-                <option value="9">9 – Almost perfect match</option>
-                <option value="10">10 – Perfect agreement (same vision)</option>
+                <option value="1">1 – Complete Disagreement (opposite goals)</option>
+                <option value="2">2 – Mostly Disagree</option>
+                <option value="3">3 – Slight Disagreement</option>
+                <option value="4">4 – Slightly Agree but Confused</option>
+                <option value="5">5 – Neutral / No Clear Agreement</option>
+                <option value="6">6 – Somewhat Agree</option>
+                <option value="7">7 – Mostly Agree</option>
+                <option value="8">8 – Strongly Agree</option>
+                <option value="9">9 – Almost Perfect Match</option>
+                <option value="10">10 – Perfect Agreement (same vision)</option>
             </select>
-            <div class="alignment-scale">💡 1 = completely different goals | 10 = parents and child want same future</div>
+            <div class="alignment-scale">💡 1 = completely different goals | 10 = parents and child want exactly the same future</div>
         </div>
 
         <!-- Email -->
@@ -280,7 +290,7 @@
 </div>
 
 <script>
-    // All multiple-select fields
+    // All multiple-select fields (same as before)
     const fieldsConfig = {
         interests: {
             label: "3. FAVORITE ACTIVITIES / SUBJECTS",
@@ -387,7 +397,7 @@
         return val ? val : "";
     }
 
-    // Simple AI analysis
+    // AI analysis
     function generateAnalysis(childName, age, height, weight, interests, extracurricular, tvshow, targetOrg, strengths, weaknesses, mental, physical, budget, goal, alignment) {
         let careerPath = "";
         if (interests.includes("CODING") || interests.includes("GAMING") || extracurricular.includes("CODING")) careerPath = "AI/ML SOFTWARE ENGINEER";
@@ -412,6 +422,9 @@
     const SCRIPT_URL = "https://docs.google.com/spreadsheets/d/13I3XJNo_JLPYUO8qW2PS4E-48T-Uqr7saAgSyDbzwDw/edit?gid=0#gid=0";
 
     async function submitAndGenerate() {
+        // Parent info
+        let parentName = document.getElementById('parentName').value.trim();
+        let relationship = document.getElementById('relationship').value;
         let childName = document.getElementById('childName').value.trim();
         let age = document.getElementById('age').value;
         let height = document.getElementById('height').value || "";
@@ -431,8 +444,8 @@
         let parentEmail = document.getElementById('parentEmail').value.trim();
         let rating = document.getElementById('ratingValue').value;
 
-        if(!childName || !age || !budget || !city || !alignment || !parentEmail) {
-            alert("Please fill all mandatory fields (including email)");
+        if(!parentName || !relationship || !childName || !age || !budget || !city || !alignment || !parentEmail) {
+            alert("Please fill all mandatory fields (Parent Name, Relationship, Child Name, Age, Budget, City, Agreement Level, Email)");
             return;
         }
         if(rating == "0") { alert("Please rate the app"); return; }
@@ -450,7 +463,7 @@
 
         let payload = {
             timestamp: new Date().toISOString(),
-            childName, age, height, weight, interests, extracurricular, tvshow, targetOrg,
+            parentName, relationship, childName, age, height, weight, interests, extracurricular, tvshow, targetOrg,
             strengths, weaknesses, mental, physical, budget, city, goal, alignment,
             parentEmail, rating, skillScore, careerPath: analysis.careerPath,
             swot_s: analysis.S, swot_w: analysis.W, swot_o: analysis.O, swot_t: analysis.T
@@ -487,7 +500,7 @@
                 <div class="swot-card threat-card"><h4>⚠️ THREATS</h4><p>${analysis.T}</p></div>
             </div>
             <p>✅ Report sent to ${parentEmail}</p>
-            <button class="reload-btn" onclick="location.reload();">🔄 Fill Another Form (Scan QR Again)</button>
+            <button class="reload-btn" onclick="location.reload();">🔄 Fill Another Form</button>
         `;
         loadingDiv.style.display = 'none';
         btn.disabled = false;
