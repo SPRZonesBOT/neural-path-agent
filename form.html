@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Neural Path 2.0 - Fixed Modal Wrapping</title>
+    <title>Neural Path 2.0 - Modal Wrap Fixed</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -75,7 +75,7 @@
         .threat-card { border-color: #f97316; }
         .loading { display: none; text-align: center; margin-top: 15px; }
         hr { border-color: #334155; margin: 15px 0; }
-        /* Modal fix - critical for text wrapping */
+        /* Modal fix - critical */
         .modal {
             display: none;
             position: fixed;
@@ -84,7 +84,7 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.7);
+            background-color: rgba(0,0,0,0.8);
             justify-content: center;
             align-items: center;
         }
@@ -93,9 +93,9 @@
             margin: 20px;
             padding: 20px;
             border-radius: 32px;
-            max-width: 500px;
+            max-width: 550px;
             width: 90%;
-            max-height: 80%;
+            max-height: 85%;
             overflow-y: auto;
             border: 1px solid #a855f7;
         }
@@ -112,24 +112,24 @@
             gap: 12px;
             margin-bottom: 20px;
         }
-        /* CRITICAL FIX: ensures text wraps and doesn't cut off */
+        /* FIXED: text will not break incorrectly, full words visible */
         .checkbox-group label {
             display: flex;
-            align-items: flex-start;
+            align-items: baseline;
             gap: 10px;
             font-size: 15px;
             line-height: 1.4;
             white-space: normal;
-            word-wrap: break-word;
             word-break: normal;
-            overflow-wrap: break-word;
+            overflow-wrap: normal;
+            word-wrap: normal;
             width: 100%;
         }
         .checkbox-group input {
             flex-shrink: 0;
             margin-top: 2px;
         }
-        .modal-buttons { display: flex; gap: 10px; justify-content: flex-end; }
+        .modal-buttons { display: flex; gap: 10px; justify-content: flex-end; margin-top: 10px; }
         .modal-buttons button { width: auto; padding: 8px 16px; margin-top: 0; }
         .alignment-scale { display: flex; flex-wrap: wrap; justify-content: space-between; margin-top: 5px; font-size: 11px; color: #94a3b8; }
         .reload-btn { background: #334155; margin-top: 20px; }
@@ -214,7 +214,7 @@
 <div id="modal" class="modal"><div class="modal-content"><div id="modalQuestion" class="modal-question"></div><div id="modalCheckboxes" class="checkbox-group"></div><div class="modal-buttons"><button id="modalCancel">Cancel</button><button id="modalSave">Save</button></div></div></div>
 
 <script>
-    // All multiple-select fields with normal case options
+    // All multiple-select fields with normal case options (full text)
     const fieldsConfig = {
         interests: {
             label: "3. Favorite Activities / Subjects",
@@ -259,16 +259,23 @@
         checkboxesDiv.innerHTML = "";
         config.options.forEach(opt => {
             let isChecked = selectedArr.includes(opt);
-            let cb = document.createElement('label');
-            cb.innerHTML = `<input type="checkbox" value="${opt}" ${isChecked ? 'checked' : ''}> ${opt}`;
-            checkboxesDiv.appendChild(cb);
+            // Create label with proper structure
+            let label = document.createElement('label');
+            let cb = document.createElement('input');
+            cb.type = 'checkbox';
+            cb.value = opt;
+            cb.checked = isChecked;
+            label.appendChild(cb);
+            label.appendChild(document.createTextNode(' ' + opt));
+            checkboxesDiv.appendChild(label);
         });
         modal.style.display = 'flex';
     }
     function saveModal() {
         if (!currentModalField) return;
         const checkboxes = document.querySelectorAll('#modalCheckboxes input[type="checkbox"]');
-        let selected = []; checkboxes.forEach(cb => { if (cb.checked) selected.push(cb.value); });
+        let selected = [];
+        checkboxes.forEach(cb => { if (cb.checked) selected.push(cb.value); });
         let selectedStr = selected.join(", ");
         document.getElementById(currentModalField).value = selectedStr;
         let btn = document.getElementById(currentModalField + "Btn");
@@ -333,7 +340,7 @@
             recommendationsHTML += buildCollegeRow("University of Delhi","May-June 2025","Class 12 45-60%","Cutoffs 90-99% for popular courses");
             recommendationsHTML += buildCollegeRow("Mumbai University","May-June 2025","Class 12 45-60%","Cutoffs vary by college");
         }
-        recommendationsHTML += `</tbody></table></div><br><small style="color:#94a3b8;">*Cutoffs are approximate; aim higher.</small>`;
+        recommendationsHTML += `</tbody></td></div><br><small style="color:#94a3b8;">*Cutoffs are approximate; aim higher.</small>`;
         let cityUpper = city.toUpperCase();
         if (cityUpper.includes("DELHI")) recommendationsHTML += `<br><div style="margin-top:10px;"><strong>📍 Local (Delhi-NCR):</strong> DTU, NSUT, IIIT Delhi, JMI, Amity.</div>`;
         else if (cityUpper.includes("MUMBAI")) recommendationsHTML += `<br><div style="margin-top:10px;"><strong>📍 Local (Mumbai):</strong> VJTI, SPCE, NMIMS, Mumbai University.</div>`;
@@ -342,7 +349,7 @@
         return recommendationsHTML;
     }
 
-    // Helper functions (unchanged but referenced)
+    // Helper functions (same as before, shortened for brevity)
     function getGrowthRoadmap(careerPath, age, childName) {
         let roadmap = `<ul style="margin-left:20px;">`;
         if (careerPath.includes("Software") || careerPath.includes("AI")) {
