@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Neural Path 2.0 - With Parent Details</title>
+    <title>Neural Path 2.0 - All Inputs UPPERCASE</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -38,7 +38,20 @@
             font-size: 14px;
             cursor: pointer;
         }
-        input, input[type="text"], input[type="number"], input[type="email"], select { width: 100%; padding: 12px; border-radius: 24px; border: none; background: #334155; color: white; font-size: 14px; outline: none; }
+        input, input[type="text"], input[type="number"], input[type="email"], select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 24px;
+            border: none;
+            background: #334155;
+            color: white;
+            font-size: 14px;
+            outline: none;
+        }
+        /* Uppercase for text inputs */
+        input[type="text"], input[type="text"]:focus, input[type="text"]:active {
+            text-transform: uppercase;
+        }
         .stars { display: flex; gap: 10px; font-size: 32px; cursor: pointer; justify-content: center; margin: 10px 0; }
         .star { color: #475569; transition: 0.1s; }
         .star.selected { color: #fbbf24; text-shadow: 0 0 4px gold; }
@@ -135,29 +148,33 @@
             background: #334155;
             margin-top: 20px;
         }
+        /* Force uppercase for dropdown text options (they are already uppercase) */
+        select option {
+            text-transform: none;
+        }
     </style>
 </head>
 <body>
 <div class="container">
     <h1>🧠 NEURAL PATH 2.0</h1>
-    <div class="sub">PARENT + CHILD DETAILS | AI REPORT</div>
+    <div class="sub">ALL ANSWERS ARE STORED IN CAPS</div>
 
     <form id="parentForm">
-        <!-- === PARENT DETAILS (NEW) === -->
-        <div class="form-group"><label class="main-label">👨‍👩 PARENT/GUARDIAN NAME</label><input type="text" id="parentName" required placeholder="e.g., Rajesh Sharma or Neha Sharma"></div>
+        <!-- PARENT DETAILS -->
+        <div class="form-group"><label class="main-label">👨‍👩 PARENT/GUARDIAN NAME</label><input type="text" id="parentName" required placeholder="e.g., RAJESH SHARMA" oninput="this.value = this.value.toUpperCase()"></div>
         <div class="form-group"><label class="main-label">RELATIONSHIP TO CHILD</label>
             <select id="relationship" required>
                 <option value="">SELECT</option>
-                <option value="Father">Father</option>
-                <option value="Mother">Mother</option>
-                <option value="Guardian">Guardian</option>
+                <option value="FATHER">FATHER</option>
+                <option value="MOTHER">MOTHER</option>
+                <option value="GUARDIAN">GUARDIAN</option>
             </select>
         </div>
 
-        <!-- Child Name -->
-        <div class="form-group"><label class="main-label">👶 CHILD'S FULL NAME</label><input type="text" id="childName" required placeholder="e.g., Aryan Sharma"></div>
+        <!-- CHILD NAME -->
+        <div class="form-group"><label class="main-label">👶 CHILD'S FULL NAME</label><input type="text" id="childName" required placeholder="e.g., ARYAN SHARMA" oninput="this.value = this.value.toUpperCase()"></div>
         
-        <!-- Age -->
+        <!-- AGE -->
         <div class="form-group"><label class="main-label">1. CHILD'S AGE (YEARS)</label>
             <select id="age" required><option value="">SELECT AGE</option>
             <option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
@@ -166,7 +183,7 @@
             <option>23</option><option>24</option><option>25</option></select>
         </div>
 
-        <!-- Height & Weight -->
+        <!-- HEIGHT & WEIGHT -->
         <div class="form-group"><label class="main-label">2. HEIGHT (cm) & WEIGHT (kg)</label>
             <div style="display: flex; gap: 10px;">
                 <input type="number" id="height" placeholder="Height (cm)" style="width:50%">
@@ -174,53 +191,53 @@
             </div>
         </div>
 
-        <!-- Interests -->
+        <!-- INTERESTS (multiple) -->
         <div class="form-group"><label class="main-label">3. FAVORITE ACTIVITIES / SUBJECTS</label>
             <button type="button" class="custom-select-btn" id="interestsBtn">Select options...</button>
             <input type="hidden" id="interests" value="">
         </div>
 
-        <!-- Extra Curricular -->
+        <!-- EXTRA CURRICULAR -->
         <div class="form-group"><label class="main-label">4. EXTRA CURRICULAR ACTIVITIES</label>
             <button type="button" class="custom-select-btn" id="extracurricularBtn">Select options...</button>
             <input type="hidden" id="extracurricular" value="">
         </div>
 
-        <!-- Favorite TV Show -->
+        <!-- TV SHOW -->
         <div class="form-group"><label class="main-label">5. FAVORITE TV SHOW / WEB SERIES</label>
-            <input type="text" id="tvshow" placeholder="e.g., Shark Tank, Stranger Things">
+            <input type="text" id="tvshow" placeholder="e.g., SHARK TANK" oninput="this.value = this.value.toUpperCase()">
         </div>
 
-        <!-- Future Target Company -->
+        <!-- TARGET COMPANY -->
         <div class="form-group"><label class="main-label">6. FUTURE TARGET COMPANY / ORGANIZATION</label>
-            <input type="text" id="targetOrg" placeholder="e.g., Google, ISRO, My Startup">
+            <input type="text" id="targetOrg" placeholder="e.g., GOOGLE, ISRO" oninput="this.value = this.value.toUpperCase()">
         </div>
 
-        <!-- Strengths -->
+        <!-- STRENGTHS -->
         <div class="form-group"><label class="main-label">7. STRENGTHS</label>
             <button type="button" class="custom-select-btn" id="strengthsBtn">Select options...</button>
             <input type="hidden" id="strengths" value="">
         </div>
 
-        <!-- Weaknesses -->
+        <!-- WEAKNESSES -->
         <div class="form-group"><label class="main-label">8. WEAKNESSES</label>
             <button type="button" class="custom-select-btn" id="weaknessesBtn">Select options...</button>
             <input type="hidden" id="weaknesses" value="">
         </div>
 
-        <!-- Mental Condition -->
+        <!-- MENTAL CONDITION -->
         <div class="form-group"><label class="main-label">9. MENTAL CONDITION</label>
             <button type="button" class="custom-select-btn" id="mentalBtn">Select options...</button>
             <input type="hidden" id="mental" value="">
         </div>
 
-        <!-- Physical Health -->
+        <!-- PHYSICAL HEALTH -->
         <div class="form-group"><label class="main-label">10. PHYSICAL HEALTH</label>
             <button type="button" class="custom-select-btn" id="physicalBtn">Select options...</button>
             <input type="hidden" id="physical" value="">
         </div>
 
-        <!-- Budget -->
+        <!-- BUDGET -->
         <div class="form-group"><label class="main-label">11. ANNUAL BUDGET (₹ PER YEAR)</label>
             <select id="budget" required>
                 <option value="">SELECT</option><option value="100000">LESS THAN ₹1 LAKH</option>
@@ -230,39 +247,39 @@
             </select>
         </div>
 
-        <!-- City -->
-        <div class="form-group"><label class="main-label">12. CITY / STATE</label><input type="text" id="city" required placeholder="e.g., DELHI"></div>
+        <!-- CITY -->
+        <div class="form-group"><label class="main-label">12. CITY / STATE</label><input type="text" id="city" required placeholder="e.g., DELHI" oninput="this.value = this.value.toUpperCase()"></div>
 
-        <!-- Long Term Goal -->
+        <!-- LONG TERM GOAL -->
         <div class="form-group"><label class="main-label">13. LONG TERM GOAL</label>
             <button type="button" class="custom-select-btn" id="goalBtn">Select options...</button>
             <input type="hidden" id="goal" value="">
         </div>
 
-        <!-- Q14 -->
+        <!-- Q14 AGREEMENT LEVEL -->
         <div class="form-group"><label class="main-label">14. PARENT-CHILD AGREEMENT LEVEL (1-10)</label>
             <select id="alignment" required>
                 <option value="">SELECT</option>
-                <option value="1">1 – Complete Disagreement (opposite goals)</option>
-                <option value="2">2 – Mostly Disagree</option>
-                <option value="3">3 – Slight Disagreement</option>
-                <option value="4">4 – Slightly Agree but Confused</option>
-                <option value="5">5 – Neutral / No Clear Agreement</option>
-                <option value="6">6 – Somewhat Agree</option>
-                <option value="7">7 – Mostly Agree</option>
-                <option value="8">8 – Strongly Agree</option>
-                <option value="9">9 – Almost Perfect Match</option>
-                <option value="10">10 – Perfect Agreement (same vision)</option>
+                <option value="1">1 – COMPLETE DISAGREEMENT (OPPOSITE GOALS)</option>
+                <option value="2">2 – MOSTLY DISAGREE</option>
+                <option value="3">3 – SLIGHT DISAGREEMENT</option>
+                <option value="4">4 – SLIGHTLY AGREE BUT CONFUSED</option>
+                <option value="5">5 – NEUTRAL / NO CLEAR AGREEMENT</option>
+                <option value="6">6 – SOMEWHAT AGREE</option>
+                <option value="7">7 – MOSTLY AGREE</option>
+                <option value="8">8 – STRONGLY AGREE</option>
+                <option value="9">9 – ALMOST PERFECT MATCH</option>
+                <option value="10">10 – PERFECT AGREEMENT (SAME VISION)</option>
             </select>
-            <div class="alignment-scale">💡 1 = completely different goals | 10 = parents and child want exactly the same future</div>
+            <div class="alignment-scale">💡 1 = COMPLETELY DIFFERENT GOALS | 10 = PARENTS AND CHILD WANT EXACTLY THE SAME FUTURE</div>
         </div>
 
-        <!-- Email -->
+        <!-- EMAIL (converted to lowercase) -->
         <div class="form-group"><label class="main-label">📧 PARENT'S EMAIL (TO RECEIVE REPORT)</label>
             <input type="email" id="parentEmail" placeholder="parent@example.com" required>
         </div>
 
-        <!-- Rating -->
+        <!-- RATING -->
         <div class="form-group"><label class="main-label">⭐ RATE THIS APP</label>
             <div class="stars" id="starRating">
                 <span class="star" data-value="1">☆</span><span class="star" data-value="2">☆</span>
@@ -277,28 +294,49 @@
     <div id="result" class="result"></div>
 </div>
 
-<!-- Modal popup (same as before) -->
+<!-- MODAL POPUP -->
 <div id="modal" class="modal">
     <div class="modal-content">
         <div id="modalQuestion" class="modal-question"></div>
         <div id="modalCheckboxes" class="checkbox-group"></div>
         <div class="modal-buttons">
-            <button id="modalCancel">Cancel</button>
-            <button id="modalSave">Save</button>
+            <button id="modalCancel">CANCEL</button>
+            <button id="modalSave">SAVE</button>
         </div>
     </div>
 </div>
 
 <script>
-    // All multiple-select fields (same as before)
+    // All multiple-select fields with uppercase options
     const fieldsConfig = {
-        interests: { label: "3. FAVORITE ACTIVITIES / SUBJECTS", options: ["GAMING & COMPUTERS", "CODING & PROGRAMMING", "DRAWING & DESIGN", "SPORTS & PHYSICAL", "READING & WRITING", "MATHS & LOGIC", "SCIENCE & EXPERIMENTS", "MUSIC & ARTS", "BUSINESS & MONEY"] },
-        extracurricular: { label: "4. EXTRA CURRICULAR ACTIVITIES", options: ["SPORTS (CRICKET/FOOTBALL)", "CHESS / BOARD GAMES", "MUSIC / DANCE", "CODING CLUB / ROBOTICS", "DEBATE / DRAMA", "ART & CRAFT", "VOLUNTEERING / SOCIAL WORK"] },
-        strengths: { label: "7. STRENGTHS", options: ["PROBLEM SOLVING", "CREATIVE THINKING", "LEADERSHIP", "HARD WORKING", "QUICK LEARNER", "GOOD MEMORY", "TEAM PLAYER"] },
-        weaknesses: { label: "8. WEAKNESSES", options: ["PUBLIC SPEAKING FEAR", "LACK OF DISCIPLINE", "WEAK IN MATHS", "POOR WRITING SKILLS", "LOW CONFIDENCE", "DELAYS TASKS / POSTPONES"] },
-        mental: { label: "9. MENTAL CONDITION", options: ["ANXIOUS / WORRIED", "LOW CONFIDENCE", "STRESSED OFTEN", "HAPPY & CALM", "SHORT TEMPER"] },
-        physical: { label: "10. PHYSICAL HEALTH", options: ["EYE SIGHT ISSUE", "OBESITY / WEIGHT", "LOW STAMINA", "FIT & ACTIVE", "FREQUENT SICKNESS"] },
-        goal: { label: "13. LONG TERM GOAL", options: ["SETTLE ABROAD", "START MY OWN BUSINESS", "STABLE GOVERNMENT JOB", "HIGH PAYING PRIVATE JOB", "BECOME A RESEARCHER/SCIENTIST"] }
+        interests: {
+            label: "3. FAVORITE ACTIVITIES / SUBJECTS",
+            options: ["GAMING & COMPUTERS", "CODING & PROGRAMMING", "DRAWING & DESIGN", "SPORTS & PHYSICAL", "READING & WRITING", "MATHS & LOGIC", "SCIENCE & EXPERIMENTS", "MUSIC & ARTS", "BUSINESS & MONEY"]
+        },
+        extracurricular: {
+            label: "4. EXTRA CURRICULAR ACTIVITIES",
+            options: ["SPORTS (CRICKET/FOOTBALL)", "CHESS / BOARD GAMES", "MUSIC / DANCE", "CODING CLUB / ROBOTICS", "DEBATE / DRAMA", "ART & CRAFT", "VOLUNTEERING / SOCIAL WORK"]
+        },
+        strengths: {
+            label: "7. STRENGTHS",
+            options: ["PROBLEM SOLVING", "CREATIVE THINKING", "LEADERSHIP", "HARD WORKING", "QUICK LEARNER", "GOOD MEMORY", "TEAM PLAYER"]
+        },
+        weaknesses: {
+            label: "8. WEAKNESSES",
+            options: ["PUBLIC SPEAKING FEAR", "LACK OF DISCIPLINE", "WEAK IN MATHS", "POOR WRITING SKILLS", "LOW CONFIDENCE", "DELAYS TASKS / POSTPONES"]
+        },
+        mental: {
+            label: "9. MENTAL CONDITION",
+            options: ["ANXIOUS / WORRIED", "LOW CONFIDENCE", "STRESSED OFTEN", "HAPPY & CALM", "SHORT TEMPER"]
+        },
+        physical: {
+            label: "10. PHYSICAL HEALTH",
+            options: ["EYE SIGHT ISSUE", "OBESITY / WEIGHT", "LOW STAMINA", "FIT & ACTIVE", "FREQUENT SICKNESS"]
+        },
+        goal: {
+            label: "13. LONG TERM GOAL",
+            options: ["SETTLE ABROAD", "START MY OWN BUSINESS", "STABLE GOVERNMENT JOB", "HIGH PAYING PRIVATE JOB", "BECOME A RESEARCHER/SCIENTIST"]
+        }
     };
 
     let currentModalField = null;
@@ -309,9 +347,12 @@
         const modal = document.getElementById('modal');
         const questionDiv = document.getElementById('modalQuestion');
         const checkboxesDiv = document.getElementById('modalCheckboxes');
-        questionDiv.innerHTML = `${config.label} <small>(select one or more)</small>`;
+        
+        questionDiv.innerHTML = `${config.label} <small>(SELECT ONE OR MORE)</small>`;
+        
         let hiddenValue = document.getElementById(fieldId).value;
         let selectedArr = hiddenValue ? hiddenValue.split(", ") : [];
+        
         checkboxesDiv.innerHTML = "";
         config.options.forEach(opt => {
             let isChecked = selectedArr.includes(opt);
@@ -330,7 +371,7 @@
         let selectedStr = selected.join(", ");
         document.getElementById(currentModalField).value = selectedStr;
         let btn = document.getElementById(currentModalField + "Btn");
-        if (selectedStr) btn.innerText = selectedStr; else btn.innerText = "Select options...";
+        if (selectedStr) btn.innerText = selectedStr; else btn.innerText = "SELECT OPTIONS...";
         closeModal();
     }
 
@@ -355,57 +396,59 @@
         });
     });
 
-    function getHiddenValue(id) { let val = document.getElementById(id).value; return val ? val : ""; }
+    function getHiddenValue(id) { let val = document.getElementById(id).value; return val ? val.toUpperCase() : ""; } // ensure uppercase
 
+    // AI analysis (same as before but all strings uppercase internally)
     function generateAnalysis(childName, age, height, weight, interests, extracurricular, tvshow, targetOrg, strengths, weaknesses, mental, physical, budget, goal, alignment) {
         let careerPath = "";
         if (interests.includes("CODING") || interests.includes("GAMING") || extracurricular.includes("CODING")) careerPath = "AI/ML SOFTWARE ENGINEER";
         else if (interests.includes("DRAWING") || interests.includes("DESIGN")) careerPath = "UI/UX DESIGNER";
         else if (interests.includes("SPORTS") || extracurricular.includes("SPORTS")) { if (height && height > 170) careerPath = "PROFESSIONAL ATHLETE"; else careerPath = "SPORTS MANAGEMENT"; }
-        else if (interests.includes("BUSINESS") || tvshow.toLowerCase().includes("shark tank")) careerPath = "ENTREPRENEUR";
+        else if (interests.includes("BUSINESS") || tvshow.includes("SHARK TANK")) careerPath = "ENTREPRENEUR";
         else careerPath = "DIGITAL MARKETING";
-        if (targetOrg.toLowerCase().includes("google")) careerPath = "SOFTWARE ENGINEER AT GOOGLE";
-        else if (targetOrg.toLowerCase().includes("isro")) careerPath = "AEROSPACE SCIENTIST";
-        let S = strengths ? "✅ " + strengths : "✅ Basic strengths";
-        let W = weaknesses ? "⚠️ " + weaknesses : "⚠️ No major weakness";
-        let O = (parseInt(budget)>=500000) ? "💰 Good budget" : "💰 Limited budget, use free resources";
-        let T = mental.includes("ANXIOUS") ? "😟 Stress management needed" : "No major threats";
-        let companies = (careerPath.includes("SOFTWARE")) ? "Google, Microsoft, Amazon" : "Tata, Infosys";
+        if (targetOrg.includes("GOOGLE")) careerPath = "SOFTWARE ENGINEER AT GOOGLE";
+        else if (targetOrg.includes("ISRO")) careerPath = "AEROSPACE SCIENTIST";
+        let S = strengths ? "✅ " + strengths : "✅ BASIC STRENGTHS";
+        let W = weaknesses ? "⚠️ " + weaknesses : "⚠️ NO MAJOR WEAKNESS";
+        let O = (parseInt(budget)>=500000) ? "💰 GOOD BUDGET" : "💰 LIMITED BUDGET, USE FREE RESOURCES";
+        let T = mental.includes("ANXIOUS") ? "😟 STRESS MANAGEMENT NEEDED" : "NO MAJOR THREATS";
+        let companies = (careerPath.includes("SOFTWARE")) ? "GOOGLE, MICROSOFT, AMAZON" : "TATA, INFOSYS";
         return { careerPath, S, W, O, T, companies };
     }
 
-    // IMPORTANT: Replace with your actual Google Apps Script URL
+    // Replace with your actual Google Apps Script URL
     const SCRIPT_URL = "https://docs.google.com/spreadsheets/d/13I3XJNo_JLPYUO8qW2PS4E-48T-Uqr7saAgSyDbzwDw/edit?gid=0#gid=0";
 
     async function submitAndGenerate() {
-        let parentName = document.getElementById('parentName').value.trim();
+        // Get all values and convert text fields to uppercase (except email)
+        let parentName = document.getElementById('parentName').value.trim().toUpperCase();
         let relationship = document.getElementById('relationship').value;
-        let childName = document.getElementById('childName').value.trim();
+        let childName = document.getElementById('childName').value.trim().toUpperCase();
         let age = document.getElementById('age').value;
         let height = document.getElementById('height').value || "";
         let weight = document.getElementById('weight').value || "";
         let interests = getHiddenValue('interests');
         let extracurricular = getHiddenValue('extracurricular');
-        let tvshow = document.getElementById('tvshow').value.trim();
-        let targetOrg = document.getElementById('targetOrg').value.trim();
+        let tvshow = document.getElementById('tvshow').value.trim().toUpperCase();
+        let targetOrg = document.getElementById('targetOrg').value.trim().toUpperCase();
         let strengths = getHiddenValue('strengths');
         let weaknesses = getHiddenValue('weaknesses');
         let mental = getHiddenValue('mental');
         let physical = getHiddenValue('physical');
         let budget = document.getElementById('budget').value;
-        let city = document.getElementById('city').value.trim();
+        let city = document.getElementById('city').value.trim().toUpperCase();
         let goal = getHiddenValue('goal');
         let alignment = document.getElementById('alignment').value;
-        let parentEmail = document.getElementById('parentEmail').value.trim();
+        let parentEmail = document.getElementById('parentEmail').value.trim().toLowerCase();
         let rating = document.getElementById('ratingValue').value;
 
         if(!parentName || !relationship || !childName || !age || !budget || !city || !alignment || !parentEmail) {
-            alert("Please fill all mandatory fields (Parent Name, Relationship, Child Name, Age, Budget, City, Agreement Level, Email)");
+            alert("PLEASE FILL ALL MANDATORY FIELDS (PARENT NAME, RELATIONSHIP, CHILD NAME, AGE, BUDGET, CITY, AGREEMENT LEVEL, EMAIL)");
             return;
         }
-        if(rating == "0") { alert("Please rate the app"); return; }
+        if(rating == "0") { alert("PLEASE RATE THE APP"); return; }
         if(!interests || !strengths || !weaknesses || !mental || !physical || !goal) {
-            alert("Please select options for all multiple-choice fields (use the buttons)");
+            alert("PLEASE SELECT OPTIONS FOR ALL MULTIPLE-CHOICE FIELDS (USE THE BUTTONS)");
             return;
         }
 
@@ -430,9 +473,16 @@
 
         if(SCRIPT_URL && SCRIPT_URL !== "YOUR_GOOGLE_SCRIPT_URL") {
             try {
-                await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
             } catch(e) { console.error(e); }
-        } else { alert("Google Sheet URL not configured. Data not saved."); }
+        } else {
+            alert("GOOGLE SHEET URL NOT CONFIGURED. DATA NOT SAVED.");
+        }
 
         let resultDiv = document.getElementById('result');
         resultDiv.style.display = 'block';
@@ -446,8 +496,8 @@
                 <div class="swot-card opportunity-card"><h4>🌟 OPPORTUNITIES</h4><p>${analysis.O}</p></div>
                 <div class="swot-card threat-card"><h4>⚠️ THREATS</h4><p>${analysis.T}</p></div>
             </div>
-            <p>✅ Report sent to ${parentEmail}</p>
-            <button class="reload-btn" onclick="location.reload();">🔄 Fill Another Form</button>
+            <p>✅ REPORT SENT TO ${parentEmail}</p>
+            <button class="reload-btn" onclick="location.reload();">🔄 FILL ANOTHER FORM</button>
         `;
         loadingDiv.style.display = 'none';
         btn.disabled = false;
