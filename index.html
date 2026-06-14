@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Neural Path 2.0 - Landing</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
@@ -21,29 +25,40 @@
             backdrop-filter: blur(10px);
             border-radius: 48px;
             padding: 40px 30px;
-            max-width: 550px;
+            max-width: 500px;
             margin: 20px;
             box-shadow: 0 25px 45px rgba(0,0,0,0.3);
             border: 1px solid rgba(255,255,255,0.2);
         }
-        h1 { font-size: 36px; background: linear-gradient(135deg, #a855f7, #3b82f6); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 20px; }
-        .sub { font-size: 16px; opacity: 0.8; margin-bottom: 30px; }
-        .qr-box { background: white; padding: 20px; border-radius: 32px; display: inline-block; margin: 10px auto; }
-        #qrcode { display: flex; justify-content: center; }
-        .info, .note { margin-top: 20px; font-size: 14px; color: #94a3b8; }
-        .note { background: #1e293b; padding: 10px; border-radius: 16px; color: #cbd5e1; }
-        .link-btn {
-            display: inline-block;
-            margin-top: 20px;
-            background: #3b82f6;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 40px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 16px;
+        h1 {
+            font-size: 36px;
+            background: linear-gradient(135deg, #a855f7, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
         }
-        .link-btn:active { transform: scale(0.98); }
+        .sub {
+            font-size: 16px;
+            opacity: 0.8;
+            margin-bottom: 30px;
+        }
+        .qr-box {
+            background: white;
+            padding: 20px;
+            border-radius: 32px;
+            display: inline-block;
+            margin: 10px auto;
+        }
+        #qrcode {
+            display: flex;
+            justify-content: center;
+        }
+        .info {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #94a3b8;
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 </head>
@@ -54,9 +69,7 @@
     <div class="qr-box">
         <div id="qrcode"></div>
     </div>
-    <div class="info">📱 Scan this QR code with your phone's <strong>default camera app</strong> (not third-party scanner).<br>It will open the question form automatically.</div>
-    <div class="note">⚠️ Agar scanner sirf text dikhaye, toh neeche diye link par click karo — form seedha khulega.</div>
-    <a href="https://sprzonesbot.github.io/neural-path-agent/form.html" class="link-btn">🔗 Open Form Directly</a>
+    <div class="info">📱 Scan this QR code with your phone's camera (or Google Lens)<br>It will open the question form automatically.</div>
 </div>
 
 <script>
