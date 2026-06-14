@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Neural Path 2.0 - Modal Gap Fixed</title>
+    <title>Neural Path 2.0 - Final Modal Fix</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -75,7 +75,7 @@
         .threat-card { border-color: #f97316; }
         .loading { display: none; text-align: center; margin-top: 15px; }
         hr { border-color: #334155; margin: 15px 0; }
-        /* Modal styles - fixed gap and wrapping */
+        /* MODAL FIX - FINAL */
         .modal {
             display: none;
             position: fixed;
@@ -84,7 +84,7 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.8);
+            background-color: rgba(0,0,0,0.85);
             justify-content: center;
             align-items: center;
         }
@@ -93,7 +93,7 @@
             margin: 20px;
             padding: 20px;
             border-radius: 32px;
-            max-width: 550px;
+            max-width: 600px;
             width: 90%;
             max-height: 85%;
             overflow-y: auto;
@@ -105,25 +105,30 @@
             margin-bottom: 15px;
             color: #c084fc;
         }
-        .modal-question small { font-size: 12px; color: #94a3b8; display: block; margin-top: 5px; }
+        .modal-question small {
+            font-size: 12px;
+            color: #94a3b8;
+            display: block;
+            margin-top: 5px;
+        }
         .checkbox-group {
             display: flex;
             flex-direction: column;
             gap: 12px;
             margin-bottom: 20px;
         }
-        /* Fixed: no extra gap, normal text spacing */
         .checkbox-group label {
             display: flex;
-            align-items: baseline;
+            align-items: center;
             gap: 8px;
             font-size: 15px;
             line-height: 1.4;
             white-space: normal;
             word-break: normal;
-            overflow-wrap: normal;
+            overflow-wrap: break-word;
             width: 100%;
             margin: 0;
+            padding: 0;
         }
         .checkbox-group input {
             flex-shrink: 0;
@@ -131,8 +136,17 @@
             width: 18px;
             height: 18px;
         }
-        .modal-buttons { display: flex; gap: 10px; justify-content: flex-end; margin-top: 10px; }
-        .modal-buttons button { width: auto; padding: 8px 16px; margin-top: 0; }
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 10px;
+        }
+        .modal-buttons button {
+            width: auto;
+            padding: 8px 16px;
+            margin-top: 0;
+        }
         .alignment-scale { display: flex; flex-wrap: wrap; justify-content: space-between; margin-top: 5px; font-size: 11px; color: #94a3b8; }
         .reload-btn { background: #334155; margin-top: 20px; }
         .disclaimer {
@@ -216,7 +230,7 @@
 <div id="modal" class="modal"><div class="modal-content"><div id="modalQuestion" class="modal-question"></div><div id="modalCheckboxes" class="checkbox-group"></div><div class="modal-buttons"><button id="modalCancel">Cancel</button><button id="modalSave">Save</button></div></div></div>
 
 <script>
-    // All multiple-select fields with full text (no breaks)
+    // All multiple-select fields with full text (no short forms)
     const fieldsConfig = {
         interests: {
             label: "3. Favorite Activities / Subjects",
@@ -317,7 +331,7 @@
                         <td style="padding: 10px;">${cutoff}</td>
                       </td>`;
         }
-        recommendationsHTML = `<div class="college-table"><table style="width:100%"><thead><tr style="background:#0f172a; color:#c084fc;"><th>College / Institute</th><th>🗓️ Admission Timeline</th><th>📝 Eligibility & Selection</th><th>🎯 Expected/Previous Year Cutoff</th></tr></thead><tbody>`;
+        recommendationsHTML = `<div class="college-table"><table style="width:100%"><thead><tr style="background:#0f172a; color:#c084fc;"><th>College / Institute</th><th>🗓️ Admission Timeline</th><th>📝 Eligibility & Selection</th><th>🎯 Expected/Previous Year Cutoff</th></table></thead><tbody>`;
         if (path.includes("AI") || path.includes("SOFTWARE") || path.includes("COMPUTER")) {
             recommendationsHTML += buildCollegeRow("IITs (via JEE Advanced)","Registration: Apr 23 - May 2, 2025","Top 2,50,000 JEE Main rankers; 75% in Class 12","~88-90 percentile in JEE Main");
             recommendationsHTML += buildCollegeRow("NITs (via JEE Main)","Exam: Jan/Feb & Apr 2025","75% in Class 12; JEE Main score","CSE at NIT Delhi: Closing rank ~8,971");
