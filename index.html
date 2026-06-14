@@ -59,6 +59,14 @@
             font-size: 14px;
             color: #94a3b8;
         }
+        .note {
+            margin-top: 20px;
+            font-size: 12px;
+            background: #1e293b;
+            padding: 10px;
+            border-radius: 16px;
+            color: #cbd5e1;
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 </head>
@@ -69,18 +77,16 @@
     <div class="qr-box">
         <div id="qrcode"></div>
     </div>
-    <div class="info">📱 Scan this QR code to open the question form<br>and get a complete career roadmap + SWOT analysis</div>
+    <div class="info">📱 Scan this QR code with your phone's camera (or Google Lens)<br>It will open the question form automatically.</div>
+    <div class="note">✅ No text copy needed — direct form open hoga. Use default camera app for best results.</div>
 </div>
 
 <script>
-    // The QR code should point to the form page.
-    // Change the URL below if you host form.html at a different location.
-    // For local testing, use relative path: "form.html"
-    // For live server, put full URL.
-    const formPageUrl = "form.html";  // Change this to your actual form page URL
+    // ✅ CHANGE THIS URL IF YOUR LIVE SITE CHANGES
+    const formUrl = "https://sprzonesbot.github.io/neural-path-agent/form.html";
     window.onload = function() {
         new QRCode(document.getElementById("qrcode"), {
-            text: formPageUrl,
+            text: formUrl,
             width: 200,
             height: 200,
             colorDark: "#000000",
