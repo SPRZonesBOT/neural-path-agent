@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Neural Path 2.0 - Complete</title>
+    <title>Neural Path 2.0 - Financial Advice Added</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -145,6 +145,7 @@
         .college-table th, .college-table td { padding: 10px; text-align: left; border-bottom: 1px solid #334155; }
         .college-table th { background: #0f172a; color: #c084fc; }
         .pdf-btn { background: #334155; margin-top: 20px; }
+        .financial-advice { background: #0f172a; padding: 12px; border-radius: 16px; margin: 10px 0; border-left: 4px solid #22c55e; }
         @media print {
             body { background: white; color: black; }
             .container { background: white; box-shadow: none; padding: 0; }
@@ -159,7 +160,7 @@
 <body>
 <div class="container">
     <h1>🧠 Neural Path 2.0</h1>
-    <div class="sub">Complete Career Roadmap</div>
+    <div class="sub">Complete Career Roadmap + Financial Advice</div>
 
     <form id="parentForm">
         <div class="form-group"><label class="main-label">👨‍👩 Parent/Guardian Name</label><input type="text" id="parentName" required placeholder="e.g., Rajesh Sharma"></div>
@@ -174,7 +175,6 @@
         <div class="form-group"><label class="main-label">3. Favorite Activities / Subjects</label><button type="button" class="custom-select-btn" id="interestsBtn">Select options...</button><input type="hidden" id="interests" value=""></div>
         <div class="form-group"><label class="main-label">4. Extra Curricular Activities</label><button type="button" class="custom-select-btn" id="extracurricularBtn">Select options...</button><input type="hidden" id="extracurricular" value=""></div>
         
-        <!-- Question 5: Favorite TV Show Genre -->
         <div class="form-group"><label class="main-label">5. Favorite TV Show / Web Series Genre</label>
             <select id="tvshow" required>
                 <option value="">Select genre</option>
@@ -196,7 +196,6 @@
         <div class="form-group"><label class="main-label">8. Mental Condition</label><button type="button" class="custom-select-btn" id="mentalBtn">Select options...</button><input type="hidden" id="mental" value=""></div>
         <div class="form-group"><label class="main-label">9. Physical Health</label><button type="button" class="custom-select-btn" id="physicalBtn">Select options...</button><input type="hidden" id="physical" value=""></div>
         
-        <!-- Question 10: Expanded Budget -->
         <div class="form-group"><label class="main-label">10. Annual Budget (₹ per year) - Includes tuition, coaching, living, etc.</label>
             <select id="budget" required>
                 <option value="">Select</option>
@@ -215,7 +214,6 @@
         <div class="form-group"><label class="main-label">11. City / State</label><input type="text" id="city" required placeholder="e.g., Delhi"></div>
         <div class="form-group"><label class="main-label">12. Long Term Goal</label><button type="button" class="custom-select-btn" id="goalBtn">Select options...</button><input type="hidden" id="goal" value=""></div>
         
-        <!-- Question 13: Parents' desired field -->
         <div class="form-group"><label class="main-label">13. Parents' Desired Field for Child</label>
             <select id="parentDesiredField" required>
                 <option value="">Select</option>
@@ -335,7 +333,7 @@
     function getZodiacSign(dob) { let date = new Date(dob); let month = date.getMonth() + 1, day = date.getDate(); if ((month == 1 && day >= 20) || (month == 2 && day <= 18)) return "Aquarius"; if ((month == 2 && day >= 19) || (month == 3 && day <= 20)) return "Pisces"; if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) return "Aries"; if ((month == 4 && day >= 20) || (month == 5 && day <= 20)) return "Taurus"; if ((month == 5 && day >= 21) || (month == 6 && day <= 20)) return "Gemini"; if ((month == 6 && day >= 21) || (month == 7 && day <= 22)) return "Cancer"; if ((month == 7 && day >= 23) || (month == 8 && day <= 22)) return "Leo"; if ((month == 8 && day >= 23) || (month == 9 && day <= 22)) return "Virgo"; if ((month == 9 && day >= 23) || (month == 10 && day <= 22)) return "Libra"; if ((month == 10 && day >= 23) || (month == 11 && day <= 21)) return "Scorpio"; if ((month == 11 && day >= 22) || (month == 12 && day <= 21)) return "Sagittarius"; return "Capricorn"; }
     function getAstrologySuggestion(zodiac) { let s = { "Aries":"Entrepreneurship, sports, army", "Taurus":"Finance, banking, music", "Gemini":"Media, coding, teaching", "Cancer":"Psychology, healthcare", "Leo":"Acting, politics, management", "Virgo":"Data science, research", "Libra":"Law, design, diplomacy", "Scorpio":"Psychology, finance, surgery", "Sagittarius":"Travel, sports coaching", "Capricorn":"Engineering, corporate", "Aquarius":"AI, social work", "Pisces":"Arts, nursing" }; return s[zodiac] || "Hard work brings success."; }
 
-    // ---------- Expanded College Recommendations (tentative months only) ----------
+    // Expanded College Recommendations
     function getCollegeRecommendations(careerPath, budget, city) {
         let path = careerPath.toUpperCase();
         let budgetVal = parseInt(budget);
@@ -388,42 +386,26 @@
         return `<div class="college-table"><table style="width:100%"><thead><tr><th>College / Institute</th><th>Admission Timeline (tentative months)</th><th>Eligibility & Selection</th><th>Expected Cutoff</th></tr></thead><tbody>${tableRows}</tbody></table></div><br><small>*Cutoffs are approximate. Months are tentative. Check official websites for exact dates.</small>${local}`;
     }
 
-    // ---------- Field Recommendation (Science, Arts, Commerce, Army, Medical, Self Business) ----------
+    // Field Recommendation
     function getFieldRecommendation(interests, strengths, weaknesses, tvshow) {
         let i = interests.toLowerCase();
         let s = strengths.toLowerCase();
         let w = weaknesses.toLowerCase();
         let tv = tvshow.toLowerCase();
-        
-        if (i.includes("coding") || i.includes("programming") || i.includes("computers") || i.includes("maths") || s.includes("problem solving")) {
-            return "Science (Engineering / Computer Science)";
-        }
-        if (i.includes("drawing") || i.includes("design") || i.includes("music") || i.includes("arts")) {
-            return "Arts / Design / Fine Arts";
-        }
-        if (i.includes("sports") || i.includes("physical")) {
-            return "Sports / Physical Education / Army (NDA)";
-        }
-        if (i.includes("business") || i.includes("money") || tv.includes("shark tank")) {
-            return "Commerce / Business / Entrepreneurship";
-        }
-        if (i.includes("science") || i.includes("experiments")) {
-            return "Science (Research / Medical)";
-        }
-        if (s.includes("leadership") || s.includes("hard working")) {
-            return "Army / Defence Services (NDA, CDS)";
-        }
-        if (w.includes("public speaking") || w.includes("low confidence")) {
-            return "Arts / Humanities / Psychology / Teaching";
-        }
+        if (i.includes("coding") || i.includes("programming") || i.includes("computers") || i.includes("maths") || s.includes("problem solving")) return "Science (Engineering / Computer Science)";
+        if (i.includes("drawing") || i.includes("design") || i.includes("music") || i.includes("arts")) return "Arts / Design / Fine Arts";
+        if (i.includes("sports") || i.includes("physical")) return "Sports / Physical Education / Army (NDA)";
+        if (i.includes("business") || i.includes("money") || tv.includes("shark tank")) return "Commerce / Business / Entrepreneurship";
+        if (i.includes("science") || i.includes("experiments")) return "Science (Research / Medical)";
+        if (s.includes("leadership") || s.includes("hard working")) return "Army / Defence Services (NDA, CDS)";
+        if (w.includes("public speaking") || w.includes("low confidence")) return "Arts / Humanities / Psychology / Teaching";
         return "Multi-disciplinary – Explore both Science and Commerce based on further aptitude tests.";
     }
 
-    // ---------- Scholarship Suggestions (updated for expanded budget) ----------
+    // Scholarship Suggestions
     function getScholarshipSuggestions(careerPath, budget, city) {
-        let suggestions = `<ul>`;
         let budgetNum = parseInt(budget);
-        
+        let suggestions = `<ul>`;
         if (budgetNum < 300000) {
             suggestions += `<li>🎓 <strong>National Scholarship Portal (NSP):</strong> Apply for pre-matric/post-matric scholarships.</li>
                             <li>🎓 <strong>LIC HFL Vidhyadhan Scholarship</strong> – for students with family income < ₹6L.</li>
@@ -442,20 +424,34 @@
                             <li>🏥 <strong>For medical:</strong> Many private medical colleges offer merit scholarships (e.g., Kasturba Medical College, Manipal).</li>
                             <li>🌍 <strong>Study abroad:</strong> Look for external scholarships (Inlaks, JN Tata Endowment, Commonwealth).</li>`;
         }
-        
         if (careerPath.includes("Sports")) suggestions += `<li>⚽ <strong>Khelo India Scholarship</strong> – for young athletes (₹5L per year).</li>`;
         if (careerPath.includes("Design")) suggestions += `<li>🎨 <strong>NIFT/NID Merit Scholarships</strong> – based on entrance rank.</li>`;
-        if (budgetNum >= 2000000 && careerPath.includes("Software")) {
-            suggestions += `<li>💻 <strong>IITs, BITS, IIITs:</strong> High fees but excellent ROI. Many students repay loans within 2-3 years of placement.</li>`;
-        }
-        if (budgetNum >= 10000000 && careerPath.includes("Medical")) {
-            suggestions += `<li>🩺 <strong>Private medical colleges:</strong> Fees up to ₹1 crore. Consider education loan with moratorium period. Many banks offer collateral-free loans up to ₹40L.</li>`;
-        }
+        if (budgetNum >= 2000000 && careerPath.includes("Software")) suggestions += `<li>💻 <strong>IITs, BITS, IIITs:</strong> High fees but excellent ROI. Many students repay loans within 2-3 years of placement.</li>`;
+        if (budgetNum >= 10000000 && careerPath.includes("Medical")) suggestions += `<li>🩺 <strong>Private medical colleges:</strong> Fees up to ₹1 crore. Consider education loan with moratorium period. Many banks offer collateral-free loans up to ₹40L.</li>`;
         suggestions += `</ul><p>Check college websites for specific scholarship applications.</p>`;
         return suggestions;
     }
 
-    // ---------- Other Helper Functions (unchanged) ----------
+    // Financial Advice (new function)
+    function getFinancialAdvice(budget, careerPath) {
+        let budgetNum = parseInt(budget);
+        let advice = "";
+        if (budgetNum < 300000) {
+            advice = "💰 <strong>Budget limited (less than ₹3L):</strong> Focus on government colleges (IITs, NITs, DU) via entrance exams. Use free resources (NPTEL, YouTube, SWAYAM). Apply for NSP scholarships. Education loan may be required for high-fee courses, but many colleges offer need-based fee waivers.";
+        } else if (budgetNum < 2000000) {
+            advice = "💰 <strong>Comfortable budget (₹3L - ₹20L):</strong> You can afford good private colleges (VIT, Manipal, LPU, Amity) and coaching. Still consider ROI. Education loan is optional but can be used to reduce upfront burden. Apply for merit scholarships.";
+        } else if (budgetNum < 10000000) {
+            advice = "💰 <strong>High budget (₹20L - ₹1Cr):</strong> You can afford top private engineering colleges (BITS, IIITs) or study abroad (Germany, Canada, Australia) with loan. Look for merit-based tuition waivers. For medical, private colleges may be within reach, but still explore scholarships.";
+        } else {
+            advice = "💰 <strong>Premium budget (Above ₹1Cr):</strong> You can afford top-tier private medical colleges (Kasturba, Manipal, etc.) or international universities (USA, UK, Australia). Consider education loans for tax benefits. Many elite colleges offer no-questions-asked merit scholarships; apply anyway to save money.";
+        }
+        if (careerPath.includes("Medical") && budgetNum < 8000000) {
+            advice += " ⚠️ Medical education in private colleges can cost > ₹1Cr. For budget below that, focus on government medical colleges (NEET) or consider education loan.";
+        }
+        return advice;
+    }
+
+    // Helper functions (Growth Roadmap, Skill Gap, Exam Planner, Top Companies, Industry Trend, Wellness Plan)
     function getGrowthRoadmap(careerPath, age, childName) {
         let roadmap = `<ul style="margin-left:20px;">`;
         if (careerPath.includes("Software") || careerPath.includes("AI")) {
@@ -567,7 +563,7 @@
         return plan;
     }
 
-    // ---------- Main Analysis ----------
+    // Main analysis
     function generateAnalysis(age, height, weight, interests, extracurricular, tvshow, strengths, weaknesses, mental, physical, budget, goal, alignment) {
         let careerPath = "";
         if (interests.includes("Coding") || interests.includes("Programming") || interests.includes("Gaming") || extracurricular.includes("Coding")) careerPath = "AI/ML Software Engineer";
@@ -626,9 +622,7 @@
         if(weaknesses.includes("Public Speaking Fear")) skillScore -= 10;
         skillScore = Math.min(100, Math.max(20, skillScore));
 
-        // Field recommendation
         let fieldRecommendation = getFieldRecommendation(interests, strengths, weaknesses, tvshow);
-
         let collegeSuggestions = getCollegeRecommendations(analysis.careerPath, budget, city);
         let growthRoadmap = getGrowthRoadmap(analysis.careerPath, age, childName);
         let skillGap = getSkillGapAnalysis(strengths, weaknesses, analysis.careerPath);
@@ -637,6 +631,7 @@
         let topCompanies = getTopCompanies(analysis.careerPath);
         let industryTrend = getIndustryTrendAnalysis(analysis.careerPath);
         let wellnessPlan = getWellnessPlan(weaknesses, mental, physical);
+        let financialAdvice = getFinancialAdvice(budget, analysis.careerPath);
 
         let payload = {
             timestamp: new Date().toISOString(),
@@ -683,6 +678,7 @@
                     <div class="swot-card opportunity-card"><h4>🌟 Opportunities</h4><p>${analysis.O}</p></div>
                     <div class="swot-card threat-card"><h4>⚠️ Threats</h4><p>${analysis.T}</p></div>
                 </div>
+                <div class="financial-advice"><h4>💰 Financial Advice</h4><p>${financialAdvice}</p></div>
                 <h3>🏫 Suggested Colleges / Institutes (with tentative months)</h3>
                 ${collegeSuggestions}
                 <h3>📅 5-Year Personalised Growth Roadmap (age-wise)</h3>
