@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Neural Path 2.0 - Popup with Question</title>
+    <title>Neural Path 2.0 - Reload after submit</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -67,7 +67,6 @@
         .threat-card { border-color: #f97316; }
         .loading { display: none; text-align: center; margin-top: 15px; }
         hr { border-color: #334155; margin: 15px 0; }
-        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -125,12 +124,24 @@
             padding: 8px 16px;
             margin-top: 0;
         }
+        .alignment-scale {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 5px;
+            font-size: 11px;
+            color: #94a3b8;
+        }
+        .reload-btn {
+            background: #334155;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
 <div class="container">
     <h1>🧠 NEURAL PATH 2.0</h1>
-    <div class="sub">POPUP WITH QUESTION + EMAIL REPORT</div>
+    <div class="sub">POPUP + EMAIL REPORT</div>
 
     <form id="parentForm">
         <!-- Child Name -->
@@ -218,11 +229,22 @@
             <input type="hidden" id="goal" value="">
         </div>
 
-        <!-- Alignment -->
-        <div class="form-group"><label class="main-label">14. PARENT'S EXPECTATION VS CHILD'S WISH (1-10)</label>
-            <select id="alignment" required><option value="">SELECT</option>
-            <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
-            <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select>
+        <!-- Question 14 Simplified -->
+        <div class="form-group"><label class="main-label">14. PARENT & CHILD AGREEMENT LEVEL (1-10)</label>
+            <select id="alignment" required>
+                <option value="">SELECT</option>
+                <option value="1">1 – Bahut zyada disagreement (bilkul nahi maante)</option>
+                <option value="2">2 – Mostly disagree</option>
+                <option value="3">3 – Thoda disagreement</option>
+                <option value="4">4 – Thoda agree lekin confuse</option>
+                <option value="5">5 – Neutral / half-half</option>
+                <option value="6">6 – Slightly agree</option>
+                <option value="7">7 – Mostly agree</option>
+                <option value="8">8 – Strongly agree</option>
+                <option value="9">9 – Almost perfect match</option>
+                <option value="10">10 – Perfect agreement (same vision)</option>
+            </select>
+            <div class="alignment-scale">💡 1 = completely different goals | 10 = parents and child want same future</div>
         </div>
 
         <!-- Email -->
@@ -386,7 +408,8 @@
         return { careerPath, S, W, O, T, companies };
     }
 
-    const SCRIPT_URL = "https://docs.google.com/spreadsheets/d/13I3XJNo_JLPYUO8qW2PS4E-48T-Uqr7saAgSyDbzwDw/edit?gid=0#gid=0";  // Replace with your Apps Script URL
+    // Replace with your actual Google Apps Script URL
+    const SCRIPT_URL = "https://docs.google.com/spreadsheets/d/13I3XJNo_JLPYUO8qW2PS4E-48T-Uqr7saAgSyDbzwDw/edit?gid=0#gid=0";
 
     async function submitAndGenerate() {
         let childName = document.getElementById('childName').value.trim();
@@ -464,6 +487,7 @@
                 <div class="swot-card threat-card"><h4>⚠️ THREATS</h4><p>${analysis.T}</p></div>
             </div>
             <p>✅ Report sent to ${parentEmail}</p>
+            <button class="reload-btn" onclick="location.reload();">🔄 Fill Another Form (Scan QR Again)</button>
         `;
         loadingDiv.style.display = 'none';
         btn.disabled = false;
