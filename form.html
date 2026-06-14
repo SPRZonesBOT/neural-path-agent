@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Neural Path 2.0 - Final</title>
+    <title>Neural Path 2.0 - Normal Case, Fixed Modal</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -48,7 +48,7 @@
             font-size: 14px;
             outline: none;
         }
-        input[type="text"] { text-transform: uppercase; }
+        /* Removed text-transform: uppercase from text inputs */
         .stars { display: flex; gap: 10px; font-size: 32px; cursor: pointer; justify-content: center; margin: 10px 0; }
         .star { color: #475569; transition: 0.1s; }
         .star.selected { color: #fbbf24; text-shadow: 0 0 4px gold; }
@@ -106,18 +106,27 @@
             color: #c084fc;
         }
         .modal-question small { font-size: 12px; color: #94a3b8; display: block; margin-top: 5px; }
-        .checkbox-group { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
-        /* FIX: full text wrap */
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        /* Fixed wrapping: no text cutoff */
         .checkbox-group label {
             display: flex;
             align-items: flex-start;
             gap: 10px;
-            font-size: 14px;
+            font-size: 15px;
             line-height: 1.4;
             white-space: normal;
-            word-break: break-word;
+            word-break: normal;
+            overflow-wrap: break-word;
         }
-        .checkbox-group input { flex-shrink: 0; margin-top: 2px; }
+        .checkbox-group input {
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
         .modal-buttons { display: flex; gap: 10px; justify-content: flex-end; }
         .modal-buttons button { width: auto; padding: 8px 16px; margin-top: 0; }
         .alignment-scale { display: flex; flex-wrap: wrap; justify-content: space-between; margin-top: 5px; font-size: 11px; color: #94a3b8; }
@@ -158,61 +167,81 @@
 </head>
 <body>
 <div class="container">
-    <h1>🧠 NEURAL PATH 2.0</h1>
-    <div class="sub">COMPLETE CAREER ROADMAP</div>
+    <h1>🧠 Neural Path 2.0</h1>
+    <div class="sub">Complete Career Roadmap</div>
 
     <form id="parentForm">
-        <div class="form-group"><label class="main-label">👨‍👩 PARENT/GUARDIAN NAME</label><input type="text" id="parentName" required placeholder="E.G., RAJESH SHARMA" oninput="this.value = this.value.toUpperCase()"></div>
-        <div class="form-group"><label class="main-label">RELATIONSHIP TO CHILD</label>
-            <select id="relationship" required><option value="">SELECT</option><option value="FATHER">FATHER</option><option value="MOTHER">MOTHER</option><option value="GUARDIAN">GUARDIAN</option></select>
+        <div class="form-group"><label class="main-label">👨‍👩 Parent/Guardian Name</label><input type="text" id="parentName" required placeholder="e.g., Rajesh Sharma"></div>
+        <div class="form-group"><label class="main-label">Relationship to Child</label>
+            <select id="relationship" required><option value="">Select</option><option value="Father">Father</option><option value="Mother">Mother</option><option value="Guardian">Guardian</option></select>
         </div>
-        <div class="form-group"><label class="main-label">👶 CHILD'S FULL NAME</label><input type="text" id="childName" required placeholder="E.G., ARYAN SHARMA" oninput="this.value = this.value.toUpperCase()"></div>
-        <div class="form-group"><label class="main-label">1. CHILD'S DATE OF BIRTH (DOB)</label><input type="date" id="dob" required></div>
-        <div class="form-group"><label class="main-label">2. HEIGHT (cm) & WEIGHT (kg)</label>
+        <div class="form-group"><label class="main-label">👶 Child's Full Name</label><input type="text" id="childName" required placeholder="e.g., Aryan Sharma"></div>
+        <div class="form-group"><label class="main-label">1. Child's Date of Birth (DOB)</label><input type="date" id="dob" required></div>
+        <div class="form-group"><label class="main-label">2. Height (cm) & Weight (kg)</label>
             <div style="display: flex; gap: 10px;"><input type="number" id="height" placeholder="Height (cm)" style="width:50%"><input type="number" id="weight" placeholder="Weight (kg)" style="width:50%"></div>
         </div>
-        <div class="form-group"><label class="main-label">3. FAVORITE ACTIVITIES / SUBJECTS</label><button type="button" class="custom-select-btn" id="interestsBtn">SELECT OPTIONS...</button><input type="hidden" id="interests" value=""></div>
-        <div class="form-group"><label class="main-label">4. EXTRA CURRICULAR ACTIVITIES</label><button type="button" class="custom-select-btn" id="extracurricularBtn">SELECT OPTIONS...</button><input type="hidden" id="extracurricular" value=""></div>
-        <div class="form-group"><label class="main-label">5. FAVORITE TV SHOW / WEB SERIES</label><input type="text" id="tvshow" placeholder="E.G., SHARK TANK" oninput="this.value = this.value.toUpperCase()"></div>
-        <!-- QUESTION 6 REMOVED (FUTURE TARGET COMPANY) -->
-        <div class="form-group"><label class="main-label">6. STRENGTHS</label><button type="button" class="custom-select-btn" id="strengthsBtn">SELECT OPTIONS...</button><input type="hidden" id="strengths" value=""></div>
-        <div class="form-group"><label class="main-label">7. WEAKNESSES</label><button type="button" class="custom-select-btn" id="weaknessesBtn">SELECT OPTIONS...</button><input type="hidden" id="weaknesses" value=""></div>
-        <div class="form-group"><label class="main-label">8. MENTAL CONDITION</label><button type="button" class="custom-select-btn" id="mentalBtn">SELECT OPTIONS...</button><input type="hidden" id="mental" value=""></div>
-        <div class="form-group"><label class="main-label">9. PHYSICAL HEALTH</label><button type="button" class="custom-select-btn" id="physicalBtn">SELECT OPTIONS...</button><input type="hidden" id="physical" value=""></div>
-        <div class="form-group"><label class="main-label">10. ANNUAL BUDGET (₹ PER YEAR)</label>
-            <select id="budget" required><option value="">SELECT</option><option value="100000">LESS THAN ₹1 LAKH</option><option value="300000">₹1 LAKH - ₹3 LAKH</option><option value="500000">₹3 LAKH - ₹5 LAKH</option><option value="800000">₹5 LAKH - ₹8 LAKH</option><option value="1200000">₹8 LAKH - ₹12 LAKH</option><option value="2000000">ABOVE ₹12 LAKH</option></select>
+        <div class="form-group"><label class="main-label">3. Favorite Activities / Subjects</label><button type="button" class="custom-select-btn" id="interestsBtn">Select options...</button><input type="hidden" id="interests" value=""></div>
+        <div class="form-group"><label class="main-label">4. Extra Curricular Activities</label><button type="button" class="custom-select-btn" id="extracurricularBtn">Select options...</button><input type="hidden" id="extracurricular" value=""></div>
+        <div class="form-group"><label class="main-label">5. Favorite TV Show / Web Series</label><input type="text" id="tvshow" placeholder="e.g., Shark Tank"></div>
+        <div class="form-group"><label class="main-label">6. Strengths</label><button type="button" class="custom-select-btn" id="strengthsBtn">Select options...</button><input type="hidden" id="strengths" value=""></div>
+        <div class="form-group"><label class="main-label">7. Weaknesses</label><button type="button" class="custom-select-btn" id="weaknessesBtn">Select options...</button><input type="hidden" id="weaknesses" value=""></div>
+        <div class="form-group"><label class="main-label">8. Mental Condition</label><button type="button" class="custom-select-btn" id="mentalBtn">Select options...</button><input type="hidden" id="mental" value=""></div>
+        <div class="form-group"><label class="main-label">9. Physical Health</label><button type="button" class="custom-select-btn" id="physicalBtn">Select options...</button><input type="hidden" id="physical" value=""></div>
+        <div class="form-group"><label class="main-label">10. Annual Budget (₹ per year)</label>
+            <select id="budget" required><option value="">Select</option><option value="100000">Less than ₹1 lakh</option><option value="300000">₹1 lakh - ₹3 lakh</option><option value="500000">₹3 lakh - ₹5 lakh</option><option value="800000">₹5 lakh - ₹8 lakh</option><option value="1200000">₹8 lakh - ₹12 lakh</option><option value="2000000">Above ₹12 lakh</option></select>
         </div>
-        <div class="form-group"><label class="main-label">11. CITY / STATE</label><input type="text" id="city" required placeholder="E.G., DELHI" oninput="this.value = this.value.toUpperCase()"></div>
-        <div class="form-group"><label class="main-label">12. LONG TERM GOAL</label><button type="button" class="custom-select-btn" id="goalBtn">SELECT OPTIONS...</button><input type="hidden" id="goal" value=""></div>
-        <div class="form-group"><label class="main-label">13. PARENT-CHILD AGREEMENT LEVEL (1-10)</label>
-            <select id="alignment" required><option value="">SELECT</option><option value="1">1 – COMPLETE DISAGREEMENT</option><option value="2">2 – MOSTLY DISAGREE</option><option value="3">3 – SLIGHT DISAGREEMENT</option><option value="4">4 – SLIGHTLY AGREE BUT CONFUSED</option><option value="5">5 – NEUTRAL</option><option value="6">6 – SOMEWHAT AGREE</option><option value="7">7 – MOSTLY AGREE</option><option value="8">8 – STRONGLY AGREE</option><option value="9">9 – ALMOST PERFECT MATCH</option><option value="10">10 – PERFECT AGREEMENT</option></select>
-            <div class="alignment-scale">💡 1 = DIFFERENT GOALS | 10 = SAME VISION</div>
+        <div class="form-group"><label class="main-label">11. City / State</label><input type="text" id="city" required placeholder="e.g., Delhi"></div>
+        <div class="form-group"><label class="main-label">12. Long Term Goal</label><button type="button" class="custom-select-btn" id="goalBtn">Select options...</button><input type="hidden" id="goal" value=""></div>
+        <div class="form-group"><label class="main-label">13. Parent-Child Agreement Level (1-10)</label>
+            <select id="alignment" required><option value="">Select</option><option value="1">1 – Complete disagreement (opposite goals)</option><option value="2">2 – Mostly disagree</option><option value="3">3 – Slight disagreement</option><option value="4">4 – Slightly agree but confused</option><option value="5">5 – Neutral / no clear agreement</option><option value="6">6 – Somewhat agree</option><option value="7">7 – Mostly agree</option><option value="8">8 – Strongly agree</option><option value="9">9 – Almost perfect match</option><option value="10">10 – Perfect agreement (same vision)</option></select>
+            <div class="alignment-scale">💡 1 = completely different goals | 10 = same vision</div>
         </div>
-        <div class="form-group"><label class="main-label">📧 PARENT'S EMAIL (TO RECEIVE REPORT)</label><input type="email" id="parentEmail" placeholder="parent@example.com" required></div>
-        <div class="form-group"><label class="main-label">⭐ RATE THIS APP</label>
+        <div class="form-group"><label class="main-label">📧 Parent's Email (to receive report)</label><input type="email" id="parentEmail" placeholder="parent@example.com" required></div>
+        <div class="form-group"><label class="main-label">⭐ Rate this app</label>
             <div class="stars" id="starRating"><span class="star" data-value="1">☆</span><span class="star" data-value="2">☆</span><span class="star" data-value="3">☆</span><span class="star" data-value="4">☆</span><span class="star" data-value="5">☆</span></div>
             <input type="hidden" id="ratingValue" value="0">
         </div>
-        <div class="disclaimer">⚠️ <strong>DISCLAIMER:</strong> This is an AI-generated approximate analysis. Use as reference only.</div>
-        <button type="button" onclick="submitAndGenerate()">✨ GENERATE COMPLETE REPORT ✨</button>
+        <div class="disclaimer">⚠️ <strong>Disclaimer:</strong> This is an AI-generated approximate analysis. Use as reference only.</div>
+        <button type="button" onclick="submitAndGenerate()">✨ Generate Complete Report ✨</button>
     </form>
-    <div class="loading" id="loading">⏳ GENERATING ROADMAP...</div>
+    <div class="loading" id="loading">⏳ Generating roadmap...</div>
     <div id="result" class="result"></div>
 </div>
 
 <!-- Modal -->
-<div id="modal" class="modal"><div class="modal-content"><div id="modalQuestion" class="modal-question"></div><div id="modalCheckboxes" class="checkbox-group"></div><div class="modal-buttons"><button id="modalCancel">CANCEL</button><button id="modalSave">SAVE</button></div></div></div>
+<div id="modal" class="modal"><div class="modal-content"><div id="modalQuestion" class="modal-question"></div><div id="modalCheckboxes" class="checkbox-group"></div><div class="modal-buttons"><button id="modalCancel">Cancel</button><button id="modalSave">Save</button></div></div></div>
 
 <script>
-    // ---------- Multiple-select configuration ----------
+    // All multiple-select fields with normal case options
     const fieldsConfig = {
-        interests: { label: "3. FAVORITE ACTIVITIES / SUBJECTS", options: ["GAMING & COMPUTERS", "CODING & PROGRAMMING", "DRAWING & DESIGN", "SPORTS & PHYSICAL", "READING & WRITING", "MATHS & LOGIC", "SCIENCE & EXPERIMENTS", "MUSIC & ARTS", "BUSINESS & MONEY"] },
-        extracurricular: { label: "4. EXTRA CURRICULAR ACTIVITIES", options: ["SPORTS (CRICKET/FOOTBALL)", "CHESS / BOARD GAMES", "MUSIC / DANCE", "CODING CLUB / ROBOTICS", "DEBATE / DRAMA", "ART & CRAFT", "VOLUNTEERING / SOCIAL WORK"] },
-        strengths: { label: "6. STRENGTHS", options: ["PROBLEM SOLVING", "CREATIVE THINKING", "LEADERSHIP", "HARD WORKING", "QUICK LEARNER", "GOOD MEMORY", "TEAM PLAYER"] },
-        weaknesses: { label: "7. WEAKNESSES", options: ["PUBLIC SPEAKING FEAR", "LACK OF DISCIPLINE", "WEAK IN MATHS", "POOR WRITING SKILLS", "LOW CONFIDENCE", "DELAYS TASKS / POSTPONES"] },
-        mental: { label: "8. MENTAL CONDITION", options: ["ANXIOUS / WORRIED", "LOW CONFIDENCE", "STRESSED OFTEN", "HAPPY & CALM", "SHORT TEMPER"] },
-        physical: { label: "9. PHYSICAL HEALTH", options: ["EYE SIGHT ISSUE", "OBESITY / WEIGHT", "LOW STAMINA", "FIT & ACTIVE", "FREQUENT SICKNESS"] },
-        goal: { label: "12. LONG TERM GOAL", options: ["SETTLE ABROAD", "START MY OWN BUSINESS", "STABLE GOVERNMENT JOB", "HIGH PAYING PRIVATE JOB", "BECOME A RESEARCHER/SCIENTIST"] }
+        interests: {
+            label: "3. Favorite Activities / Subjects",
+            options: ["Gaming & Computers", "Coding & Programming", "Drawing & Design", "Sports & Physical", "Reading & Writing", "Maths & Logic", "Science & Experiments", "Music & Arts", "Business & Money"]
+        },
+        extracurricular: {
+            label: "4. Extra Curricular Activities",
+            options: ["Sports (Cricket/Football)", "Chess / Board Games", "Music / Dance", "Coding Club / Robotics", "Debate / Drama", "Art & Craft", "Volunteering / Social Work"]
+        },
+        strengths: {
+            label: "6. Strengths",
+            options: ["Problem Solving", "Creative Thinking", "Leadership", "Hard Working", "Quick Learner", "Good Memory", "Team Player"]
+        },
+        weaknesses: {
+            label: "7. Weaknesses",
+            options: ["Public Speaking Fear", "Lack of Discipline", "Weak in Maths", "Poor Writing Skills", "Low Confidence", "Delays Tasks / Postpones"]
+        },
+        mental: {
+            label: "8. Mental Condition",
+            options: ["Anxious / Worried", "Low Confidence", "Stressed Often", "Happy & Calm", "Short Temper"]
+        },
+        physical: {
+            label: "9. Physical Health",
+            options: ["Eye Sight Issue", "Obesity / Weight", "Low Stamina", "Fit & Active", "Frequent Sickness"]
+        },
+        goal: {
+            label: "12. Long Term Goal",
+            options: ["Settle Abroad", "Start My Own Business", "Stable Government Job", "High Paying Private Job", "Become a Researcher/Scientist"]
+        }
     };
 
     let currentModalField = null;
@@ -222,7 +251,7 @@
         const modal = document.getElementById('modal');
         const questionDiv = document.getElementById('modalQuestion');
         const checkboxesDiv = document.getElementById('modalCheckboxes');
-        questionDiv.innerHTML = `${config.label} <small>(SELECT ONE OR MORE)</small>`;
+        questionDiv.innerHTML = `${config.label} <small>(select one or more)</small>`;
         let hiddenValue = document.getElementById(fieldId).value;
         let selectedArr = hiddenValue ? hiddenValue.split(", ") : [];
         checkboxesDiv.innerHTML = "";
@@ -241,7 +270,7 @@
         let selectedStr = selected.join(", ");
         document.getElementById(currentModalField).value = selectedStr;
         let btn = document.getElementById(currentModalField + "Btn");
-        if (selectedStr) btn.innerText = selectedStr; else btn.innerText = "SELECT OPTIONS...";
+        if (selectedStr) btn.innerText = selectedStr; else btn.innerText = "Select options...";
         closeModal();
     }
     function closeModal() { document.getElementById('modal').style.display = 'none'; currentModalField = null; }
@@ -259,12 +288,12 @@
             stars.forEach((s, idx) => { if(idx < value) { s.innerHTML = '★'; s.classList.add('selected'); } else { s.innerHTML = '☆'; s.classList.remove('selected'); } });
         });
     });
-    function getHiddenValue(id) { let val = document.getElementById(id).value; return val ? val.toUpperCase() : ""; }
+    function getHiddenValue(id) { let val = document.getElementById(id).value; return val; }  // no uppercase
     function calculateAge(dob) { let birthDate = new Date(dob); let today = new Date(); let age = today.getFullYear() - birthDate.getFullYear(); let m = today.getMonth() - birthDate.getMonth(); if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--; return age; }
-    function getZodiacSign(dob) { let date = new Date(dob); let month = date.getMonth() + 1, day = date.getDate(); if ((month == 1 && day >= 20) || (month == 2 && day <= 18)) return "AQUARIUS"; if ((month == 2 && day >= 19) || (month == 3 && day <= 20)) return "PISCES"; if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) return "ARIES"; if ((month == 4 && day >= 20) || (month == 5 && day <= 20)) return "TAURUS"; if ((month == 5 && day >= 21) || (month == 6 && day <= 20)) return "GEMINI"; if ((month == 6 && day >= 21) || (month == 7 && day <= 22)) return "CANCER"; if ((month == 7 && day >= 23) || (month == 8 && day <= 22)) return "LEO"; if ((month == 8 && day >= 23) || (month == 9 && day <= 22)) return "VIRGO"; if ((month == 9 && day >= 23) || (month == 10 && day <= 22)) return "LIBRA"; if ((month == 10 && day >= 23) || (month == 11 && day <= 21)) return "SCORPIO"; if ((month == 11 && day >= 22) || (month == 12 && day <= 21)) return "SAGITTARIUS"; return "CAPRICORN"; }
-    function getAstrologySuggestion(zodiac) { let s = { "ARIES":"Entrepreneurship, sports, army", "TAURUS":"Finance, banking, music", "GEMINI":"Media, coding, teaching", "CANCER":"Psychology, healthcare", "LEO":"Acting, politics, management", "VIRGO":"Data science, research", "LIBRA":"Law, design, diplomacy", "SCORPIO":"Psychology, finance, surgery", "SAGITTARIUS":"Travel, sports coaching", "CAPRICORN":"Engineering, corporate", "AQUARIUS":"AI, social work", "PISCES":"Arts, nursing" }; return s[zodiac] || "Hard work brings success."; }
+    function getZodiacSign(dob) { let date = new Date(dob); let month = date.getMonth() + 1, day = date.getDate(); if ((month == 1 && day >= 20) || (month == 2 && day <= 18)) return "Aquarius"; if ((month == 2 && day >= 19) || (month == 3 && day <= 20)) return "Pisces"; if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) return "Aries"; if ((month == 4 && day >= 20) || (month == 5 && day <= 20)) return "Taurus"; if ((month == 5 && day >= 21) || (month == 6 && day <= 20)) return "Gemini"; if ((month == 6 && day >= 21) || (month == 7 && day <= 22)) return "Cancer"; if ((month == 7 && day >= 23) || (month == 8 && day <= 22)) return "Leo"; if ((month == 8 && day >= 23) || (month == 9 && day <= 22)) return "Virgo"; if ((month == 9 && day >= 23) || (month == 10 && day <= 22)) return "Libra"; if ((month == 10 && day >= 23) || (month == 11 && day <= 21)) return "Scorpio"; if ((month == 11 && day >= 22) || (month == 12 && day <= 21)) return "Sagittarius"; return "Capricorn"; }
+    function getAstrologySuggestion(zodiac) { let s = { "Aries":"Entrepreneurship, sports, army", "Taurus":"Finance, banking, music", "Gemini":"Media, coding, teaching", "Cancer":"Psychology, healthcare", "Leo":"Acting, politics, management", "Virgo":"Data science, research", "Libra":"Law, design, diplomacy", "Scorpio":"Psychology, finance, surgery", "Sagittarius":"Travel, sports coaching", "Capricorn":"Engineering, corporate", "Aquarius":"AI, social work", "Pisces":"Arts, nursing" }; return s[zodiac] || "Hard work brings success."; }
 
-    // ---------- College Recommendations ----------
+    // College recommendations (same as before, but with normal case text inside)
     function getCollegeRecommendations(careerPath, budget, city) {
         let recommendationsHTML = "";
         let path = careerPath.toUpperCase();
@@ -276,7 +305,7 @@
                         <td style="padding: 10px;">${timeline}</td>
                         <td style="padding: 10px;">${eligibility}</td>
                         <td style="padding: 10px;">${cutoff}</td>
-                      </tr>`;
+                     </tr>`;
         }
         recommendationsHTML = `<div class="college-table"><table style="width:100%"><thead><tr style="background:#0f172a; color:#c084fc;"><th>College / Institute</th><th>🗓️ Admission Timeline</th><th>📝 Eligibility & Selection</th><th>🎯 Expected/Previous Year Cutoff</th></tr></thead><tbody>`;
         if (path.includes("AI") || path.includes("SOFTWARE") || path.includes("COMPUTER")) {
@@ -311,7 +340,7 @@
         return recommendationsHTML;
     }
 
-    // ---------- Helper functions (growth roadmap, skill gap, scholarships, exam planner, top companies, industry trend, wellness) ----------
+    // Helper functions (keep same, but ensure text is normal case where needed)
     function getGrowthRoadmap(careerPath, age, childName) {
         let roadmap = `<ul style="margin-left:20px;">`;
         if (careerPath.includes("SOFTWARE") || careerPath.includes("AI")) {
@@ -340,12 +369,12 @@
         let gap = `<div><strong>Strengths you have:</strong> ${strengths || "Not specified"}<br>
                    <strong>Weaknesses identified:</strong> ${weaknesses || "Not specified"}<br><br>
                    <strong>Recommended action plan to close gaps:</strong><ul>`;
-        if (weaknesses.includes("PUBLIC SPEAKING")) gap += `<li>Join Toastmasters or record daily 1-min selfie video.</li>`;
-        if (weaknesses.includes("DELAYS TASKS")) gap += `<li>Use Pomodoro technique (25 min work, 5 min break) and daily checklists.</li>`;
-        if (weaknesses.includes("LACK OF DISCIPLINE")) gap += `<li>Create a fixed daily schedule with apps like Google Calendar.</li>`;
-        if (weaknesses.includes("LOW CONFIDENCE")) gap += `<li>Celebrate small wins; maintain a success journal.</li>`;
-        if (weaknesses.includes("WEAK IN MATHS") && (careerPath.includes("SOFTWARE") || careerPath.includes("AI"))) gap += `<li>Take foundational math courses (Khan Academy, NCERT) – spend 1 hour daily.</li>`;
-        if (!weaknesses.includes("PUBLIC SPEAKING") && !weaknesses.includes("DELAYS TASKS")) gap += `<li>No major skill gaps – focus on advanced certifications.</li>`;
+        if (weaknesses.includes("Public Speaking Fear")) gap += `<li>Join Toastmasters or record daily 1-min selfie video.</li>`;
+        if (weaknesses.includes("Delays Tasks") || weaknesses.includes("Postpones")) gap += `<li>Use Pomodoro technique (25 min work, 5 min break) and daily checklists.</li>`;
+        if (weaknesses.includes("Lack of Discipline")) gap += `<li>Create a fixed daily schedule with apps like Google Calendar.</li>`;
+        if (weaknesses.includes("Low Confidence")) gap += `<li>Celebrate small wins; maintain a success journal.</li>`;
+        if (weaknesses.includes("Weak in Maths") && (careerPath.includes("SOFTWARE") || careerPath.includes("AI"))) gap += `<li>Take foundational math courses (Khan Academy, NCERT) – spend 1 hour daily.</li>`;
+        if (!weaknesses.includes("Public Speaking Fear") && !weaknesses.includes("Delays Tasks") && !weaknesses.includes("Postpones")) gap += `<li>No major skill gaps – focus on advanced certifications.</li>`;
         gap += `</ul></div>`;
         return gap;
     }
@@ -430,62 +459,62 @@
 
     function getWellnessPlan(weaknesses, mental, physical) {
         let plan = `<ul>`;
-        if (weaknesses.includes("PUBLIC SPEAKING")) plan += `<li>🎤 Join a local Toastmasters club or practice speaking in front of mirror daily.</li>`;
-        if (weaknesses.includes("DELAYS TASKS")) plan += `<li>⏰ Use Pomodoro timer (Forest app) and break tasks into 15-minute chunks.</li>`;
-        if (mental.includes("ANXIOUS") || mental.includes("STRESSED")) plan += `<li>🧘 Practice 10-minute mindfulness meditation (apps: Calm, Headspace, or free YouTube).</li>`;
-        if (physical.includes("LOW STAMINA")) plan += `<li>🏃 Start with 20-min daily walk, increase to 30 min cardio 4 times/week.</li>`;
-        if (physical.includes("EYE SIGHT")) plan += `<li>👓 Follow 20-20-20 rule: every 20 min look 20 feet away for 20 seconds.</li>`;
+        if (weaknesses.includes("Public Speaking Fear")) plan += `<li>🎤 Join a local Toastmasters club or practice speaking in front of mirror daily.</li>`;
+        if (weaknesses.includes("Delays Tasks") || weaknesses.includes("Postpones")) plan += `<li>⏰ Use Pomodoro timer (Forest app) and break tasks into 15-minute chunks.</li>`;
+        if (mental.includes("Anxious") || mental.includes("Stressed")) plan += `<li>🧘 Practice 10-minute mindfulness meditation (apps: Calm, Headspace, or free YouTube).</li>`;
+        if (physical.includes("Low Stamina")) plan += `<li>🏃 Start with 20-min daily walk, increase to 30 min cardio 4 times/week.</li>`;
+        if (physical.includes("Eye Sight")) plan += `<li>👓 Follow 20-20-20 rule: every 20 min look 20 feet away for 20 seconds.</li>`;
         if (!plan.includes("<li>")) plan += `<li>✅ Maintain a balanced routine – 8 hrs sleep, regular exercise, and time for hobbies.</li>`;
         plan += `</ul><p>Small consistent changes lead to big improvements.</p>`;
         return plan;
     }
 
-    // ---------- Main analysis (without targetOrg) ----------
+    // Main analysis (all text normal case)
     function generateAnalysis(age, height, weight, interests, extracurricular, tvshow, strengths, weaknesses, mental, physical, budget, goal, alignment) {
         let careerPath = "";
-        if (interests.includes("CODING") || interests.includes("GAMING") || extracurricular.includes("CODING")) careerPath = "AI/ML SOFTWARE ENGINEER";
-        else if (interests.includes("DRAWING") || interests.includes("DESIGN")) careerPath = "UI/UX DESIGNER";
-        else if (interests.includes("SPORTS") || extracurricular.includes("SPORTS")) { if (height && height > 170) careerPath = "PROFESSIONAL ATHLETE"; else careerPath = "SPORTS MANAGEMENT"; }
-        else if (interests.includes("BUSINESS") || tvshow.includes("SHARK TANK")) careerPath = "ENTREPRENEUR";
-        else careerPath = "DIGITAL MARKETING";
-        let S = strengths ? "✅ " + strengths : "✅ BASIC STRENGTHS";
-        let W = weaknesses ? "⚠️ " + weaknesses : "⚠️ NO MAJOR WEAKNESS";
-        let O = (parseInt(budget)>=500000) ? "💰 GOOD BUDGET" : "💰 LIMITED BUDGET, USE FREE RESOURCES";
-        let T = mental.includes("ANXIOUS") ? "😟 STRESS MANAGEMENT NEEDED" : "NO MAJOR THREATS";
+        if (interests.includes("Coding") || interests.includes("Gaming") || extracurricular.includes("Coding")) careerPath = "AI/ML Software Engineer";
+        else if (interests.includes("Drawing") || interests.includes("Design")) careerPath = "UI/UX Designer";
+        else if (interests.includes("Sports") || extracurricular.includes("Sports")) { if (height && height > 170) careerPath = "Professional Athlete"; else careerPath = "Sports Management"; }
+        else if (interests.includes("Business") || tvshow.includes("Shark Tank")) careerPath = "Entrepreneur";
+        else careerPath = "Digital Marketing";
+        let S = strengths ? "✅ " + strengths : "✅ Basic strengths";
+        let W = weaknesses ? "⚠️ " + weaknesses : "⚠️ No major weakness";
+        let O = (parseInt(budget)>=500000) ? "💰 Good budget" : "💰 Limited budget, use free resources";
+        let T = mental.includes("Anxious") ? "😟 Stress management needed" : "No major threats";
         return { careerPath, S, W, O, T };
     }
 
-    const SCRIPT_URL = "https://docs.google.com/spreadsheets/d/13I3XJNo_JLPYUO8qW2PS4E-48T-Uqr7saAgSyDbzwDw/edit?gid=0#gid=0";  // REPLACE WITH YOUR ACTUAL URL
+    const SCRIPT_URL = "https://docs.google.com/spreadsheets/d/13I3XJNo_JLPYUO8qW2PS4E-48T-Uqr7saAgSyDbzwDw/edit?gid=0#gid=0";  // Replace with your actual Apps Script URL
 
     async function submitAndGenerate() {
-        let parentName = document.getElementById('parentName').value.trim().toUpperCase();
+        let parentName = document.getElementById('parentName').value.trim();
         let relationship = document.getElementById('relationship').value;
-        let childName = document.getElementById('childName').value.trim().toUpperCase();
+        let childName = document.getElementById('childName').value.trim();
         let dob = document.getElementById('dob').value;
         let age = dob ? calculateAge(dob) : "";
         let height = document.getElementById('height').value || "";
         let weight = document.getElementById('weight').value || "";
         let interests = getHiddenValue('interests');
         let extracurricular = getHiddenValue('extracurricular');
-        let tvshow = document.getElementById('tvshow').value.trim().toUpperCase();
+        let tvshow = document.getElementById('tvshow').value.trim();
         let strengths = getHiddenValue('strengths');
         let weaknesses = getHiddenValue('weaknesses');
         let mental = getHiddenValue('mental');
         let physical = getHiddenValue('physical');
         let budget = document.getElementById('budget').value;
-        let city = document.getElementById('city').value.trim().toUpperCase();
+        let city = document.getElementById('city').value.trim();
         let goal = getHiddenValue('goal');
         let alignment = document.getElementById('alignment').value;
         let parentEmail = document.getElementById('parentEmail').value.trim().toLowerCase();
         let rating = document.getElementById('ratingValue').value;
 
         if(!parentName || !relationship || !childName || !dob || !budget || !city || !alignment || !parentEmail) {
-            alert("PLEASE FILL ALL MANDATORY FIELDS");
+            alert("Please fill all mandatory fields");
             return;
         }
-        if(rating == "0") { alert("PLEASE RATE THE APP"); return; }
+        if(rating == "0") { alert("Please rate the app"); return; }
         if(!interests || !strengths || !weaknesses || !mental || !physical || !goal) {
-            alert("PLEASE SELECT OPTIONS FOR ALL MULTIPLE-CHOICE FIELDS");
+            alert("Please select options for all multiple-choice fields (use the buttons)");
             return;
         }
 
@@ -493,8 +522,8 @@
         let astrologyMsg = getAstrologySuggestion(zodiac);
         let analysis = generateAnalysis(age, height, weight, interests, extracurricular, tvshow, strengths, weaknesses, mental, physical, budget, goal, alignment);
         let skillScore = 50;
-        if(strengths.includes("PROBLEM SOLVING")) skillScore += 15;
-        if(weaknesses.includes("PUBLIC SPEAKING")) skillScore -= 10;
+        if(strengths.includes("Problem Solving")) skillScore += 15;
+        if(weaknesses.includes("Public Speaking Fear")) skillScore -= 10;
         skillScore = Math.min(100, Math.max(20, skillScore));
 
         let collegeSuggestions = getCollegeRecommendations(analysis.careerPath, budget, city);
@@ -506,7 +535,6 @@
         let industryTrend = getIndustryTrendAnalysis(analysis.careerPath);
         let wellnessPlan = getWellnessPlan(weaknesses, mental, physical);
 
-        // Payload (targetOrg removed)
         let payload = {
             timestamp: new Date().toISOString(),
             parentName, relationship, childName, dob, age, height, weight, interests, extracurricular, tvshow,
@@ -523,43 +551,43 @@
 
         if(SCRIPT_URL && SCRIPT_URL !== "YOUR_GOOGLE_SCRIPT_URL") {
             try { await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }); } catch(e) { console.error(e); }
-        } else { alert("GOOGLE SHEET URL NOT CONFIGURED. DATA NOT SAVED."); }
+        } else { alert("Google Sheet URL not configured. Data not saved."); }
 
         let resultDiv = document.getElementById('result');
         resultDiv.style.display = 'block';
         resultDiv.innerHTML = `
             <div id="reportContent">
-                <h3>🎯 SKILL SCORE: ${skillScore}/100</h3>
-                <h3>🤖 RECOMMENDED CAREER: ${analysis.careerPath}</h3>
-                <div class="astrology-card">🌟 <strong>ASTROLOGY INSIGHT (${zodiac}):</strong> ${astrologyMsg}<br><small>✨ Traditional belief – not scientific.</small></div>
-                <h3>📊 SWOT ANALYSIS</h3>
+                <h3>🎯 Skill Score: ${skillScore}/100</h3>
+                <h3>🤖 Recommended Career: ${analysis.careerPath}</h3>
+                <div class="astrology-card">🌟 <strong>Astrology Insight (${zodiac}):</strong> ${astrologyMsg}<br><small>✨ Traditional belief – not scientific.</small></div>
+                <h3>📊 SWOT Analysis</h3>
                 <div class="swot-grid">
-                    <div class="swot-card strength-card"><h4>💪 STRENGTHS</h4><p>${analysis.S}</p></div>
-                    <div class="swot-card weakness-card"><h4>🔻 WEAKNESSES</h4><p>${analysis.W}</p></div>
-                    <div class="swot-card opportunity-card"><h4>🌟 OPPORTUNITIES</h4><p>${analysis.O}</p></div>
-                    <div class="swot-card threat-card"><h4>⚠️ THREATS</h4><p>${analysis.T}</p></div>
+                    <div class="swot-card strength-card"><h4>💪 Strengths</h4><p>${analysis.S}</p></div>
+                    <div class="swot-card weakness-card"><h4>🔻 Weaknesses</h4><p>${analysis.W}</p></div>
+                    <div class="swot-card opportunity-card"><h4>🌟 Opportunities</h4><p>${analysis.O}</p></div>
+                    <div class="swot-card threat-card"><h4>⚠️ Threats</h4><p>${analysis.T}</p></div>
                 </div>
-                <h3>🏫 SUGGESTED COLLEGES / INSTITUTES (with Timelines, Eligibility & Cutoffs)</h3>
+                <h3>🏫 Suggested Colleges / Institutes (with Timelines, Eligibility & Cutoffs)</h3>
                 ${collegeSuggestions}
-                <h3>📅 5-YEAR PERSONALISED GROWTH ROADMAP (age-wise)</h3>
+                <h3>📅 5-Year Personalised Growth Roadmap (age-wise)</h3>
                 ${growthRoadmap}
-                <h3>🧩 SKILL GAP ANALYSIS & ACTION PLAN</h3>
+                <h3>🧩 Skill Gap Analysis & Action Plan</h3>
                 ${skillGap}
-                <h3>💰 SCHOLARSHIP & FINANCIAL AID SUGGESTIONS</h3>
+                <h3>💰 Scholarship & Financial Aid Suggestions</h3>
                 ${scholarships}
-                <h3>📝 ENTRANCE EXAM PLANNER (month-wise)</h3>
+                <h3>📝 Entrance Exam Planner (month-wise)</h3>
                 ${examPlanner}
-                <h3>🏢 TOP COMPANIES HIRING FOR THIS CAREER</h3>
+                <h3>🏢 Top Companies Hiring for this Career</h3>
                 ${topCompanies}
-                <h3>📊 INDUSTRY TREND ANALYSIS (till 2035)</h3>
+                <h3>📊 Industry Trend Analysis (till 2035)</h3>
                 ${industryTrend}
-                <h3>🧘 MENTAL & PHYSICAL WELLNESS PLAN</h3>
+                <h3>🧘 Mental & Physical Wellness Plan</h3>
                 ${wellnessPlan}
                 <hr>
                 <p>✅ Report sent to <strong>${parentEmail}</strong> (if Google Sheet configured).</p>
             </div>
-            <button class="pdf-btn" onclick="window.print();">📄 DOWNLOAD AS PDF (PRINT)</button>
-            <button class="reload-btn" onclick="location.reload();">🔄 FILL ANOTHER FORM</button>
+            <button class="pdf-btn" onclick="window.print();">📄 Download as PDF (Print)</button>
+            <button class="reload-btn" onclick="location.reload();">🔄 Fill Another Form</button>
         `;
         loadingDiv.style.display = 'none';
         btn.disabled = false;
