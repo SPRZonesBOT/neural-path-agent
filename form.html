@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Neural Path 2.0 - Gender Added</title>
+    <title>Neural Path 2.0 - Skill Score Explanation</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -168,13 +168,21 @@
             margin: 15px 0;
             border-left: 4px solid #fbbf24;
         }
+        .skill-note {
+            background: #1e293b;
+            padding: 8px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            color: #94a3b8;
+            margin: 5px 0 10px 0;
+        }
         @media print {
             body { background: white; color: black; }
             .container { background: white; box-shadow: none; padding: 0; }
             .form-group, .stars, button:not(.pdf-btn), .loading, .modal, .sub { display: none; }
             .result { display: block !important; background: white; color: black; }
             .result h3 { color: #2c3e66; }
-            .swot-card, .astrology-card, .college-table table, .report-header, .time-estimate { background: #f0f0f0; color: black; border-color: #ccc; }
+            .swot-card, .astrology-card, .college-table table, .report-header, .time-estimate, .skill-note { background: #f0f0f0; color: black; border-color: #ccc; }
             .pdf-btn { display: block; }
         }
     </style>
@@ -190,25 +198,15 @@
             <select id="relationship" required><option value="">Select</option><option value="Father">Father</option><option value="Mother">Mother</option><option value="Guardian">Guardian</option></select>
         </div>
         <div class="form-group"><label class="main-label">👶 Child's Full Name</label><input type="text" id="childName" required placeholder="e.g., Aryan Sharma"></div>
-        
-        <!-- NEW: Child's Gender -->
         <div class="form-group"><label class="main-label">Child's Gender</label>
-            <select id="childGender" required>
-                <option value="">Select</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
-            </select>
+            <select id="childGender" required><option value="">Select</option><option value="Male">Male</option><option value="Female">Female</option><option value="Other">Other</option></select>
         </div>
-
         <div class="form-group"><label class="main-label">1. Child's Date of Birth (DOB)</label><input type="date" id="dob" required></div>
         <div class="form-group"><label class="main-label">2. Height (cm) & Weight (kg)</label>
             <div style="display: flex; gap: 10px;"><input type="number" id="height" placeholder="Height (cm)" style="width:50%"><input type="number" id="weight" placeholder="Weight (kg)" style="width:50%"></div>
         </div>
         <div class="form-group"><label class="main-label">3. Favorite Activities / Subjects</label><button type="button" class="custom-select-btn" id="interestsBtn">Select options...</button><input type="hidden" id="interests" value=""></div>
         <div class="form-group"><label class="main-label">4. Extra Curricular Activities</label><button type="button" class="custom-select-btn" id="extracurricularBtn">Select options...</button><input type="hidden" id="extracurricular" value=""></div>
-        
-        <!-- Question 5: TV Show Genre -->
         <div class="form-group"><label class="main-label">5. Favorite TV Show / Web Series Genre</label>
             <select id="tvshow" required>
                 <option value="">Select genre</option>
@@ -224,13 +222,10 @@
                 <option value="Romance">Romance</option>
             </select>
         </div>
-
         <div class="form-group"><label class="main-label">6. Strengths</label><button type="button" class="custom-select-btn" id="strengthsBtn">Select options...</button><input type="hidden" id="strengths" value=""></div>
         <div class="form-group"><label class="main-label">7. Weaknesses</label><button type="button" class="custom-select-btn" id="weaknessesBtn">Select options...</button><input type="hidden" id="weaknesses" value=""></div>
         <div class="form-group"><label class="main-label">8. Mental Condition</label><button type="button" class="custom-select-btn" id="mentalBtn">Select options...</button><input type="hidden" id="mental" value=""></div>
         <div class="form-group"><label class="main-label">9. Physical Health</label><button type="button" class="custom-select-btn" id="physicalBtn">Select options...</button><input type="hidden" id="physical" value=""></div>
-        
-        <!-- Budget expanded -->
         <div class="form-group"><label class="main-label">10. Annual Budget (₹ per year) - Includes tuition, coaching, living, etc.</label>
             <select id="budget" required>
                 <option value="">Select</option>
@@ -245,11 +240,8 @@
                 <option value="15000000">Above ₹1 crore</option>
             </select>
         </div>
-        
         <div class="form-group"><label class="main-label">11. City / State</label><input type="text" id="city" required placeholder="e.g., Delhi"></div>
         <div class="form-group"><label class="main-label">12. Long Term Goal</label><button type="button" class="custom-select-btn" id="goalBtn">Select options...</button><input type="hidden" id="goal" value=""></div>
-        
-        <!-- Parents' Desired Field -->
         <div class="form-group"><label class="main-label">13. Parents' Desired Field for Child</label>
             <select id="parentDesiredField" required>
                 <option value="">Select</option>
@@ -262,13 +254,10 @@
                 <option value="Not Sure">Not sure / Open to any</option>
             </select>
         </div>
-
         <div class="form-group"><label class="main-label">14. Parent-Child Agreement Level (1-10)</label>
             <select id="alignment" required><option value="">Select</option><option value="1">1 – Complete disagreement</option><option value="2">2 – Mostly disagree</option><option value="3">3 – Slight disagreement</option><option value="4">4 – Slightly agree but confused</option><option value="5">5 – Neutral</option><option value="6">6 – Somewhat agree</option><option value="7">7 – Mostly agree</option><option value="8">8 – Strongly agree</option><option value="9">9 – Almost perfect match</option><option value="10">10 – Perfect agreement</option></select>
             <div class="alignment-scale">💡 1 = different goals | 10 = same vision</div>
         </div>
-
-        <!-- Academic details -->
         <div class="form-group"><label class="main-label">15. After school, how many hours does the child study daily?</label>
             <select id="studyHours" required>
                 <option value="">Select</option>
@@ -280,14 +269,12 @@
                 <option value="More than 5 hours">More than 5 hours</option>
             </select>
         </div>
-
         <div class="form-group"><label class="main-label">16. Current class and percentage / CGPA</label>
             <div style="display: flex; gap: 10px;">
                 <input type="text" id="currentClass" placeholder="Class (e.g., 10th, 12th)" style="width:50%" required>
                 <input type="text" id="percentage" placeholder="Percentage / CGPA (e.g., 85%, 8.5 CGPA)" style="width:50%" required>
             </div>
         </div>
-
         <div class="form-group"><label class="main-label">📧 Parent's Email (to receive report)</label><input type="email" id="parentEmail" placeholder="parent@example.com" required></div>
         <div class="form-group"><label class="main-label">⭐ Rate this app</label>
             <div class="stars" id="starRating"><span class="star" data-value="1">☆</span><span class="star" data-value="2">☆</span><span class="star" data-value="3">☆</span><span class="star" data-value="4">☆</span><span class="star" data-value="5">☆</span></div>
@@ -303,7 +290,7 @@
 <div id="modal" class="modal"><div class="modal-content"><div id="modalQuestion" class="modal-question"></div><div id="modalCheckboxes" class="checkbox-group"></div><div class="modal-buttons"><button id="modalCancel">Cancel</button><button id="modalSave">Save</button></div></div></div>
 
 <script>
-    // All multiple-select fields (same as before)
+    // All multiple-select fields
     const fieldsConfig = {
         interests: {
             label: "3. Favorite Activities / Subjects",
@@ -396,14 +383,14 @@
         let tableRows = "";
         if (path.includes("AI") || path.includes("SOFTWARE") || path.includes("COMPUTER")) {
             tableRows = `<tr><td style="padding: 8px;">IITs (Bombay, Delhi, Madras, Kanpur)</td><td style="padding: 8px;">April, May</td><td>JEE Advanced rank, 75% in class 12</td><td>~88-90 percentile in JEE Main</td></tr>
-                           <tr><td>NITs (Trichy, Surathkal, Warangal, Delhi)</td><td>Jan, Feb, April</td><td>JEE Main score, 75% in class 12</td><td>CSE closing rank ~8,971 (NIT Delhi)</td></tr>
-                           <tr><td>IIIT Hyderabad</td><td>May</td><td>UGEE exam, class 12 PCM</td><td>UGEE rank 62-255 (Gen)</td></tr>
-                           <tr><td>BITS Pilani</td><td>May, June</td><td>BITSAT score, class 12 PCM</td><td>Pilani CSE ~304 marks</td></tr>`;
+                          <tr><td style="padding: 8px;">NITs (Trichy, Surathkal, Warangal, Delhi)</td><td style="padding: 8px;">Jan, Feb, April</td><td>JEE Main score, 75% in class 12</td><td>CSE closing rank ~8,971 (NIT Delhi)</td></tr>
+                          <tr><td style="padding: 8px;">IIIT Hyderabad</td><td style="padding: 8px;">May</td><td>UGEE exam, class 12 PCM</td><td>UGEE rank 62-255 (Gen)</td></tr>
+                          <tr><td style="padding: 8px;">BITS Pilani</td><td style="padding: 8px;">May, June</td><td>BITSAT score, class 12 PCM</td><td>Pilani CSE ~304 marks</td></tr>`;
         } else if (path.includes("DESIGN")) {
-            tableRows = `<tr><td>NID Ahmedabad</td><td>Jan, April</td><td>DAT Prelims + Mains</td><td>Merit based</td></tr>
-                          <tr><td>NIFT Delhi</td><td>Nov, Feb</td><td>GAT + CAT, class 12</td><td>Closing rank ~62-74 (Gen)</td></tr>`;
+            tableRows = `<tr><td style="padding: 8px;">NID Ahmedabad</td><td style="padding: 8px;">Jan, April</td><td>DAT Prelims + Mains</td><td>Merit based</td></tr>
+                         <tr><td style="padding: 8px;">NIFT Delhi</td><td style="padding: 8px;">Nov, Feb</td><td>GAT + CAT, class 12</td><td>Closing rank ~62-74 (Gen)</td></tr>`;
         } else {
-            tableRows = `<tr><td>University of Delhi</td><td>May, June</td><td>CUET score, class 12</td><td>Cutoffs 90-99%</td></tr>`;
+            tableRows = `<tr><td style="padding: 8px;">University of Delhi</td><td style="padding: 8px;">May, June</td><td>CUET score, class 12</td><td>Cutoffs 90-99%</td></tr>`;
         }
         return `<div class="college-table"><table style="width:100%; border-collapse: collapse;">${tableRows}</table></div><br><small>*Cutoffs approximate. Months tentative.</small>`;
     }
@@ -445,7 +432,7 @@
         return "Premium budget: Can afford top medical (Kasturba, Manipal) or international universities. Use scholarships to save.";
     }
 
-    // Estimated years to goal
+    // Estimated years
     function getEstimatedYears(currentClass, careerPath) {
         let classNum = parseInt(currentClass);
         if (isNaN(classNum)) {
@@ -453,13 +440,9 @@
             classNum = match ? parseInt(match[0]) : null;
         }
         let yearsToClass12 = 0;
-        if (classNum && classNum < 12) {
-            yearsToClass12 = 12 - classNum;
-        } else if (classNum && classNum >= 12) {
-            yearsToClass12 = 0;
-        } else {
-            yearsToClass12 = 2;
-        }
+        if (classNum && classNum < 12) yearsToClass12 = 12 - classNum;
+        else if (classNum && classNum >= 12) yearsToClass12 = 0;
+        else yearsToClass12 = 2;
         let yearsAfter12 = 0;
         let path = careerPath.toLowerCase();
         if (path.includes("software") || path.includes("engineer") || path.includes("ai") || path.includes("ml")) yearsAfter12 = 4;
@@ -473,7 +456,7 @@
         return `${yearsToClass12Text}approximately ${totalYears} years from now (including graduation).`;
     }
 
-    // Helper functions (simplified but kept)
+    // Helper functions (simplified)
     function getGrowthRoadmap(careerPath, age, childName) {
         let roadmap = `<ul>`;
         if (careerPath.includes("Software") || careerPath.includes("AI")) {
@@ -537,7 +520,7 @@
         return plan;
     }
 
-    // Main analysis (unchanged)
+    // Main analysis
     function generateAnalysis(age, height, weight, interests, extracurricular, tvshow, strengths, weaknesses, mental, physical, budget, goal, alignment) {
         let careerPath = "";
         if (interests.includes("Coding") || interests.includes("Programming") || interests.includes("Gaming") || extracurricular.includes("Coding")) careerPath = "AI/ML Software Engineer";
@@ -552,7 +535,7 @@
         return { careerPath, S, W, O, T };
     }
 
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyqP04dUqxCB-ny2Zf0TGlFqhnZljOg1uOtw1LzDuKrbd47o1QudmYSdBtPTgWhdzzL/exec";  // REPLACE WITH YOUR ACTUAL APPS SCRIPT URL
+    const SCRIPT_URL = "https://script.google.com/home/projects/1Er_k7ZiDGYl2uI_ffF3U0_oM2by3e9Vq-fy_OA14HyZe0rHHome7BV_B/edit";  // REPLACE WITH YOUR ACTUAL APPS SCRIPT URL
 
     async function submitAndGenerate() {
         let parentName = document.getElementById('parentName').value.trim();
@@ -599,6 +582,14 @@
         if(weaknesses.includes("Public Speaking Fear")) skillScore -= 10;
         skillScore = Math.min(100, Math.max(20, skillScore));
 
+        // Explanation of skill score calculation
+        let skillExplanation = "";
+        if (strengths.includes("Problem Solving")) skillExplanation += "+15 for Problem Solving; ";
+        if (strengths.includes("Creative")) skillExplanation += "+12 for Creative Thinking; ";
+        if (weaknesses.includes("Public Speaking")) skillExplanation += "-10 for Public Speaking Fear; ";
+        if (weaknesses.includes("Delays Tasks")) skillExplanation += "-8 for Delays Tasks/Postpones; ";
+        if (!skillExplanation) skillExplanation = "Base score 50, adjusted based on selected strengths/weaknesses.";
+        
         let fieldRecommendation = getFieldRecommendation(interests, strengths, weaknesses, tvshow);
         let collegeSuggestions = getCollegeRecommendations(analysis.careerPath, budget, city);
         let growthRoadmap = getGrowthRoadmap(analysis.careerPath, age, childName);
@@ -656,6 +647,7 @@
                     </div>
                 </div>
                 <h3>🎯 Skill Score: ${skillScore}/100</h3>
+                <div class="skill-note">📌 <strong>Calculation basis:</strong> Base score 50. ${skillExplanation} Score capped between 20-100.</div>
                 <h3>🤖 Recommended Career: ${analysis.careerPath}</h3>
                 <h3>📚 Recommended Field / Stream for Child: <span style="color:#fbbf24;">${fieldRecommendation}</span></h3>
                 <h3>👪 Parents' Desired Field: ${parentDesiredField}</h3>
