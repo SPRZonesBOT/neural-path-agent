@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Neural Path 2.0 - Final</title>
+    <title>Neural Path 2.0 - Final Working</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -290,7 +290,7 @@
 <div id="modal" class="modal"><div class="modal-content"><div id="modalQuestion" class="modal-question"></div><div id="modalCheckboxes" class="checkbox-group"></div><div class="modal-buttons"><button id="modalCancel">Cancel</button><button id="modalSave">Save</button></div></div></div>
 
 <script>
-    // All multiple-select fields
+    // All multiple-select fields (same as before)
     const fieldsConfig = {
         interests: {
             label: "3. Favorite Activities / Subjects",
@@ -377,15 +377,15 @@
     function getZodiacSign(dob) { let date = new Date(dob); let month = date.getMonth() + 1, day = date.getDate(); if ((month == 1 && day >= 20) || (month == 2 && day <= 18)) return "Aquarius"; if ((month == 2 && day >= 19) || (month == 3 && day <= 20)) return "Pisces"; if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) return "Aries"; if ((month == 4 && day >= 20) || (month == 5 && day <= 20)) return "Taurus"; if ((month == 5 && day >= 21) || (month == 6 && day <= 20)) return "Gemini"; if ((month == 6 && day >= 21) || (month == 7 && day <= 22)) return "Cancer"; if ((month == 7 && day >= 23) || (month == 8 && day <= 22)) return "Leo"; if ((month == 8 && day >= 23) || (month == 9 && day <= 22)) return "Virgo"; if ((month == 9 && day >= 23) || (month == 10 && day <= 22)) return "Libra"; if ((month == 10 && day >= 23) || (month == 11 && day <= 21)) return "Scorpio"; if ((month == 11 && day >= 22) || (month == 12 && day <= 21)) return "Sagittarius"; return "Capricorn"; }
     function getAstrologySuggestion(zodiac) { let s = { "Aries":"Entrepreneurship, sports, army", "Taurus":"Finance, banking, music", "Gemini":"Media, coding, teaching", "Cancer":"Psychology, healthcare", "Leo":"Acting, politics, management", "Virgo":"Data science, research", "Libra":"Law, design, diplomacy", "Scorpio":"Psychology, finance, surgery", "Sagittarius":"Travel, sports coaching", "Capricorn":"Engineering, corporate", "Aquarius":"AI, social work", "Pisces":"Arts, nursing" }; return s[zodiac] || "Hard work brings success."; }
 
-    // College Recommendations
+    // College Recommendations (shortened for brevity)
     function getCollegeRecommendations(careerPath, budget, city) {
         let path = careerPath.toUpperCase();
         let tableRows = "";
         if (path.includes("AI") || path.includes("SOFTWARE") || path.includes("COMPUTER")) {
-            tableRows = `<tr><td style="padding: 8px;">IITs (Bombay, Delhi, Madras, Kanpur)</td><td style="padding: 8px;">April, May</td><td>JEE Advanced rank, 75% in class 12</td><td>~88-90 percentile in JEE Main</td></tr>
-                          <tr><td>NITs (Trichy, Surathkal, Warangal, Delhi)</td><td>Jan, Feb, April</td><td>JEE Main score, 75% in class 12</td><td>CSE closing rank ~8,971 (NIT Delhi)</td></tr>
-                          <tr><td>IIIT Hyderabad</td><td>May</td><td>UGEE exam, class 12 PCM</td><td>UGEE rank 62-255 (Gen)</td></tr>
-                          <tr><td>BITS Pilani</td><td>May, June</td><td>BITSAT score, class 12 PCM</td><td>Pilani CSE ~304 marks</td></tr>`;
+            tableRows = `<tr><td>IITs (Bombay, Delhi, Madras, Kanpur)</td><td>April, May</td><td>JEE Advanced rank, 75% in class 12</td><td>~88-90 percentile in JEE Main</td></tr>
+                         <tr><td>NITs (Trichy, Surathkal, Warangal, Delhi)</td><td>Jan, Feb, April</td><td>JEE Main score, 75% in class 12</td><td>CSE closing rank ~8,971 (NIT Delhi)</td></tr>
+                         <tr><td>IIIT Hyderabad</td><td>May</td><td>UGEE exam, class 12 PCM</td><td>UGEE rank 62-255 (Gen)</td></tr>
+                         <tr><td>BITS Pilani</td><td>May, June</td><td>BITSAT score, class 12 PCM</td><td>Pilani CSE ~304 marks</td></tr>`;
         } else if (path.includes("DESIGN")) {
             tableRows = `<tr><td>NID Ahmedabad</td><td>Jan, April</td><td>DAT Prelims + Mains</td><td>Merit based</td></tr>
                          <tr><td>NIFT Delhi</td><td>Nov, Feb</td><td>GAT + CAT, class 12</td><td>Closing rank ~62-74 (Gen)</td></tr>`;
@@ -395,7 +395,6 @@
         return `<div class="college-table"><table style="width:100%; border-collapse: collapse;">${tableRows}</table></div><br><small>*Cutoffs approximate. Months tentative.</small>`;
     }
 
-    // Field Recommendation
     function getFieldRecommendation(interests, strengths, weaknesses, tvshow) {
         let i = interests.toLowerCase();
         let s = strengths.toLowerCase();
@@ -411,34 +410,28 @@
         return "Multi-disciplinary – Explore both Science and Commerce based on further aptitude tests.";
     }
 
-    // Scholarship suggestions
     function getScholarshipSuggestions(careerPath, budget, city) {
         let budgetNum = parseInt(budget);
         let suggestions = `<ul>`;
-        if (budgetNum < 300000) suggestions += `<li>National Scholarship Portal (NSP)</li><li>LIC HFL Vidhyadhan Scholarship (income <₹6L)</li>`;
+        if (budgetNum < 300000) suggestions += `<li>National Scholarship Portal (NSP)</li><li>LIC HFL Vidhyadhan Scholarship</li>`;
         else if (budgetNum < 2000000) suggestions += `<li>Merit-cum-Means Scholarship (IITs, NITs, BITS)</li><li>Google Anita Borg Scholarship</li>`;
         else if (budgetNum < 10000000) suggestions += `<li>Education loans (SBI, HDFC Credila)</li><li>College merit scholarships (BITS, VIT up to 100%)</li>`;
-        else suggestions += `<li>Premium funding: education loans with subsidy</li><li>Private medical colleges merit scholarships</li><li>Inlaks, JN Tata Endowment for abroad</li>`;
+        else suggestions += `<li>Premium funding: education loans with subsidy</li><li>Private medical colleges merit scholarships</li><li>Inlaks, JN Tata Endowment</li>`;
         suggestions += `</ul>`;
         return suggestions;
     }
 
-    // Financial Advice
     function getFinancialAdvice(budget, careerPath) {
         let budgetNum = parseInt(budget);
         if (budgetNum < 300000) return "Budget limited: Focus on government colleges, free resources (NPTEL), NSP scholarships.";
         if (budgetNum < 2000000) return "Comfortable budget: Affordable private colleges (VIT, Manipal), consider merit scholarships.";
         if (budgetNum < 10000000) return "High budget: Top private engineering (BITS, IIITs) or study abroad with loan. Apply for merit waivers.";
-        return "Premium budget: Can afford top medical (Kasturba, Manipal) or international universities. Use scholarships to save.";
+        return "Premium budget: Can afford top medical or international universities. Use scholarships to save.";
     }
 
-    // Estimated years
     function getEstimatedYears(currentClass, careerPath) {
         let classNum = parseInt(currentClass);
-        if (isNaN(classNum)) {
-            let match = currentClass.match(/\d+/);
-            classNum = match ? parseInt(match[0]) : null;
-        }
+        if (isNaN(classNum)) { let match = currentClass.match(/\d+/); classNum = match ? parseInt(match[0]) : null; }
         let yearsToClass12 = 0;
         if (classNum && classNum < 12) yearsToClass12 = 12 - classNum;
         else if (classNum && classNum >= 12) yearsToClass12 = 0;
@@ -456,7 +449,6 @@
         return `${yearsToClass12Text}approximately ${totalYears} years from now (including graduation).`;
     }
 
-    // Helper functions
     function getGrowthRoadmap(careerPath, age, childName) {
         let roadmap = `<ul>`;
         if (careerPath.includes("Software") || careerPath.includes("AI")) {
@@ -479,7 +471,7 @@
     function getSkillGapAnalysis(strengths, weaknesses, careerPath) {
         let gap = `<div><strong>Strengths:</strong> ${strengths || "Not specified"}<br><strong>Weaknesses:</strong> ${weaknesses || "Not specified"}<br><br><strong>Action plan:</strong><ul>`;
         if (weaknesses.includes("Public Speaking")) gap += `<li>Join Toastmasters or record daily 1-min selfie video.</li>`;
-        if (weaknesses.includes("Delays Tasks") || weaknesses.includes("Postpones")) gap += `<li>Use Pomodoro technique (25 min work, 5 min break).</li>`;
+        if (weaknesses.includes("Delays Tasks") || weaknesses.includes("Postpones")) gap += `<li>Use Pomodoro technique.</li>`;
         if (!weaknesses.includes("Public Speaking") && !weaknesses.includes("Delays Tasks")) gap += `<li>No major skill gaps – focus on advanced certifications.</li>`;
         gap += `</ul></div>`;
         return gap;
@@ -487,7 +479,7 @@
     function getEntranceExamPlanner(careerPath, age) {
         let planner = `<ul>`;
         if (careerPath.includes("Software") || careerPath.includes("AI")) {
-            planner += `<li>JEE Main: April/June (Session 1 & 2). Register by Dec/Jan.</li><li>JEE Advanced: May/June.</li><li>BITSAT: May-June.</li><li>VITEEE: April.</li>`;
+            planner += `<li>JEE Main: April/June. Register by Dec/Jan.</li><li>JEE Advanced: May/June.</li><li>BITSAT: May-June.</li>`;
         } else if (careerPath.includes("Design")) {
             planner += `<li>UCEED: January exam; register by Oct.</li><li>NID DAT: Prelims Jan, Mains Apr-May.</li>`;
         } else {
@@ -500,27 +492,26 @@
         let companies = `<ul>`;
         if (careerPath.includes("Software") || careerPath.includes("AI")) companies += `<li>Google, Microsoft, Amazon, Adobe, Flipkart</li><li>Startups: Unacademy, Dream11, Postman</li>`;
         else if (careerPath.includes("Design")) companies += `<li>Figma, Adobe, Microsoft (UX), Tata Elxsi</li>`;
-        else if (careerPath.includes("Sports")) companies += `<li>BCCI, IPL franchises, Decathlon, Nike, Adidas</li>`;
-        else companies += `<li>Infosys, TCS, Wipro, Deloitte, KPMG, HDFC Bank</li>`;
+        else if (careerPath.includes("Sports")) companies += `<li>BCCI, IPL franchises, Decathlon, Nike</li>`;
+        else companies += `<li>Infosys, TCS, Wipro, Deloitte, HDFC Bank</li>`;
         companies += `</ul>`;
         return companies;
     }
     function getIndustryTrendAnalysis(careerPath) {
-        if (careerPath.includes("Software") || careerPath.includes("AI")) return `<p>AI/ML jobs expected to grow 30-40% in India by 2035. Demand for prompt engineers, AI ethicists rising.</p>`;
+        if (careerPath.includes("Software") || careerPath.includes("AI")) return `<p>AI/ML jobs expected to grow 30-40% in India by 2035.</p>`;
         if (careerPath.includes("Design")) return `<p>UX/UI design demand increasing. Generative AI tools require designers to co-create with AI.</p>`;
         return `<p>Traditional jobs evolving with digital skills. Upskilling essential.</p>`;
     }
     function getWellnessPlan(weaknesses, mental, physical) {
         let plan = `<ul>`;
         if (weaknesses.includes("Public Speaking")) plan += `<li>🎤 Toastmasters or daily 1-min selfie video.</li>`;
-        if (mental.includes("Anxious") || mental.includes("Stressed")) plan += `<li>🧘 10-min mindfulness meditation (Calm, Headspace).</li>`;
-        if (physical.includes("Low Stamina")) plan += `<li>🏃 20-min daily walk, increase to 30 min cardio 4 times/week.</li>`;
+        if (mental.includes("Anxious") || mental.includes("Stressed")) plan += `<li>🧘 10-min mindfulness meditation.</li>`;
+        if (physical.includes("Low Stamina")) plan += `<li>🏃 20-min daily walk.</li>`;
         if (!plan.includes("<li>")) plan += `<li>✅ Balanced routine – 8 hrs sleep, regular exercise, hobbies.</li>`;
         plan += `</ul>`;
         return plan;
     }
 
-    // Main analysis
     function generateAnalysis(age, height, weight, interests, extracurricular, tvshow, strengths, weaknesses, mental, physical, budget, goal, alignment) {
         let careerPath = "";
         if (interests.includes("Coding") || interests.includes("Programming") || interests.includes("Gaming") || extracurricular.includes("Coding")) careerPath = "AI/ML Software Engineer";
@@ -535,10 +526,10 @@
         return { careerPath, S, W, O, T };
     }
 
-    // REPLACE WITH YOUR ACTUAL APPS SCRIPT URL
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyDcr37gtyJi8p55fdBdHWEA9oLsHMIwS9BWXuFIuVaSgCKWU_EvNxQ9uFQ5AAbJb3M/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwy2gGFYCForKzOdYFSTH8E_ozQKBocGBbb4nvdA-UaaFAaP875xZTEYAIZ8fFzWGJ9/exec";  // REPLACE WITH YOUR ACTUAL APPS SCRIPT URL
 
     async function submitAndGenerate() {
+        // Get all form values (same as before)
         let parentName = document.getElementById('parentName').value.trim();
         let relationship = document.getElementById('relationship').value;
         let childName = document.getElementById('childName').value.trim();
@@ -565,13 +556,14 @@
         let parentEmail = document.getElementById('parentEmail').value.trim().toLowerCase();
         let rating = document.getElementById('ratingValue').value;
 
+        // Validation
         if(!parentName || !relationship || !childName || !childGender || !dob || !budget || !city || !alignment || !parentEmail || !tvshow || !parentDesiredField || !studyHours || !currentClass || !percentage) {
-            alert("Please fill all mandatory fields (including child's gender, study hours, class, percentage)");
+            alert("Please fill all mandatory fields");
             return;
         }
         if(rating == "0") { alert("Please rate the app"); return; }
         if(!interests || !strengths || !weaknesses || !mental || !physical || !goal) {
-            alert("Please select options for all multiple-choice fields (use the buttons)");
+            alert("Please select options for all multiple-choice fields");
             return;
         }
 
@@ -620,20 +612,19 @@
         loadingDiv.style.display = 'block';
         btn.disabled = true;
 
+        // IMPORTANT: Use no-cors mode, no headers
         if(SCRIPT_URL && SCRIPT_URL !== "YOUR_GOOGLE_SCRIPT_URL") {
             try {
-                // IMPORTANT: mode: 'cors' (removed no-cors)
-                const response = await fetch(SCRIPT_URL, {
+                await fetch(SCRIPT_URL, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    mode: 'no-cors',
                     body: JSON.stringify(payload)
                 });
-                const result = await response.text();
-                console.log("Server response:", result);
+                console.log("Request sent (no-cors mode)");
             } catch(e) { console.error("Fetch error:", e); }
         } else {
-            console.warn("Google Sheet URL not configured. Data will not be saved.");
-            alert("⚠️ Google Sheet URL not set. Data will not be saved. Please set SCRIPT_URL.");
+            console.warn("Google Sheet URL not configured.");
+            alert("⚠️ Google Sheet URL not set. Data will not be saved.");
         }
 
         let resultDiv = document.getElementById('result');
