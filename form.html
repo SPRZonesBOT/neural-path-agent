@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Neural Path 2.0 - Final</title>
+    <title>Neural Path 2.0 - World's Best Career Counselor</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -14,7 +14,7 @@
             min-height: 100vh;
         }
         .container {
-            max-width: 650px;
+            max-width: 700px;
             margin: 0 auto;
             background: rgba(255,255,255,0.1);
             backdrop-filter: blur(10px);
@@ -190,9 +190,10 @@
 <body>
 <div class="container">
     <h1>🧠 Neural Path 2.0</h1>
-    <div class="sub">Complete Career Roadmap + PDF Report</div>
+    <div class="sub">World's Most Comprehensive Career Counselor</div>
 
     <form id="parentForm">
+        <!-- Basic Info -->
         <div class="form-group"><label class="main-label">👨‍👩 Parent/Guardian Name</label><input type="text" id="parentName" required placeholder="e.g., Rajesh Sharma"></div>
         <div class="form-group"><label class="main-label">Relationship to Child</label>
             <select id="relationship" required><option value="">Select</option><option value="Father">Father</option><option value="Mother">Mother</option><option value="Guardian">Guardian</option></select>
@@ -205,8 +206,14 @@
         <div class="form-group"><label class="main-label">2. Height (cm) & Weight (kg)</label>
             <div style="display: flex; gap: 10px;"><input type="number" id="height" placeholder="Height (cm)" style="width:50%"><input type="number" id="weight" placeholder="Weight (kg)" style="width:50%"></div>
         </div>
-        <div class="form-group"><label class="main-label">3. Favorite Activities / Subjects</label><button type="button" class="custom-select-btn" id="interestsBtn">Select options...</button><input type="hidden" id="interests" value=""></div>
-        <div class="form-group"><label class="main-label">4. Extra Curricular Activities</label><button type="button" class="custom-select-btn" id="extracurricularBtn">Select options...</button><input type="hidden" id="extracurricular" value=""></div>
+        
+        <!-- Expanded Interests (no option left) -->
+        <div class="form-group"><label class="main-label">3. Favorite Activities / Subjects (Select all that apply)</label><button type="button" class="custom-select-btn" id="interestsBtn">Select options...</button><input type="hidden" id="interests" value=""></div>
+        
+        <!-- Expanded Extracurricular -->
+        <div class="form-group"><label class="main-label">4. Extra Curricular Activities (Select all that apply)</label><button type="button" class="custom-select-btn" id="extracurricularBtn">Select options...</button><input type="hidden" id="extracurricular" value=""></div>
+        
+        <!-- TV Genre -->
         <div class="form-group"><label class="main-label">5. Favorite TV Show / Web Series Genre</label>
             <select id="tvshow" required>
                 <option value="">Select genre</option>
@@ -220,12 +227,24 @@
                 <option value="Reality Show">Reality Show</option>
                 <option value="Action">Action</option>
                 <option value="Romance">Romance</option>
+                <option value="Travel">Travel</option>
+                <option value="News">News / Politics</option>
             </select>
         </div>
-        <div class="form-group"><label class="main-label">6. Strengths</label><button type="button" class="custom-select-btn" id="strengthsBtn">Select options...</button><input type="hidden" id="strengths" value=""></div>
-        <div class="form-group"><label class="main-label">7. Weaknesses</label><button type="button" class="custom-select-btn" id="weaknessesBtn">Select options...</button><input type="hidden" id="weaknesses" value=""></div>
-        <div class="form-group"><label class="main-label">8. Mental Condition</label><button type="button" class="custom-select-btn" id="mentalBtn">Select options...</button><input type="hidden" id="mental" value=""></div>
-        <div class="form-group"><label class="main-label">9. Physical Health</label><button type="button" class="custom-select-btn" id="physicalBtn">Select options...</button><input type="hidden" id="physical" value=""></div>
+        
+        <!-- Strengths -->
+        <div class="form-group"><label class="main-label">6. Strengths (Select all that apply)</label><button type="button" class="custom-select-btn" id="strengthsBtn">Select options...</button><input type="hidden" id="strengths" value=""></div>
+        
+        <!-- Weaknesses -->
+        <div class="form-group"><label class="main-label">7. Weaknesses (Select all that apply)</label><button type="button" class="custom-select-btn" id="weaknessesBtn">Select options...</button><input type="hidden" id="weaknesses" value=""></div>
+        
+        <!-- Mental Condition -->
+        <div class="form-group"><label class="main-label">8. Mental Condition (Select all that apply)</label><button type="button" class="custom-select-btn" id="mentalBtn">Select options...</button><input type="hidden" id="mental" value=""></div>
+        
+        <!-- Physical Health -->
+        <div class="form-group"><label class="main-label">9. Physical Health (Select all that apply)</label><button type="button" class="custom-select-btn" id="physicalBtn">Select options...</button><input type="hidden" id="physical" value=""></div>
+        
+        <!-- Budget (expanded) -->
         <div class="form-group"><label class="main-label">10. Annual Budget (₹ per year) - Includes tuition, coaching, living, etc.</label>
             <select id="budget" required>
                 <option value="">Select</option>
@@ -240,8 +259,13 @@
                 <option value="15000000">Above ₹1 crore</option>
             </select>
         </div>
+        
         <div class="form-group"><label class="main-label">11. City / State</label><input type="text" id="city" required placeholder="e.g., Delhi"></div>
-        <div class="form-group"><label class="main-label">12. Long Term Goal</label><button type="button" class="custom-select-btn" id="goalBtn">Select options...</button><input type="hidden" id="goal" value=""></div>
+        
+        <!-- Long Term Goal -->
+        <div class="form-group"><label class="main-label">12. Long Term Goal (Select all that apply)</label><button type="button" class="custom-select-btn" id="goalBtn">Select options...</button><input type="hidden" id="goal" value=""></div>
+        
+        <!-- Parents' Desired Field -->
         <div class="form-group"><label class="main-label">13. Parents' Desired Field for Child</label>
             <select id="parentDesiredField" required>
                 <option value="">Select</option>
@@ -254,10 +278,26 @@
                 <option value="Not Sure">Not sure / Open to any</option>
             </select>
         </div>
+        
+        <!-- Agreement Level -->
         <div class="form-group"><label class="main-label">14. Parent-Child Agreement Level (1-10)</label>
-            <select id="alignment" required><option value="">Select</option><option value="1">1 – Complete disagreement</option><option value="2">2 – Mostly disagree</option><option value="3">3 – Slight disagreement</option><option value="4">4 – Slightly agree but confused</option><option value="5">5 – Neutral</option><option value="6">6 – Somewhat agree</option><option value="7">7 – Mostly agree</option><option value="8">8 – Strongly agree</option><option value="9">9 – Almost perfect match</option><option value="10">10 – Perfect agreement</option></select>
+            <select id="alignment" required>
+                <option value="">Select</option>
+                <option value="1">1 – Complete disagreement</option>
+                <option value="2">2 – Mostly disagree</option>
+                <option value="3">3 – Slight disagreement</option>
+                <option value="4">4 – Slightly agree but confused</option>
+                <option value="5">5 – Neutral</option>
+                <option value="6">6 – Somewhat agree</option>
+                <option value="7">7 – Mostly agree</option>
+                <option value="8">8 – Strongly agree</option>
+                <option value="9">9 – Almost perfect match</option>
+                <option value="10">10 – Perfect agreement</option>
+            </select>
             <div class="alignment-scale">💡 1 = different goals | 10 = same vision</div>
         </div>
+        
+        <!-- Study Hours -->
         <div class="form-group"><label class="main-label">15. After school, how many hours does the child study daily?</label>
             <select id="studyHours" required>
                 <option value="">Select</option>
@@ -269,12 +309,16 @@
                 <option value="More than 5 hours">More than 5 hours</option>
             </select>
         </div>
+        
+        <!-- Current Class & Percentage -->
         <div class="form-group"><label class="main-label">16. Current class and percentage / CGPA</label>
             <div style="display: flex; gap: 10px;">
                 <input type="text" id="currentClass" placeholder="Class (e.g., 10th, 12th)" style="width:50%" required>
                 <input type="text" id="percentage" placeholder="Percentage / CGPA (e.g., 85%, 8.5 CGPA)" style="width:50%" required>
             </div>
         </div>
+        
+        <!-- Rating -->
         <div class="form-group"><label class="main-label">⭐ Rate this app</label>
             <div class="stars" id="starRating"><span class="star" data-value="1">☆</span><span class="star" data-value="2">☆</span><span class="star" data-value="3">☆</span><span class="star" data-value="4">☆</span><span class="star" data-value="5">☆</span></div>
             <input type="hidden" id="ratingValue" value="0">
@@ -286,38 +330,76 @@
     <div id="result" class="result"></div>
 </div>
 
+<!-- Modal -->
 <div id="modal" class="modal"><div class="modal-content"><div id="modalQuestion" class="modal-question"></div><div id="modalCheckboxes" class="checkbox-group"></div><div class="modal-buttons"><button id="modalCancel">Cancel</button><button id="modalSave">Save</button></div></div></div>
 
 <script>
-    // All multiple-select fields
+    // ---------- ALL OPTIONS (No option left) ----------
     const fieldsConfig = {
         interests: {
             label: "3. Favorite Activities / Subjects",
-            options: ["Gaming & Computers", "Coding & Programming", "Drawing & Design", "Sports & Physical", "Reading & Writing", "Maths & Logic", "Science & Experiments", "Music & Arts", "Business & Money"]
+            options: [
+                "Gaming & Computers", "Coding & Programming", "Drawing & Design", 
+                "Sports & Physical", "Reading & Writing", "Maths & Logic", 
+                "Science & Experiments", "Music & Arts", "Business & Money",
+                "Cooking & Food", "Travel & Exploration", "Nature & Animals",
+                "History & Civics", "Languages & Literature", "Photography & Filmmaking",
+                "Psychology & Human Behaviour", "Politics & Current Affairs", "Robotics & AI"
+            ]
         },
         extracurricular: {
             label: "4. Extra Curricular Activities",
-            options: ["Sports (Cricket/Football)", "Chess / Board Games", "Music / Dance", "Coding Club / Robotics", "Debate / Drama", "Art & Craft", "Volunteering / Social Work"]
+            options: [
+                "Sports (Cricket/Football)", "Chess / Board Games", "Music / Dance", 
+                "Coding Club / Robotics", "Debate / Drama", "Art & Craft", 
+                "Volunteering / Social Work", "Science Club", "Nature / Trekking Club",
+                "Student Council / Leadership", "Quiz Club", "Photography Club",
+                "Yoga / Meditation", "Martial Arts", "Public Speaking / Toastmasters"
+            ]
         },
         strengths: {
             label: "6. Strengths",
-            options: ["Problem Solving", "Creative Thinking", "Leadership", "Hard Working", "Quick Learner", "Good Memory", "Team Player"]
+            options: [
+                "Problem Solving", "Creative Thinking", "Leadership", 
+                "Hard Working", "Quick Learner", "Good Memory", 
+                "Team Player", "Empathy & Listening", "Time Management",
+                "Public Speaking", "Writing Skills", "Analytical Thinking",
+                "Adaptability", "Persistence", "Networking Skills"
+            ]
         },
         weaknesses: {
             label: "7. Weaknesses",
-            options: ["Public Speaking Fear", "Lack of Discipline", "Weak in Maths", "Poor Writing Skills", "Low Confidence", "Delays Tasks / Postpones"]
+            options: [
+                "Public Speaking Fear", "Lack of Discipline", "Weak in Maths", 
+                "Poor Writing Skills", "Low Confidence", "Delays Tasks / Postpones",
+                "Poor Time Management", "Easily Distracted", "Shy / Introverted",
+                "Difficulty with Criticism", "Poor Memory", "Low Stamina"
+            ]
         },
         mental: {
             label: "8. Mental Condition",
-            options: ["Anxious / Worried", "Low Confidence", "Stressed Often", "Happy & Calm", "Short Temper"]
+            options: [
+                "Anxious / Worried", "Low Confidence", "Stressed Often", 
+                "Happy & Calm", "Short Temper", "Very Competitive",
+                "Emotionally Sensitive", "Resilient & Tough"
+            ]
         },
         physical: {
             label: "9. Physical Health",
-            options: ["Eye Sight Issue", "Obesity / Weight", "Low Stamina", "Fit & Active", "Frequent Sickness"]
+            options: [
+                "Eye Sight Issue", "Obesity / Weight", "Low Stamina", 
+                "Fit & Active", "Frequent Sickness", "Healthy & Strong",
+                "Physically Challenged (any)", "Excellent Endurance"
+            ]
         },
         goal: {
             label: "12. Long Term Goal",
-            options: ["Settle Abroad", "Start My Own Business", "Stable Government Job", "High Paying Private Job", "Become a Researcher/Scientist"]
+            options: [
+                "Settle Abroad", "Start My Own Business", "Stable Government Job", 
+                "High Paying Private Job", "Become a Researcher/Scientist",
+                "Work in Social Service", "Become a Creative Artist",
+                "Join Defence Services", "Work in Sports Professionally"
+            ]
         }
     };
 
@@ -376,47 +458,55 @@
     function getZodiacSign(dob) { let date = new Date(dob); let month = date.getMonth() + 1, day = date.getDate(); if ((month == 1 && day >= 20) || (month == 2 && day <= 18)) return "Aquarius"; if ((month == 2 && day >= 19) || (month == 3 && day <= 20)) return "Pisces"; if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) return "Aries"; if ((month == 4 && day >= 20) || (month == 5 && day <= 20)) return "Taurus"; if ((month == 5 && day >= 21) || (month == 6 && day <= 20)) return "Gemini"; if ((month == 6 && day >= 21) || (month == 7 && day <= 22)) return "Cancer"; if ((month == 7 && day >= 23) || (month == 8 && day <= 22)) return "Leo"; if ((month == 8 && day >= 23) || (month == 9 && day <= 22)) return "Virgo"; if ((month == 9 && day >= 23) || (month == 10 && day <= 22)) return "Libra"; if ((month == 10 && day >= 23) || (month == 11 && day <= 21)) return "Scorpio"; if ((month == 11 && day >= 22) || (month == 12 && day <= 21)) return "Sagittarius"; return "Capricorn"; }
     function getAstrologySuggestion(zodiac) { let s = { "Aries":"Entrepreneurship, sports, army", "Taurus":"Finance, banking, music", "Gemini":"Media, coding, teaching", "Cancer":"Psychology, healthcare", "Leo":"Acting, politics, management", "Virgo":"Data science, research", "Libra":"Law, design, diplomacy", "Scorpio":"Psychology, finance, surgery", "Sagittarius":"Travel, sports coaching", "Capricorn":"Engineering, corporate", "Aquarius":"AI, social work", "Pisces":"Arts, nursing" }; return s[zodiac] || "Hard work brings success."; }
 
-    // College Recommendations
+    // ---------- EXPANDED COLLEGE RECOMMENDATIONS (Career-specific) ----------
     function getCollegeRecommendations(careerPath, budget, city) {
         let path = careerPath.toLowerCase();
         let tableRows = "";
-        if (path.includes("software") || path.includes("ai") || path.includes("data")) {
-            tableRows = `<tr><td style="padding: 8px;">IITs (Bombay, Delhi, Madras, Kanpur)</td><td style="padding: 8px;">April, May</td><td>JEE Advanced rank, 75% in class 12</td><td>~88-90 percentile</td></tr>
-                        <tr><td>NITs (Trichy, Surathkal, Warangal, Delhi)</td><td>Jan, Feb, April</td><td>JEE Main score, 75% in class 12</td><td>CSE closing rank ~8,971</td></tr>
-                        <tr><td>IIIT Hyderabad</td><td>May</td><td>UGEE exam</td><td>UGEE rank 62-255</td></tr>
-                        <tr><td>BITS Pilani</td><td>May, June</td><td>BITSAT score</td><td>~304 marks</td></tr>`;
-        } else if (path.includes("medical") || path.includes("doctor")) {
-            tableRows = `<tr><td>AIIMS Delhi</td><td>June</td><td>NEET rank, 50% in PCB</td><td>1-50 rank for MBBS</td></tr>
-                        <tr><td>CMC Vellore</td><td>May</td><td>NEET score</td><td>Around 100 rank</td></tr>
-                        <tr><td>JIPMER Puducherry</td><td>June</td><td>NEET score</td><td>Top 200 rank</td></tr>
-                        <tr><td>State Medical Colleges</td><td>July-Aug</td><td>NEET + state quota</td><td>Varies by state</td></tr>`;
-        } else if (path.includes("engineer") && !path.includes("software")) {
-            tableRows = `<tr><td>IITs (Mech/Civil/Electrical)</td><td>April, May</td><td>JEE Advanced rank</td><td>~5k-20k rank</td></tr>
-                        <tr><td>NITs (Core branches)</td><td>Jan, April</td><td>JEE Main rank</td><td>~15k-50k rank</td></tr>
-                        <tr><td>DTU/NSUT (Delhi)</td><td>June, July</td><td>JEE Main (Delhi quota)</td><td>~20k-40k rank</td></tr>`;
+        if (path.includes("medical") || path.includes("doctor")) {
+            tableRows = `<tr><td>AIIMS Delhi</td><td>June</td><td>NEET rank (top 50)</td><td>~1-50 rank</td></tr>
+                         <tr><td>CMC Vellore</td><td>May</td><td>NEET score</td><td>~100 rank</td></tr>
+                         <tr><td>JIPMER Puducherry</td><td>June</td><td>NEET score</td><td>Top 200 rank</td></tr>
+                         <tr><td>State Medical Colleges</td><td>July-Aug</td><td>NEET + state quota</td><td>Varies by state</td></tr>`;
+        } else if (path.includes("software") || path.includes("ai") || path.includes("data")) {
+            tableRows = `<tr><td>IITs (Bombay, Delhi, Madras, Kanpur)</td><td>April, May</td><td>JEE Advanced rank, 75% in class 12</td><td>~88-90 percentile</td></tr>
+                         <tr><td>NITs (Trichy, Surathkal, Warangal, Delhi)</td><td>Jan, Feb, April</td><td>JEE Main score, 75% in class 12</td><td>CSE closing rank ~8,971</td></tr>
+                         <tr><td>IIIT Hyderabad</td><td>May</td><td>UGEE exam</td><td>UGEE rank 62-255</td></tr>
+                         <tr><td>BITS Pilani</td><td>May, June</td><td>BITSAT score</td><td>~304 marks</td></tr>`;
         } else if (path.includes("lawyer") || path.includes("legal")) {
             tableRows = `<tr><td>NLU Delhi (NLSIU)</td><td>Dec (CLAT)</td><td>CLAT rank</td><td>Top 100 rank</td></tr>
-                        <tr><td>Faculty of Law, DU</td><td>June (CUET)</td><td>CUET score</td><td>~750+ out of 800</td></tr>`;
-        } else if (path.includes("design")) {
-            tableRows = `<tr><td>NID Ahmedabad</td><td>Jan, April</td><td>DAT Prelims + Mains</td><td>Merit list</td></tr>
-                        <tr><td>NIFT Delhi</td><td>Nov, Feb</td><td>GAT + CAT</td><td>Closing rank ~62-74</td></tr>`;
+                         <tr><td>Faculty of Law, DU</td><td>June (CUET)</td><td>CUET score</td><td>~750+ out of 800</td></tr>
+                         <tr><td>Symbiosis Law School</td><td>May</td><td>SLAT exam</td><td>Top 500 rank</td></tr>`;
+        } else if (path.includes("engineering") && !path.includes("software")) {
+            tableRows = `<tr><td>IITs (Mech/Civil/Electrical)</td><td>April, May</td><td>JEE Advanced rank</td><td>~5k-20k rank</td></tr>
+                         <tr><td>NITs (Core branches)</td><td>Jan, April</td><td>JEE Main rank</td><td>~15k-50k rank</td></tr>
+                         <tr><td>DTU/NSUT (Delhi)</td><td>June, July</td><td>JEE Main (Delhi quota)</td><td>~20k-40k rank</td></tr>`;
         } else if (path.includes("defence") || path.includes("army")) {
             tableRows = `<tr><td>NDA (National Defence Academy)</td><td>April, Sept</td><td>NDA exam + SSB</td><td>Written cutoffs vary</td></tr>
-                        <tr><td>CDS (IMA, AFA, NA)</td><td>Feb, Sept</td><td>CDS exam + SSB</td><td>~40-60% marks</td></tr>`;
+                         <tr><td>CDS (IMA, AFA, NA)</td><td>Feb, Sept</td><td>CDS exam + SSB</td><td>~40-60% marks</td></tr>
+                         <tr><td>Officers Training Academy (OTA)</td><td>Feb, Sept</td><td>CDS exam (OTA)</td><td>~50-60% marks</td></tr>`;
+        } else if (path.includes("design")) {
+            tableRows = `<tr><td>NID Ahmedabad</td><td>Jan, April</td><td>DAT Prelims + Mains</td><td>Merit list</td></tr>
+                         <tr><td>NIFT Delhi</td><td>Nov, Feb</td><td>GAT + CAT</td><td>Closing rank ~62-74</td></tr>
+                         <tr><td>IIT Bombay IDC (UCEED)</td><td>March, May</td><td>UCEED + portfolio</td><td>Valid UCEED score</td></tr>`;
+        } else if (path.includes("business") || path.includes("entrepreneur") || path.includes("finance")) {
+            tableRows = `<tr><td>IIMs (IPM Indore, Rohtak)</td><td>April, May</td><td>IPMAT + WAT + PI</td><td>~90-95 percentile</td></tr>
+                         <tr><td>NMIMS Mumbai</td><td>Dec, May</td><td>NPAT + PI</td><td>~95-99 percentile</td></tr>
+                         <tr><td>SRCC (DU)</td><td>May, June</td><td>CUET score</td><td>99+ percentile</td></tr>`;
         } else {
             tableRows = `<tr><td>University of Delhi</td><td>May, June</td><td>CUET score</td><td>90-99%</td></tr>
-                        <tr><td>Mumbai University</td><td>May, June</td><td>HSC + CET</td><td>Varies</td></tr>`;
+                         <tr><td>Mumbai University</td><td>May, June</td><td>HSC + CET</td><td>Varies</td></tr>
+                         <tr><td>Christ University</td><td>Feb, April</td><td>CUET + PI</td><td>CUET 600+</td></tr>`;
         }
-        let cityUpper = city.toUpperCase();
         let local = "";
+        let cityUpper = city.toUpperCase();
         if (cityUpper.includes("DELHI")) local = "<br><strong>📍 Local (Delhi-NCR):</strong> DTU, NSUT, IIIT Delhi, JMI, Amity, IP University, Jamia.";
         else if (cityUpper.includes("MUMBAI")) local = "<br><strong>📍 Local (Mumbai):</strong> VJTI, SPCE, NMIMS, KJ Somaiya.";
         else if (cityUpper.includes("BANGALORE")) local = "<br><strong>📍 Local (Bangalore):</strong> RVCE, PESIT, Christ, Jain.";
         else if (cityUpper.includes("PUNE")) local = "<br><strong>📍 Local (Pune):</strong> COEP, VIT Pune, Symbiosis, MIT.";
-        return `<div class="college-table"><table style="width:100%; border-collapse: collapse;">${tableRows}</table></div><br><small>*Cutoffs approximate. Months tentative.</small>${local}`;
+        return `<div class="college-table"><table style="width:100%; border-collapse: collapse;">${tableRows}</tr></div><br><small>*Cutoffs approximate. Months tentative.</small>${local}`;
     }
 
-    // ---------- ENHANCED getFieldRecommendation ----------
+    // ---------- ENHANCED getFieldRecommendation (Stream Recommendation) ----------
     function getFieldRecommendation(interests, strengths, weaknesses, tvshow, extracurricular) {
         let i = interests.toLowerCase();
         let s = strengths.toLowerCase();
@@ -424,34 +514,20 @@
         let tv = tvshow.toLowerCase();
         let ex = extracurricular.toLowerCase();
         
-        if (i.includes("coding") || i.includes("programming") || i.includes("computers") || s.includes("problem solving")) {
-            return "Science (PCM) → Engineering / IT / AI-ML";
-        }
-        if ((i.includes("science") && i.includes("experiments")) || i.includes("biology")) {
-            return "Science (PCB) → Medical / Research / Biotech";
-        }
-        if (i.includes("maths") && i.includes("logic") && !i.includes("coding")) {
-            return "Science (PCM) → Core Engineering (Mech/Civil/Electrical)";
-        }
-        if (i.includes("reading") || i.includes("writing") || ex.includes("debate")) {
-            return "Arts / Humanities → Law, Journalism, Literature, Psychology";
-        }
-        if (i.includes("drawing") || i.includes("design") || i.includes("music") || i.includes("arts")) {
-            return "Arts / Design / Fine Arts / Animation";
-        }
-        if (i.includes("sports") || ex.includes("sports")) {
-            return "Physical Education / Sports Management / NDA";
-        }
-        if (i.includes("business") || i.includes("money") || tv.includes("shark tank")) {
-            return "Commerce / Business / Entrepreneurship / Finance";
-        }
-        if (i.includes("travel") || tv.includes("travel")) {
-            return "Hospitality / Aviation / Tourism Management";
-        }
+        if (i.includes("coding") || i.includes("programming") || i.includes("computers") || s.includes("problem solving")) return "Science (PCM) → Engineering / IT / AI-ML";
+        if ((i.includes("science") && i.includes("experiments")) || i.includes("biology")) return "Science (PCB) → Medical / Research / Biotech";
+        if (i.includes("maths") && i.includes("logic") && !i.includes("coding")) return "Science (PCM) → Core Engineering (Mech/Civil/Electrical)";
+        if (i.includes("reading") || i.includes("writing") || ex.includes("debate")) return "Arts / Humanities → Law, Journalism, Literature, Psychology";
+        if (i.includes("drawing") || i.includes("design") || i.includes("music") || i.includes("arts")) return "Arts / Design / Fine Arts / Animation";
+        if (i.includes("sports") || ex.includes("sports")) return "Physical Education / Sports Management / NDA";
+        if (i.includes("business") || i.includes("money") || tv.includes("shark tank")) return "Commerce / Business / Entrepreneurship / Finance";
+        if (i.includes("travel") || tv.includes("travel")) return "Hospitality / Aviation / Tourism Management";
+        if (i.includes("nature") || i.includes("animals")) return "Agriculture / Environmental Science / Forestry";
+        if (i.includes("history") || i.includes("civics") || tv.includes("news")) return "Arts / Humanities → Civil Services (UPSC), Law, Journalism";
         return "Multi-disciplinary – Explore Science / Commerce / Arts based on further aptitude tests.";
     }
 
-    // ---------- ENHANCED generateAnalysis (25+ careers) ----------
+    // ---------- ENHANCED generateAnalysis (35+ careers) ----------
     function generateAnalysis(age, height, weight, interests, extracurricular, tvshow, strengths, weaknesses, mental, physical, budget, goal, alignment) {
         let careerPath = "";
         let i = interests.toLowerCase();
@@ -466,99 +542,90 @@
         
         // ---------- MEDICAL / HEALTHCARE ----------
         if ((i.includes("science") && i.includes("experiments")) || i.includes("biology") || ex.includes("science")) {
-            if (s.includes("problem solving") || s.includes("quick learner")) {
-                careerPath = "🩺 Medical Doctor (MBBS) / Surgeon";
-            } else if (i.includes("animals")) {
-                careerPath = "🐾 Veterinary Doctor";
-            } else {
-                careerPath = "🔬 Medical Researcher / Biotechnologist";
-            }
+            if (s.includes("problem solving") || s.includes("quick learner")) careerPath = "🩺 Medical Doctor (MBBS) / Surgeon";
+            else if (i.includes("animals")) careerPath = "🐾 Veterinary Doctor";
+            else if (i.includes("dentist") || i.includes("teeth")) careerPath = "🦷 Dentist";
+            else if (i.includes("pharmacy") || i.includes("medicine")) careerPath = "💊 Pharmacist / Pharmaceutical Researcher";
+            else careerPath = "🔬 Medical Researcher / Biotechnologist";
         }
         // ---------- ENGINEERING (Non-IT) ----------
         else if ((i.includes("maths") && i.includes("logic")) || i.includes("physics") || i.includes("mechanics")) {
             if (!i.includes("coding") && !i.includes("programming")) {
-                if (heightNum > 160 && s.includes("problem solving")) {
-                    careerPath = "🔧 Mechanical Engineer";
-                } else if (i.includes("build") || ex.includes("robotics")) {
-                    careerPath = "🏗️ Civil Engineer";
-                } else if (i.includes("circuit") || ex.includes("robotics")) {
-                    careerPath = "⚡ Electrical / Electronics Engineer";
-                } else {
-                    careerPath = "📐 Core Engineering (Mechanical/Civil/Electrical)";
-                }
-            } else {
-                careerPath = "💻 AI/ML Software Engineer / Data Scientist";
-            }
+                if (heightNum > 160 && s.includes("problem solving")) careerPath = "🔧 Mechanical Engineer";
+                else if (i.includes("build") || ex.includes("robotics")) careerPath = "🏗️ Civil Engineer / Architect";
+                else if (i.includes("circuit") || ex.includes("robotics")) careerPath = "⚡ Electrical / Electronics Engineer";
+                else if (i.includes("chemical") || i.includes("chemistry")) careerPath = "🧪 Chemical Engineer";
+                else careerPath = "📐 Core Engineering (Mechanical/Civil/Electrical)";
+            } else careerPath = "💻 AI/ML Software Engineer / Data Scientist";
         }
         // ---------- COMPUTER / IT ----------
         else if (i.includes("coding") || i.includes("programming") || i.includes("gaming") || ex.includes("coding") || tv.includes("sci-fi")) {
-            careerPath = "💻 AI/ML Software Engineer / Data Scientist";
+            if (i.includes("gaming")) careerPath = "🎮 Game Developer / Game Designer";
+            else careerPath = "💻 AI/ML Software Engineer / Data Scientist / Cybersecurity Expert";
         }
         // ---------- LAW / LEGAL ----------
         else if ((i.includes("reading") || i.includes("writing")) && (ex.includes("debate") || ex.includes("drama"))) {
-            if (!w.includes("public speaking")) {
-                careerPath = "⚖️ Lawyer / Legal Advisor / Judge";
-            } else {
-                careerPath = "📝 Journalist / Legal Content Writer";
-            }
+            if (!w.includes("public speaking")) careerPath = "⚖️ Lawyer / Legal Advisor / Judge";
+            else careerPath = "📝 Journalist / Legal Content Writer / Author";
         }
         // ---------- DEFENCE / ARMY ----------
         else if (i.includes("sports") || i.includes("physical") || ex.includes("sports")) {
-            if (heightNum > 170 && weightNum < 80 && !w.includes("low stamina")) {
-                careerPath = "🎖️ Defence Services (Army / Navy / Air Force) - NDA / CDS";
-            } else {
-                careerPath = "🏅 Sports Management / Physical Education Teacher / Coach";
-            }
+            if (heightNum > 170 && weightNum < 80 && !w.includes("low stamina")) careerPath = "🎖️ Defence Services (Army / Navy / Air Force) - NDA / CDS";
+            else careerPath = "🏅 Sports Management / Physical Education Teacher / Coach";
         }
         // ---------- DESIGN / CREATIVE ARTS ----------
         else if (i.includes("drawing") || i.includes("design") || i.includes("music") || i.includes("arts") || ex.includes("art")) {
-            careerPath = "🎨 UI/UX Designer / Graphic Designer / Animator / Fine Artist";
+            if (i.includes("music")) careerPath = "🎵 Musician / Music Producer / Singer";
+            else if (i.includes("film") || i.includes("photography")) careerPath = "🎬 Filmmaker / Photographer / Video Editor";
+            else careerPath = "🎨 UI/UX Designer / Graphic Designer / Animator / Fine Artist";
         }
         // ---------- AVIATION / PILOT ----------
         else if (i.includes("travel") || tv.includes("travel") || (heightNum > 160 && !physical.includes("eye sight"))) {
-            careerPath = "✈️ Commercial Pilot / Cabin Crew / Airport Management";
+            careerPath = "✈️ Commercial Pilot / Cabin Crew / Airport Manager / Air Traffic Controller";
         }
         // ---------- HOSPITALITY / HOTEL MANAGEMENT ----------
         else if (i.includes("cooking") || i.includes("food") || ex.includes("volunteering")) {
-            careerPath = "🍽️ Hotel Management / Chef / Event Manager";
+            careerPath = "🍽️ Hotel Management / Chef / Event Manager / Restaurant Owner";
         }
         // ---------- BUSINESS / ENTREPRENEUR ----------
         else if (i.includes("business") || i.includes("money") || tv.includes("shark tank") || goal.includes("business")) {
-            careerPath = "💼 Entrepreneur / Business Analyst / Startup Founder";
+            careerPath = "💼 Entrepreneur / Business Analyst / Startup Founder / Business Consultant";
         }
-        // ---------- FINANCE / BANKING ----------
+        // ---------- FINANCE / BANKING / CA ----------
         else if (i.includes("maths") && i.includes("money") && !i.includes("coding")) {
-            careerPath = "💰 Investment Banker / CA / Financial Analyst";
+            careerPath = "💰 Investment Banker / Chartered Accountant (CA) / Financial Analyst / Stock Trader";
         }
         // ---------- TEACHING / ACADEMICS ----------
         else if (s.includes("good memory") && !w.includes("public speaking")) {
-            careerPath = "🍎 Teacher / Professor / Education Counselor";
+            careerPath = "🍎 Teacher / Professor / Education Counselor / Principal";
         }
         // ---------- RESEARCH / SCIENTIST ----------
         else if (i.includes("science") && s.includes("problem solving")) {
-            careerPath = "🧪 Research Scientist (ISRO, DRDO, CSIR)";
+            careerPath = "🧪 Research Scientist (ISRO, DRDO, CSIR) / Space Scientist";
         }
         // ---------- DIGITAL MARKETING / MEDIA ----------
         else if (tv.includes("reality show") || i.includes("social media")) {
-            careerPath = "📱 Digital Marketing / Social Media Manager / Content Creator";
+            careerPath = "📱 Digital Marketer / Social Media Manager / Content Creator / YouTuber / Influencer";
         }
         // ---------- PSYCHOLOGY / COUNSELING ----------
-        else if (i.includes("human behaviour") || mental.includes("happy") || s.includes("team player")) {
-            careerPath = "🧠 Psychologist / Career Counselor / Therapist";
+        else if (i.includes("human behaviour") || mental.includes("happy") || s.includes("team player") || i.includes("psychology")) {
+            careerPath = "🧠 Psychologist / Career Counselor / Therapist / Clinical Psychologist";
         }
-        // ---------- AGRICULTURE / FORESTRY ----------
-        else if (i.includes("nature") || i.includes("animals")) {
-            careerPath = "🌾 Agriculture Scientist / Forest Officer / Environmentalist";
+        // ---------- AGRICULTURE / FORESTRY / ENVIRONMENT ----------
+        else if (i.includes("nature") || i.includes("animals") || i.includes("environment")) {
+            careerPath = "🌾 Agriculture Scientist / Forest Officer / Environmentalist / Zoologist";
+        }
+        // ---------- CIVIL SERVICES (IAS/IPS) ----------
+        else if (i.includes("history") || i.includes("civics") || tv.includes("news") || goal.includes("government")) {
+            careerPath = "🇮🇳 Civil Services (IAS / IPS / IFS) / Government Officer";
         }
         // ---------- DEFAULT ----------
         else {
-            careerPath = "📊 Digital Marketing / General Management / BBA / MBA";
+            careerPath = "📊 Digital Marketing / General Management / BBA / MBA / Retail Management";
         }
         
         // Override for very high budget / study abroad goal
-        if (goal.includes("abroad") && isHighBudget) {
-            careerPath += " (with Study Abroad option)";
-        }
+        if (goal.includes("abroad") && isHighBudget) careerPath += " (with Study Abroad option)";
         
         // SWOT
         let S = strengths ? "✅ " + strengths : "✅ Basic strengths";
@@ -568,7 +635,7 @@
         return { careerPath, S, W, O, T };
     }
 
-    // Other helper functions (unchanged)
+    // ---------- Other helper functions (unchanged) ----------
     function getScholarshipSuggestions(careerPath, budget, city) {
         let budgetNum = parseInt(budget);
         let suggestions = `<ul>`;
@@ -579,7 +646,6 @@
         suggestions += `</ul>`;
         return suggestions;
     }
-
     function getFinancialAdvice(budget, careerPath) {
         let budgetNum = parseInt(budget);
         if (budgetNum < 300000) return "Budget limited: Focus on government colleges, free resources (NPTEL), NSP scholarships.";
@@ -587,7 +653,6 @@
         if (budgetNum < 10000000) return "High budget: Top private engineering (BITS, IIITs) or study abroad with loan. Apply for merit waivers.";
         return "Premium budget: Can afford top medical or international universities. Use scholarships to save.";
     }
-
     function getEstimatedYears(currentClass, careerPath) {
         let classNum = parseInt(currentClass);
         if (isNaN(classNum)) { let match = currentClass.match(/\d+/); classNum = match ? parseInt(match[0]) : null; }
@@ -597,25 +662,24 @@
         else yearsToClass12 = 2;
         let yearsAfter12 = 0;
         let path = careerPath.toLowerCase();
-        if (path.includes("software") || path.includes("engineer") || path.includes("ai") || path.includes("data")) yearsAfter12 = 4;
-        else if (path.includes("medical") || path.includes("doctor")) yearsAfter12 = 5.5;
+        if (path.includes("medical") || path.includes("doctor")) yearsAfter12 = 5.5;
         else if (path.includes("lawyer") || path.includes("legal")) yearsAfter12 = 5;
+        else if (path.includes("software") || path.includes("engineering")) yearsAfter12 = 4;
         else if (path.includes("design") || path.includes("arts")) yearsAfter12 = 4;
-        else if (path.includes("sports") || path.includes("defence")) yearsAfter12 = 3;
-        else if (path.includes("entrepreneur") || path.includes("business")) yearsAfter12 = 3;
+        else if (path.includes("defence") || path.includes("army")) yearsAfter12 = 3;
+        else if (path.includes("business") || path.includes("entrepreneur")) yearsAfter12 = 3;
         else yearsAfter12 = 3;
         let totalYears = yearsToClass12 + yearsAfter12;
         let yearsToClass12Text = yearsToClass12 > 0 ? `${yearsToClass12} years to complete 12th, then ` : "";
         return `${yearsToClass12Text}approximately ${totalYears} years from now (including graduation).`;
     }
-
     function getGrowthRoadmap(careerPath, age, childName) {
-        let roadmap = `<ul>`;
         let path = careerPath.toLowerCase();
-        if (path.includes("software") || path.includes("ai") || path.includes("data")) {
+        let roadmap = `<ul>`;
+        if (path.includes("software") || path.includes("ai")) {
             roadmap += `<li>Age ${age}-${Math.min(age+2,18)}: Learn coding basics, small projects.</li>
                         <li>Age ${Math.min(age+2,18)}-${Math.min(age+4,20)}: JEE prep, DSA, competitive programming.</li>
-                        <li>Age ${Math.min(age+4,20)}-${Math.min(age+6,22)}: B.Tech CSE/AI, internships, GitHub.</li>
+                        <li>Age ${Math.min(age+4,20)}-${Math.min(age+6,22)}: B.Tech CSE/AI, internships, GitHub portfolio.</li>
                         <li>After ${Math.min(age+6,22)}: Jobs at top tech companies or MS abroad.</li>`;
         } else if (path.includes("medical") || path.includes("doctor")) {
             roadmap += `<li>Age ${age}-${Math.min(age+2,18)}: Focus on PCB, NEET prep.</li>
@@ -630,6 +694,10 @@
             roadmap += `<li>Age ${age}-${Math.min(age+2,18)}: Physical fitness, NDA exam prep.</li>
                         <li>Age ${Math.min(age+2,18)}-${Math.min(age+4,20)}: NDA entrance, SSB interview.</li>
                         <li>After ${Math.min(age+4,20)}: Training at NDA, service in armed forces.</li>`;
+        } else if (path.includes("design") || path.includes("arts")) {
+            roadmap += `<li>Age ${age}-${Math.min(age+2,18)}: Learn design software (Figma, Adobe), build portfolio.</li>
+                        <li>Age ${Math.min(age+2,18)}-${Math.min(age+4,20)}: UCEED/NID DAT prep, create projects.</li>
+                        <li>After ${Math.min(age+4,20)}: Design college, internships, UX roles.</li>`;
         } else {
             roadmap += `<li>Age ${age}-${Math.min(age+2,18)}: Focus on academics and soft skills.</li>
                         <li>Age ${Math.min(age+2,18)}-${Math.min(age+4,20)}: Entrance exams (CUET/CLAT/IPMAT).</li>
@@ -638,7 +706,6 @@
         roadmap += `</ul><p><em>Sample roadmap – adjust based on progress.</em></p>`;
         return roadmap;
     }
-
     function getSkillGapAnalysis(strengths, weaknesses, careerPath) {
         let gap = `<div><strong>Strengths:</strong> ${strengths || "Not specified"}<br><strong>Weaknesses:</strong> ${weaknesses || "Not specified"}<br><br><strong>Action plan:</strong><ul>`;
         if (weaknesses.includes("Public Speaking")) gap += `<li>Join Toastmasters or record daily 1-min selfie video.</li>`;
@@ -650,17 +717,16 @@
         gap += `</ul></div>`;
         return gap;
     }
-
     function getEntranceExamPlanner(careerPath, age) {
-        let planner = `<ul>`;
         let path = careerPath.toLowerCase();
-        if (path.includes("software") || path.includes("ai") || path.includes("data")) {
+        let planner = `<ul>`;
+        if (path.includes("software") || path.includes("ai") || path.includes("engineering")) {
             planner += `<li>JEE Main: April/June. Register by Dec/Jan.</li><li>JEE Advanced: May/June.</li><li>BITSAT: May-June.</li><li>VITEEE: April.</li>`;
-        } else if (path.includes("medical") || path.includes("doctor")) {
+        } else if (path.includes("medical")) {
             planner += `<li>NEET: May. Register by March.</li><li>AIIMS MBBS: Integrated with NEET now.</li><li>State medical entrance exams: May-June.</li>`;
-        } else if (path.includes("lawyer") || path.includes("legal")) {
+        } else if (path.includes("law")) {
             planner += `<li>CLAT: December. Register by Oct.</li><li>AILET: May.</li><li>LSAT India: June.</li>`;
-        } else if (path.includes("defence") || path.includes("army")) {
+        } else if (path.includes("defence")) {
             planner += `<li>NDA: April, September. Register 2 months prior.</li><li>CDS: February, September.</li>`;
         } else {
             planner += `<li>CUET: May-June. Register by March.</li><li>State CETs: April-May.</li>`;
@@ -668,37 +734,37 @@
         planner += `</ul><p>Start preparing at least 18 months before target exam.</p>`;
         return planner;
     }
-
     function getTopCompanies(careerPath) {
-        let companies = `<ul>`;
         let path = careerPath.toLowerCase();
-        if (path.includes("software") || path.includes("ai")) companies += `<li>Google, Microsoft, Amazon, Adobe, Flipkart</li><li>Startups: Unacademy, Dream11, Postman</li>`;
-        else if (path.includes("medical")) companies += `<li>AIIMS, Apollo, Fortis, Max Healthcare, Private clinics</li>`;
-        else if (path.includes("lawyer")) companies += `<li>Law firms (Shardul Amarchand, Khaitan & Co), LPOs, Judiciary</li>`;
-        else if (path.includes("design")) companies += `<li>Figma, Adobe, Microsoft (UX), Tata Elxsi</li>`;
-        else if (path.includes("sports")) companies += `<li>BCCI, IPL franchises, Decathlon, Nike, Adidas</li>`;
-        else if (path.includes("defence")) companies += `<li>Indian Army, Navy, Air Force, DRDO, BSF, CRPF</li>`;
-        else companies += `<li>Infosys, TCS, Wipro, Deloitte, KPMG, HDFC Bank</li>`;
+        let companies = `<ul>`;
+        if (path.includes("software") || path.includes("ai")) companies += `<li>Google, Microsoft, Amazon, Adobe, Flipkart</li><li>Startups: Unacademy, Dream11, Postman, Razorpay</li>`;
+        else if (path.includes("medical")) companies += `<li>AIIMS, Apollo, Fortis, Max Healthcare, Private clinics, WHO, ICMR</li>`;
+        else if (path.includes("law")) companies += `<li>Law firms (Shardul Amarchand, Khaitan & Co), LPOs, Judiciary, Corporate legal depts</li>`;
+        else if (path.includes("design")) companies += `<li>Figma, Adobe, Microsoft (UX), Tata Elxsi, IDEO, Elephant Design</li>`;
+        else if (path.includes("sports")) companies += `<li>BCCI, IPL franchises, Decathlon, Nike, Adidas, Puma, Sportskeeda</li>`;
+        else if (path.includes("defence")) companies += `<li>Indian Army, Navy, Air Force, DRDO, BSF, CRPF, ISRO</li>`;
+        else if (path.includes("finance") || path.includes("business")) companies += `<li>Goldman Sachs, Morgan Stanley, Deloitte, KPMG, EY, PwC, HDFC Bank, ICICI</li>`;
+        else companies += `<li>Infosys, TCS, Wipro, HCL, Tech Mahindra, Accenture, Capgemini</li>`;
         companies += `</ul>`;
         return companies;
     }
-
     function getIndustryTrendAnalysis(careerPath) {
         let path = careerPath.toLowerCase();
-        if (path.includes("software") || path.includes("ai")) return `<p>AI/ML jobs expected to grow 30-40% in India by 2035. Demand for prompt engineers, AI ethicists rising.</p>`;
-        if (path.includes("medical")) return `<p>Healthcare sector growing rapidly; telemedicine, AI diagnostics creating new roles. Demand for doctors will remain high.</p>`;
-        if (path.includes("law")) return `<p>Legal tech, arbitration, data privacy law are emerging fields. Corporate law demand stable.</p>`;
-        if (path.includes("defence")) return `<p>Defence sector modernizing with technology. Opportunities in cyber warfare, drone operations.</p>`;
-        if (path.includes("design")) return `<p>UX/UI design demand increasing. Generative AI tools require designers to co-create with AI.</p>`;
-        return `<p>Traditional jobs evolving with digital skills. Upskilling essential.</p>`;
+        if (path.includes("software") || path.includes("ai")) return `<p>AI/ML jobs expected to grow 30-40% in India by 2035. Demand for prompt engineers, AI ethicists, data scientists rising. Remote work opportunities expanding.</p>`;
+        if (path.includes("medical")) return `<p>Healthcare sector growing rapidly; telemedicine, AI diagnostics, preventive healthcare creating new roles. Demand for doctors will remain high.</p>`;
+        if (path.includes("law")) return `<p>Legal tech, arbitration, data privacy law are emerging fields. Corporate law demand stable. AI will assist but not replace legal professionals.</p>`;
+        if (path.includes("defence")) return `<p>Defence sector modernizing with technology (cyber warfare, drones, space defence). Opportunities in technical roles within defence.</p>`;
+        if (path.includes("design")) return `<p>UX/UI design demand increasing due to digital transformation. Generative AI tools require designers to co-create with AI.</p>`;
+        if (path.includes("finance")) return `<p>Fintech, digital banking, blockchain creating new opportunities. Traditional banking roles evolving with AI and automation.</p>`;
+        return `<p>Traditional jobs evolving with digital skills. Upskilling in data analysis, digital marketing, and AI tools will be essential for career growth.</p>`;
     }
-
     function getWellnessPlan(weaknesses, mental, physical) {
         let plan = `<ul>`;
         if (weaknesses.includes("Public Speaking")) plan += `<li>🎤 Toastmasters or daily 1-min selfie video.</li>`;
         if (mental.includes("Anxious") || mental.includes("Stressed")) plan += `<li>🧘 10-min mindfulness meditation (Calm, Headspace).</li>`;
         if (physical.includes("Low Stamina")) plan += `<li>🏃 20-min daily walk, increase to 30 min cardio 4 times/week.</li>`;
-        if (physical.includes("Eye Sight")) plan += `<li>👓 Follow 20-20-20 rule: every 20 min look 20 feet away.</li>`;
+        if (physical.includes("Eye Sight")) plan += `<li>👓 Follow 20-20-20 rule: every 20 min look 20 feet away for 20 seconds.</li>`;
+        if (weaknesses.includes("Delays Tasks")) plan += `<li>⏰ Use Pomodoro timer and break tasks into 15-minute chunks.</li>`;
         if (!plan.includes("<li>")) plan += `<li>✅ Balanced routine – 8 hrs sleep, regular exercise, hobbies.</li>`;
         plan += `</ul>`;
         return plan;
@@ -776,7 +842,7 @@
         let today = new Date();
         let formattedDate = today.toLocaleDateString('en-GB');
 
-        // Payload for Google Sheet (no email)
+        // Payload for Google Sheet
         let payload = {
             timestamp: new Date().toISOString(),
             parentName, relationship, childName, childGender, dob, age, height, weight, interests, extracurricular, tvshow,
@@ -799,7 +865,7 @@
                     mode: 'no-cors',
                     body: JSON.stringify(payload)
                 });
-                console.log("Request sent");
+                console.log("Data sent successfully");
             } catch(e) { console.error("Fetch error:", e); }
         } else {
             console.warn("Google Sheet URL not configured.");
