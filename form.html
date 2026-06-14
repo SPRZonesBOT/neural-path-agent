@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Neural Path 2.0 - PDF Report</title>
+    <title>Neural Path 2.0 - Final</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -275,9 +275,6 @@
                 <input type="text" id="percentage" placeholder="Percentage / CGPA (e.g., 85%, 8.5 CGPA)" style="width:50%" required>
             </div>
         </div>
-
-        <!-- Email field removed -->
-
         <div class="form-group"><label class="main-label">⭐ Rate this app</label>
             <div class="stars" id="starRating"><span class="star" data-value="1">☆</span><span class="star" data-value="2">☆</span><span class="star" data-value="3">☆</span><span class="star" data-value="4">☆</span><span class="star" data-value="5">☆</span></div>
             <input type="hidden" id="ratingValue" value="0">
@@ -292,11 +289,11 @@
 <div id="modal" class="modal"><div class="modal-content"><div id="modalQuestion" class="modal-question"></div><div id="modalCheckboxes" class="checkbox-group"></div><div class="modal-buttons"><button id="modalCancel">Cancel</button><button id="modalSave">Save</button></div></div></div>
 
 <script>
-    // All multiple-select fields (same as before)
+    // All multiple-select fields
     const fieldsConfig = {
         interests: {
             label: "3. Favorite Activities / Subjects",
-            options: ["Gaming & Computers", "Coding & Programming", "Drawing & Design", "Sports & Physical", "Reading & Writing", "Maths & Logic", "Science & Experiments", "Music & Arts", "Business & Management"]
+            options: ["Gaming & Computers", "Coding & Programming", "Drawing & Design", "Sports & Physical", "Reading & Writing", "Maths & Logic", "Science & Experiments", "Music & Arts", "Business & Money"]
         },
         extracurricular: {
             label: "4. Extra Curricular Activities",
@@ -381,38 +378,197 @@
 
     // College Recommendations
     function getCollegeRecommendations(careerPath, budget, city) {
-        let path = careerPath.toUpperCase();
+        let path = careerPath.toLowerCase();
         let tableRows = "";
-        if (path.includes("AI") || path.includes("SOFTWARE") || path.includes("COMPUTER")) {
-            tableRows = `<tr><td style="padding: 8px;">IITs (Bombay, Delhi, Madras, Kanpur)</td><td style="padding: 8px;">April, May</td><td style="padding: 8px;">JEE Advanced rank, 75% in class 12</td><td>~88-90 percentile in JEE Main</td></tr>
-                          <tr><td>NITs (Trichy, Surathkal, Warangal, Delhi)</td><td>Jan, Feb, April</td><td>JEE Main score, 75% in class 12</td><td>CSE closing rank ~8,971 (NIT Delhi)</td></tr>
-                          <tr><td>IIIT Hyderabad</td><td>May</td><td>UGEE exam, class 12 PCM</td><td>UGEE rank 62-255 (Gen)</td></tr>
-                          <tr><td>BITS Pilani</td><td>May, June</td><td>BITSAT score, class 12 PCM</td><td>Pilani CSE ~304 marks</td></tr>`;
-        } else if (path.includes("DESIGN")) {
-            tableRows = `<tr><td>NID Ahmedabad</td><td>Jan, April</td><td>DAT Prelims + Mains</td><td>Merit based</td></tr>
-                         <tr><td>NIFT Delhi</td><td>Nov, Feb</td><td>GAT + CAT, class 12</td><td>Closing rank ~62-74 (Gen)</td></tr>`;
+        if (path.includes("software") || path.includes("ai") || path.includes("data")) {
+            tableRows = `<tr><td style="padding: 8px;">IITs (Bombay, Delhi, Madras, Kanpur)</td><td style="padding: 8px;">April, May</td><td>JEE Advanced rank, 75% in class 12</td><td>~88-90 percentile</td></tr>
+                        <tr><td>NITs (Trichy, Surathkal, Warangal, Delhi)</td><td>Jan, Feb, April</td><td>JEE Main score, 75% in class 12</td><td>CSE closing rank ~8,971</td></tr>
+                        <tr><td>IIIT Hyderabad</td><td>May</td><td>UGEE exam</td><td>UGEE rank 62-255</td></tr>
+                        <tr><td>BITS Pilani</td><td>May, June</td><td>BITSAT score</td><td>~304 marks</td></tr>`;
+        } else if (path.includes("medical") || path.includes("doctor")) {
+            tableRows = `<tr><td>AIIMS Delhi</td><td>June</td><td>NEET rank, 50% in PCB</td><td>1-50 rank for MBBS</td></tr>
+                        <tr><td>CMC Vellore</td><td>May</td><td>NEET score</td><td>Around 100 rank</td></tr>
+                        <tr><td>JIPMER Puducherry</td><td>June</td><td>NEET score</td><td>Top 200 rank</td></tr>
+                        <tr><td>State Medical Colleges</td><td>July-Aug</td><td>NEET + state quota</td><td>Varies by state</td></tr>`;
+        } else if (path.includes("engineer") && !path.includes("software")) {
+            tableRows = `<tr><td>IITs (Mech/Civil/Electrical)</td><td>April, May</td><td>JEE Advanced rank</td><td>~5k-20k rank</td></tr>
+                        <tr><td>NITs (Core branches)</td><td>Jan, April</td><td>JEE Main rank</td><td>~15k-50k rank</td></tr>
+                        <tr><td>DTU/NSUT (Delhi)</td><td>June, July</td><td>JEE Main (Delhi quota)</td><td>~20k-40k rank</td></tr>`;
+        } else if (path.includes("lawyer") || path.includes("legal")) {
+            tableRows = `<tr><td>NLU Delhi (NLSIU)</td><td>Dec (CLAT)</td><td>CLAT rank</td><td>Top 100 rank</td></tr>
+                        <tr><td>Faculty of Law, DU</td><td>June (CUET)</td><td>CUET score</td><td>~750+ out of 800</td></tr>`;
+        } else if (path.includes("design")) {
+            tableRows = `<tr><td>NID Ahmedabad</td><td>Jan, April</td><td>DAT Prelims + Mains</td><td>Merit list</td></tr>
+                        <tr><td>NIFT Delhi</td><td>Nov, Feb</td><td>GAT + CAT</td><td>Closing rank ~62-74</td></tr>`;
+        } else if (path.includes("defence") || path.includes("army")) {
+            tableRows = `<tr><td>NDA (National Defence Academy)</td><td>April, Sept</td><td>NDA exam + SSB</td><td>Written cutoffs vary</td></tr>
+                        <tr><td>CDS (IMA, AFA, NA)</td><td>Feb, Sept</td><td>CDS exam + SSB</td><td>~40-60% marks</td></tr>`;
         } else {
-            tableRows = `<tr><td>University of Delhi</td><td>May, June</td><td>CUET score, class 12</td><td>Cutoffs 90-99%</td></tr>`;
+            tableRows = `<tr><td>University of Delhi</td><td>May, June</td><td>CUET score</td><td>90-99%</td></tr>
+                        <tr><td>Mumbai University</td><td>May, June</td><td>HSC + CET</td><td>Varies</td></tr>`;
         }
-        return `<div class="college-table"><table style="width:100%; border-collapse: collapse;">${tableRows}</table></div><br><small>*Cutoffs approximate. Months tentative.</small>`;
+        let cityUpper = city.toUpperCase();
+        let local = "";
+        if (cityUpper.includes("DELHI")) local = "<br><strong>📍 Local (Delhi-NCR):</strong> DTU, NSUT, IIIT Delhi, JMI, Amity, IP University, Jamia.";
+        else if (cityUpper.includes("MUMBAI")) local = "<br><strong>📍 Local (Mumbai):</strong> VJTI, SPCE, NMIMS, KJ Somaiya.";
+        else if (cityUpper.includes("BANGALORE")) local = "<br><strong>📍 Local (Bangalore):</strong> RVCE, PESIT, Christ, Jain.";
+        else if (cityUpper.includes("PUNE")) local = "<br><strong>📍 Local (Pune):</strong> COEP, VIT Pune, Symbiosis, MIT.";
+        return `<div class="college-table"><table style="width:100%; border-collapse: collapse;">${tableRows}</table></div><br><small>*Cutoffs approximate. Months tentative.</small>${local}`;
     }
 
-    // Other helper functions (same as before)
-    function getFieldRecommendation(interests, strengths, weaknesses, tvshow) {
+    // ---------- ENHANCED getFieldRecommendation ----------
+    function getFieldRecommendation(interests, strengths, weaknesses, tvshow, extracurricular) {
         let i = interests.toLowerCase();
         let s = strengths.toLowerCase();
         let w = weaknesses.toLowerCase();
         let tv = tvshow.toLowerCase();
-        if (i.includes("coding") || i.includes("programming") || i.includes("computers") || i.includes("maths") || s.includes("problem solving")) return "Science (Engineering / Computer Science)";
-        if (i.includes("drawing") || i.includes("design") || i.includes("music") || i.includes("arts")) return "Arts / Design / Fine Arts";
-        if (i.includes("sports") || i.includes("physical")) return "Sports / Physical Education / Army (NDA)";
-        if (i.includes("business") || i.includes("money") || tv.includes("shark tank")) return "Commerce / Business / Entrepreneurship";
-        if (i.includes("science") || i.includes("experiments")) return "Science (Research / Medical)";
-        if (s.includes("leadership") || s.includes("hard working")) return "Army / Defence Services (NDA, CDS)";
-        if (w.includes("public speaking") || w.includes("low confidence")) return "Arts / Humanities / Psychology / Teaching";
-        return "Multi-disciplinary – Explore both Science and Commerce based on further aptitude tests.";
+        let ex = extracurricular.toLowerCase();
+        
+        if (i.includes("coding") || i.includes("programming") || i.includes("computers") || s.includes("problem solving")) {
+            return "Science (PCM) → Engineering / IT / AI-ML";
+        }
+        if ((i.includes("science") && i.includes("experiments")) || i.includes("biology")) {
+            return "Science (PCB) → Medical / Research / Biotech";
+        }
+        if (i.includes("maths") && i.includes("logic") && !i.includes("coding")) {
+            return "Science (PCM) → Core Engineering (Mech/Civil/Electrical)";
+        }
+        if (i.includes("reading") || i.includes("writing") || ex.includes("debate")) {
+            return "Arts / Humanities → Law, Journalism, Literature, Psychology";
+        }
+        if (i.includes("drawing") || i.includes("design") || i.includes("music") || i.includes("arts")) {
+            return "Arts / Design / Fine Arts / Animation";
+        }
+        if (i.includes("sports") || ex.includes("sports")) {
+            return "Physical Education / Sports Management / NDA";
+        }
+        if (i.includes("business") || i.includes("money") || tv.includes("shark tank")) {
+            return "Commerce / Business / Entrepreneurship / Finance";
+        }
+        if (i.includes("travel") || tv.includes("travel")) {
+            return "Hospitality / Aviation / Tourism Management";
+        }
+        return "Multi-disciplinary – Explore Science / Commerce / Arts based on further aptitude tests.";
     }
 
+    // ---------- ENHANCED generateAnalysis (25+ careers) ----------
+    function generateAnalysis(age, height, weight, interests, extracurricular, tvshow, strengths, weaknesses, mental, physical, budget, goal, alignment) {
+        let careerPath = "";
+        let i = interests.toLowerCase();
+        let ex = extracurricular.toLowerCase();
+        let tv = tvshow.toLowerCase();
+        let s = strengths.toLowerCase();
+        let w = weaknesses.toLowerCase();
+        let bud = parseInt(budget);
+        let isHighBudget = bud >= 2000000;
+        let heightNum = parseFloat(height);
+        let weightNum = parseFloat(weight);
+        
+        // ---------- MEDICAL / HEALTHCARE ----------
+        if ((i.includes("science") && i.includes("experiments")) || i.includes("biology") || ex.includes("science")) {
+            if (s.includes("problem solving") || s.includes("quick learner")) {
+                careerPath = "🩺 Medical Doctor (MBBS) / Surgeon";
+            } else if (i.includes("animals")) {
+                careerPath = "🐾 Veterinary Doctor";
+            } else {
+                careerPath = "🔬 Medical Researcher / Biotechnologist";
+            }
+        }
+        // ---------- ENGINEERING (Non-IT) ----------
+        else if ((i.includes("maths") && i.includes("logic")) || i.includes("physics") || i.includes("mechanics")) {
+            if (!i.includes("coding") && !i.includes("programming")) {
+                if (heightNum > 160 && s.includes("problem solving")) {
+                    careerPath = "🔧 Mechanical Engineer";
+                } else if (i.includes("build") || ex.includes("robotics")) {
+                    careerPath = "🏗️ Civil Engineer";
+                } else if (i.includes("circuit") || ex.includes("robotics")) {
+                    careerPath = "⚡ Electrical / Electronics Engineer";
+                } else {
+                    careerPath = "📐 Core Engineering (Mechanical/Civil/Electrical)";
+                }
+            } else {
+                careerPath = "💻 AI/ML Software Engineer / Data Scientist";
+            }
+        }
+        // ---------- COMPUTER / IT ----------
+        else if (i.includes("coding") || i.includes("programming") || i.includes("gaming") || ex.includes("coding") || tv.includes("sci-fi")) {
+            careerPath = "💻 AI/ML Software Engineer / Data Scientist";
+        }
+        // ---------- LAW / LEGAL ----------
+        else if ((i.includes("reading") || i.includes("writing")) && (ex.includes("debate") || ex.includes("drama"))) {
+            if (!w.includes("public speaking")) {
+                careerPath = "⚖️ Lawyer / Legal Advisor / Judge";
+            } else {
+                careerPath = "📝 Journalist / Legal Content Writer";
+            }
+        }
+        // ---------- DEFENCE / ARMY ----------
+        else if (i.includes("sports") || i.includes("physical") || ex.includes("sports")) {
+            if (heightNum > 170 && weightNum < 80 && !w.includes("low stamina")) {
+                careerPath = "🎖️ Defence Services (Army / Navy / Air Force) - NDA / CDS";
+            } else {
+                careerPath = "🏅 Sports Management / Physical Education Teacher / Coach";
+            }
+        }
+        // ---------- DESIGN / CREATIVE ARTS ----------
+        else if (i.includes("drawing") || i.includes("design") || i.includes("music") || i.includes("arts") || ex.includes("art")) {
+            careerPath = "🎨 UI/UX Designer / Graphic Designer / Animator / Fine Artist";
+        }
+        // ---------- AVIATION / PILOT ----------
+        else if (i.includes("travel") || tv.includes("travel") || (heightNum > 160 && !physical.includes("eye sight"))) {
+            careerPath = "✈️ Commercial Pilot / Cabin Crew / Airport Management";
+        }
+        // ---------- HOSPITALITY / HOTEL MANAGEMENT ----------
+        else if (i.includes("cooking") || i.includes("food") || ex.includes("volunteering")) {
+            careerPath = "🍽️ Hotel Management / Chef / Event Manager";
+        }
+        // ---------- BUSINESS / ENTREPRENEUR ----------
+        else if (i.includes("business") || i.includes("money") || tv.includes("shark tank") || goal.includes("business")) {
+            careerPath = "💼 Entrepreneur / Business Analyst / Startup Founder";
+        }
+        // ---------- FINANCE / BANKING ----------
+        else if (i.includes("maths") && i.includes("money") && !i.includes("coding")) {
+            careerPath = "💰 Investment Banker / CA / Financial Analyst";
+        }
+        // ---------- TEACHING / ACADEMICS ----------
+        else if (s.includes("good memory") && !w.includes("public speaking")) {
+            careerPath = "🍎 Teacher / Professor / Education Counselor";
+        }
+        // ---------- RESEARCH / SCIENTIST ----------
+        else if (i.includes("science") && s.includes("problem solving")) {
+            careerPath = "🧪 Research Scientist (ISRO, DRDO, CSIR)";
+        }
+        // ---------- DIGITAL MARKETING / MEDIA ----------
+        else if (tv.includes("reality show") || i.includes("social media")) {
+            careerPath = "📱 Digital Marketing / Social Media Manager / Content Creator";
+        }
+        // ---------- PSYCHOLOGY / COUNSELING ----------
+        else if (i.includes("human behaviour") || mental.includes("happy") || s.includes("team player")) {
+            careerPath = "🧠 Psychologist / Career Counselor / Therapist";
+        }
+        // ---------- AGRICULTURE / FORESTRY ----------
+        else if (i.includes("nature") || i.includes("animals")) {
+            careerPath = "🌾 Agriculture Scientist / Forest Officer / Environmentalist";
+        }
+        // ---------- DEFAULT ----------
+        else {
+            careerPath = "📊 Digital Marketing / General Management / BBA / MBA";
+        }
+        
+        // Override for very high budget / study abroad goal
+        if (goal.includes("abroad") && isHighBudget) {
+            careerPath += " (with Study Abroad option)";
+        }
+        
+        // SWOT
+        let S = strengths ? "✅ " + strengths : "✅ Basic strengths";
+        let W = weaknesses ? "⚠️ " + weaknesses : "⚠️ No major weakness";
+        let O = (bud >= 500000) ? "💰 Good budget" : "💰 Limited budget, use free resources";
+        let T = mental.includes("anxious") ? "😟 Stress management needed" : "No major threats";
+        return { careerPath, S, W, O, T };
+    }
+
+    // Other helper functions (unchanged)
     function getScholarshipSuggestions(careerPath, budget, city) {
         let budgetNum = parseInt(budget);
         let suggestions = `<ul>`;
@@ -441,11 +597,12 @@
         else yearsToClass12 = 2;
         let yearsAfter12 = 0;
         let path = careerPath.toLowerCase();
-        if (path.includes("software") || path.includes("engineer") || path.includes("ai") || path.includes("ml")) yearsAfter12 = 4;
-        else if (path.includes("medical")) yearsAfter12 = 5.5;
-        else if (path.includes("design")) yearsAfter12 = 4;
-        else if (path.includes("sports")) yearsAfter12 = 3;
-        else if (path.includes("entrepreneur")) yearsAfter12 = 3;
+        if (path.includes("software") || path.includes("engineer") || path.includes("ai") || path.includes("data")) yearsAfter12 = 4;
+        else if (path.includes("medical") || path.includes("doctor")) yearsAfter12 = 5.5;
+        else if (path.includes("lawyer") || path.includes("legal")) yearsAfter12 = 5;
+        else if (path.includes("design") || path.includes("arts")) yearsAfter12 = 4;
+        else if (path.includes("sports") || path.includes("defence")) yearsAfter12 = 3;
+        else if (path.includes("entrepreneur") || path.includes("business")) yearsAfter12 = 3;
         else yearsAfter12 = 3;
         let totalYears = yearsToClass12 + yearsAfter12;
         let yearsToClass12Text = yearsToClass12 > 0 ? `${yearsToClass12} years to complete 12th, then ` : "";
@@ -454,15 +611,25 @@
 
     function getGrowthRoadmap(careerPath, age, childName) {
         let roadmap = `<ul>`;
-        if (careerPath.includes("Software") || careerPath.includes("AI")) {
+        let path = careerPath.toLowerCase();
+        if (path.includes("software") || path.includes("ai") || path.includes("data")) {
             roadmap += `<li>Age ${age}-${Math.min(age+2,18)}: Learn coding basics, small projects.</li>
                         <li>Age ${Math.min(age+2,18)}-${Math.min(age+4,20)}: JEE prep, DSA, competitive programming.</li>
-                        <li>Age ${Math.min(age+4,20)}-${Math.min(age+6,22)}: B.Tech CSE/AI, internships, GitHub portfolio.</li>
+                        <li>Age ${Math.min(age+4,20)}-${Math.min(age+6,22)}: B.Tech CSE/AI, internships, GitHub.</li>
                         <li>After ${Math.min(age+6,22)}: Jobs at top tech companies or MS abroad.</li>`;
-        } else if (careerPath.includes("Design")) {
-            roadmap += `<li>Age ${age}-${Math.min(age+2,18)}: Sketching, design software (Figma, Adobe).</li>
-                        <li>Age ${Math.min(age+2,18)}-${Math.min(age+4,20)}: UCEED/NID DAT prep, portfolio.</li>
-                        <li>After ${Math.min(age+4,20)}: Design college, live projects, UX roles.</li>`;
+        } else if (path.includes("medical") || path.includes("doctor")) {
+            roadmap += `<li>Age ${age}-${Math.min(age+2,18)}: Focus on PCB, NEET prep.</li>
+                        <li>Age ${Math.min(age+2,18)}-${Math.min(age+4,20)}: NEET coaching, class 12 boards.</li>
+                        <li>Age ${Math.min(age+4,20)}-${Math.min(age+6,22)}: MBBS, internships.</li>
+                        <li>After ${Math.min(age+6,22)}: PG, specialization, practice.</li>`;
+        } else if (path.includes("lawyer") || path.includes("legal")) {
+            roadmap += `<li>Age ${age}-${Math.min(age+2,18)}: Reading, debate, CLAT prep.</li>
+                        <li>Age ${Math.min(age+2,18)}-${Math.min(age+4,20)}: CLAT exam, law school.</li>
+                        <li>After ${Math.min(age+4,20)}: Law practice, litigation, corporate law.</li>`;
+        } else if (path.includes("defence") || path.includes("army")) {
+            roadmap += `<li>Age ${age}-${Math.min(age+2,18)}: Physical fitness, NDA exam prep.</li>
+                        <li>Age ${Math.min(age+2,18)}-${Math.min(age+4,20)}: NDA entrance, SSB interview.</li>
+                        <li>After ${Math.min(age+4,20)}: Training at NDA, service in armed forces.</li>`;
         } else {
             roadmap += `<li>Age ${age}-${Math.min(age+2,18)}: Focus on academics and soft skills.</li>
                         <li>Age ${Math.min(age+2,18)}-${Math.min(age+4,20)}: Entrance exams (CUET/CLAT/IPMAT).</li>
@@ -471,65 +638,74 @@
         roadmap += `</ul><p><em>Sample roadmap – adjust based on progress.</em></p>`;
         return roadmap;
     }
+
     function getSkillGapAnalysis(strengths, weaknesses, careerPath) {
         let gap = `<div><strong>Strengths:</strong> ${strengths || "Not specified"}<br><strong>Weaknesses:</strong> ${weaknesses || "Not specified"}<br><br><strong>Action plan:</strong><ul>`;
         if (weaknesses.includes("Public Speaking")) gap += `<li>Join Toastmasters or record daily 1-min selfie video.</li>`;
-        if (weaknesses.includes("Delays Tasks") || weaknesses.includes("Postpones")) gap += `<li>Use Pomodoro technique.</li>`;
+        if (weaknesses.includes("Delays Tasks") || weaknesses.includes("Postpones")) gap += `<li>Use Pomodoro technique (25 min work, 5 min break).</li>`;
+        if (weaknesses.includes("Lack of Discipline")) gap += `<li>Create a fixed daily schedule with Google Calendar.</li>`;
+        if (weaknesses.includes("Low Confidence")) gap += `<li>Celebrate small wins; maintain a success journal.</li>`;
+        if (weaknesses.includes("Weak in Maths") && (careerPath.includes("Engineering") || careerPath.includes("AI"))) gap += `<li>Take foundational math courses (Khan Academy, NCERT).</li>`;
         if (!weaknesses.includes("Public Speaking") && !weaknesses.includes("Delays Tasks")) gap += `<li>No major skill gaps – focus on advanced certifications.</li>`;
         gap += `</ul></div>`;
         return gap;
     }
+
     function getEntranceExamPlanner(careerPath, age) {
         let planner = `<ul>`;
-        if (careerPath.includes("Software") || careerPath.includes("AI")) {
-            planner += `<li>JEE Main: April/June. Register by Dec/Jan.</li><li>JEE Advanced: May/June.</li><li>BITSAT: May-June.</li>`;
-        } else if (careerPath.includes("Design")) {
-            planner += `<li>UCEED: January exam; register by Oct.</li><li>NID DAT: Prelims Jan, Mains Apr-May.</li>`;
+        let path = careerPath.toLowerCase();
+        if (path.includes("software") || path.includes("ai") || path.includes("data")) {
+            planner += `<li>JEE Main: April/June. Register by Dec/Jan.</li><li>JEE Advanced: May/June.</li><li>BITSAT: May-June.</li><li>VITEEE: April.</li>`;
+        } else if (path.includes("medical") || path.includes("doctor")) {
+            planner += `<li>NEET: May. Register by March.</li><li>AIIMS MBBS: Integrated with NEET now.</li><li>State medical entrance exams: May-June.</li>`;
+        } else if (path.includes("lawyer") || path.includes("legal")) {
+            planner += `<li>CLAT: December. Register by Oct.</li><li>AILET: May.</li><li>LSAT India: June.</li>`;
+        } else if (path.includes("defence") || path.includes("army")) {
+            planner += `<li>NDA: April, September. Register 2 months prior.</li><li>CDS: February, September.</li>`;
         } else {
-            planner += `<li>CUET: May-June. Register by March.</li><li>CLAT: December; register by Oct.</li>`;
+            planner += `<li>CUET: May-June. Register by March.</li><li>State CETs: April-May.</li>`;
         }
         planner += `</ul><p>Start preparing at least 18 months before target exam.</p>`;
         return planner;
     }
+
     function getTopCompanies(careerPath) {
         let companies = `<ul>`;
-        if (careerPath.includes("Software") || careerPath.includes("AI")) companies += `<li>Google, Microsoft, Amazon, Adobe, Flipkart</li><li>Startups: Unacademy, Dream11, Postman</li>`;
-        else if (careerPath.includes("Design")) companies += `<li>Figma, Adobe, Microsoft (UX), Tata Elxsi</li>`;
-        else if (careerPath.includes("Sports")) companies += `<li>BCCI, IPL franchises, Decathlon, Nike</li>`;
-        else companies += `<li>Infosys, TCS, Wipro, Deloitte, HDFC Bank</li>`;
+        let path = careerPath.toLowerCase();
+        if (path.includes("software") || path.includes("ai")) companies += `<li>Google, Microsoft, Amazon, Adobe, Flipkart</li><li>Startups: Unacademy, Dream11, Postman</li>`;
+        else if (path.includes("medical")) companies += `<li>AIIMS, Apollo, Fortis, Max Healthcare, Private clinics</li>`;
+        else if (path.includes("lawyer")) companies += `<li>Law firms (Shardul Amarchand, Khaitan & Co), LPOs, Judiciary</li>`;
+        else if (path.includes("design")) companies += `<li>Figma, Adobe, Microsoft (UX), Tata Elxsi</li>`;
+        else if (path.includes("sports")) companies += `<li>BCCI, IPL franchises, Decathlon, Nike, Adidas</li>`;
+        else if (path.includes("defence")) companies += `<li>Indian Army, Navy, Air Force, DRDO, BSF, CRPF</li>`;
+        else companies += `<li>Infosys, TCS, Wipro, Deloitte, KPMG, HDFC Bank</li>`;
         companies += `</ul>`;
         return companies;
     }
+
     function getIndustryTrendAnalysis(careerPath) {
-        if (careerPath.includes("Software") || careerPath.includes("AI")) return `<p>AI/ML jobs expected to grow 30-40% in India by 2035.</p>`;
-        if (careerPath.includes("Design")) return `<p>UX/UI design demand increasing. Generative AI tools require designers to co-create with AI.</p>`;
+        let path = careerPath.toLowerCase();
+        if (path.includes("software") || path.includes("ai")) return `<p>AI/ML jobs expected to grow 30-40% in India by 2035. Demand for prompt engineers, AI ethicists rising.</p>`;
+        if (path.includes("medical")) return `<p>Healthcare sector growing rapidly; telemedicine, AI diagnostics creating new roles. Demand for doctors will remain high.</p>`;
+        if (path.includes("law")) return `<p>Legal tech, arbitration, data privacy law are emerging fields. Corporate law demand stable.</p>`;
+        if (path.includes("defence")) return `<p>Defence sector modernizing with technology. Opportunities in cyber warfare, drone operations.</p>`;
+        if (path.includes("design")) return `<p>UX/UI design demand increasing. Generative AI tools require designers to co-create with AI.</p>`;
         return `<p>Traditional jobs evolving with digital skills. Upskilling essential.</p>`;
     }
+
     function getWellnessPlan(weaknesses, mental, physical) {
         let plan = `<ul>`;
         if (weaknesses.includes("Public Speaking")) plan += `<li>🎤 Toastmasters or daily 1-min selfie video.</li>`;
-        if (mental.includes("Anxious") || mental.includes("Stressed")) plan += `<li>🧘 10-min mindfulness meditation.</li>`;
-        if (physical.includes("Low Stamina")) plan += `<li>🏃 20-min daily walk.</li>`;
+        if (mental.includes("Anxious") || mental.includes("Stressed")) plan += `<li>🧘 10-min mindfulness meditation (Calm, Headspace).</li>`;
+        if (physical.includes("Low Stamina")) plan += `<li>🏃 20-min daily walk, increase to 30 min cardio 4 times/week.</li>`;
+        if (physical.includes("Eye Sight")) plan += `<li>👓 Follow 20-20-20 rule: every 20 min look 20 feet away.</li>`;
         if (!plan.includes("<li>")) plan += `<li>✅ Balanced routine – 8 hrs sleep, regular exercise, hobbies.</li>`;
         plan += `</ul>`;
         return plan;
     }
 
-    function generateAnalysis(age, height, weight, interests, extracurricular, tvshow, strengths, weaknesses, mental, physical, budget, goal, alignment) {
-        let careerPath = "";
-        if (interests.includes("Coding") || interests.includes("Programming") || interests.includes("Gaming") || extracurricular.includes("Coding")) careerPath = "AI/ML Software Engineer";
-        else if (interests.includes("Drawing") || interests.includes("Design")) careerPath = "UI/UX Designer";
-        else if (interests.includes("Sports") || extracurricular.includes("Sports")) { if (height && height > 170) careerPath = "Professional Athlete"; else careerPath = "Sports Management"; }
-        else if (interests.includes("Business") || tvshow.includes("Shark Tank")) careerPath = "Entrepreneur";
-        else careerPath = "Digital Marketing";
-        let S = strengths ? "✅ " + strengths : "✅ Basic strengths";
-        let W = weaknesses ? "⚠️ " + weaknesses : "⚠️ No major weakness";
-        let O = (parseInt(budget)>=500000) ? "💰 Good budget" : "💰 Limited budget, use free resources";
-        let T = mental.includes("Anxious") ? "😟 Stress management needed" : "No major threats";
-        return { careerPath, S, W, O, T };
-    }
-
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyIX-Tn8q_Rd4-E0JGdGJ4LS1j4oPegiutcgNkwZuMnw2IlQPIdjcTOTWdvcCGGo2az/exec";  // REPLACE WITH YOUR ACTUAL APPS SCRIPT URL
+    // ---------- Main submission ----------
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxHhdC-rWdAEmNcC0hSkumg6BbJ4UY9qnM6-XB-h5coCAXZlPRiaahGxIVPtmoBUnqx/exec"; // REPLACE WITH YOUR APPS SCRIPT URL
 
     async function submitAndGenerate() {
         // Get all form values
@@ -558,7 +734,7 @@
         let percentage = document.getElementById('percentage').value.trim();
         let rating = document.getElementById('ratingValue').value;
 
-        // Validation (email removed)
+        // Validation
         if(!parentName || !relationship || !childName || !childGender || !dob || !budget || !city || !alignment || !tvshow || !parentDesiredField || !studyHours || !currentClass || !percentage) {
             alert("Please fill all mandatory fields");
             return;
@@ -575,6 +751,7 @@
         let skillScore = 50;
         if(strengths.includes("Problem Solving")) skillScore += 15;
         if(weaknesses.includes("Public Speaking Fear")) skillScore -= 10;
+        if(weaknesses.includes("Delays Tasks")) skillScore -= 8;
         skillScore = Math.min(100, Math.max(20, skillScore));
 
         let skillExplanation = "";
@@ -584,7 +761,7 @@
         if (weaknesses.includes("Delays Tasks")) skillExplanation += "-8 for Delays Tasks/Postpones; ";
         if (!skillExplanation) skillExplanation = "Base score 50, adjusted based on selected strengths/weaknesses.";
         
-        let fieldRecommendation = getFieldRecommendation(interests, strengths, weaknesses, tvshow);
+        let fieldRecommendation = getFieldRecommendation(interests, strengths, weaknesses, tvshow, extracurricular);
         let collegeSuggestions = getCollegeRecommendations(analysis.careerPath, budget, city);
         let growthRoadmap = getGrowthRoadmap(analysis.careerPath, age, childName);
         let skillGap = getSkillGapAnalysis(strengths, weaknesses, analysis.careerPath);
@@ -599,6 +776,7 @@
         let today = new Date();
         let formattedDate = today.toLocaleDateString('en-GB');
 
+        // Payload for Google Sheet (no email)
         let payload = {
             timestamp: new Date().toISOString(),
             parentName, relationship, childName, childGender, dob, age, height, weight, interests, extracurricular, tvshow,
@@ -621,7 +799,7 @@
                     mode: 'no-cors',
                     body: JSON.stringify(payload)
                 });
-                console.log("Request sent (no-cors mode)");
+                console.log("Request sent");
             } catch(e) { console.error("Fetch error:", e); }
         } else {
             console.warn("Google Sheet URL not configured.");
