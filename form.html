@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Neural Path 2.0 - Final Working</title>
+    <title>Neural Path 2.0 - PDF Report</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -38,7 +38,7 @@
             font-size: 14px;
             cursor: pointer;
         }
-        input, input[type="text"], input[type="number"], input[type="email"], input[type="date"], select {
+        input, input[type="text"], input[type="number"], input[type="date"], select {
             width: 100%;
             padding: 12px;
             border-radius: 24px;
@@ -190,7 +190,7 @@
 <body>
 <div class="container">
     <h1>🧠 Neural Path 2.0</h1>
-    <div class="sub">Complete Career Roadmap + Financial Advice</div>
+    <div class="sub">Complete Career Roadmap + PDF Report</div>
 
     <form id="parentForm">
         <div class="form-group"><label class="main-label">👨‍👩 Parent/Guardian Name</label><input type="text" id="parentName" required placeholder="e.g., Rajesh Sharma"></div>
@@ -275,7 +275,9 @@
                 <input type="text" id="percentage" placeholder="Percentage / CGPA (e.g., 85%, 8.5 CGPA)" style="width:50%" required>
             </div>
         </div>
-        <div class="form-group"><label class="main-label">📧 Parent's Email (to receive report)</label><input type="email" id="parentEmail" placeholder="parent@example.com" required></div>
+
+        <!-- Email field removed -->
+
         <div class="form-group"><label class="main-label">⭐ Rate this app</label>
             <div class="stars" id="starRating"><span class="star" data-value="1">☆</span><span class="star" data-value="2">☆</span><span class="star" data-value="3">☆</span><span class="star" data-value="4">☆</span><span class="star" data-value="5">☆</span></div>
             <input type="hidden" id="ratingValue" value="0">
@@ -377,15 +379,15 @@
     function getZodiacSign(dob) { let date = new Date(dob); let month = date.getMonth() + 1, day = date.getDate(); if ((month == 1 && day >= 20) || (month == 2 && day <= 18)) return "Aquarius"; if ((month == 2 && day >= 19) || (month == 3 && day <= 20)) return "Pisces"; if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) return "Aries"; if ((month == 4 && day >= 20) || (month == 5 && day <= 20)) return "Taurus"; if ((month == 5 && day >= 21) || (month == 6 && day <= 20)) return "Gemini"; if ((month == 6 && day >= 21) || (month == 7 && day <= 22)) return "Cancer"; if ((month == 7 && day >= 23) || (month == 8 && day <= 22)) return "Leo"; if ((month == 8 && day >= 23) || (month == 9 && day <= 22)) return "Virgo"; if ((month == 9 && day >= 23) || (month == 10 && day <= 22)) return "Libra"; if ((month == 10 && day >= 23) || (month == 11 && day <= 21)) return "Scorpio"; if ((month == 11 && day >= 22) || (month == 12 && day <= 21)) return "Sagittarius"; return "Capricorn"; }
     function getAstrologySuggestion(zodiac) { let s = { "Aries":"Entrepreneurship, sports, army", "Taurus":"Finance, banking, music", "Gemini":"Media, coding, teaching", "Cancer":"Psychology, healthcare", "Leo":"Acting, politics, management", "Virgo":"Data science, research", "Libra":"Law, design, diplomacy", "Scorpio":"Psychology, finance, surgery", "Sagittarius":"Travel, sports coaching", "Capricorn":"Engineering, corporate", "Aquarius":"AI, social work", "Pisces":"Arts, nursing" }; return s[zodiac] || "Hard work brings success."; }
 
-    // College Recommendations (shortened for brevity)
+    // College Recommendations
     function getCollegeRecommendations(careerPath, budget, city) {
         let path = careerPath.toUpperCase();
         let tableRows = "";
         if (path.includes("AI") || path.includes("SOFTWARE") || path.includes("COMPUTER")) {
-            tableRows = `<tr><td>IITs (Bombay, Delhi, Madras, Kanpur)</td><td>April, May</td><td>JEE Advanced rank, 75% in class 12</td><td>~88-90 percentile in JEE Main</td></tr>
-                         <tr><td>NITs (Trichy, Surathkal, Warangal, Delhi)</td><td>Jan, Feb, April</td><td>JEE Main score, 75% in class 12</td><td>CSE closing rank ~8,971 (NIT Delhi)</td></tr>
-                         <tr><td>IIIT Hyderabad</td><td>May</td><td>UGEE exam, class 12 PCM</td><td>UGEE rank 62-255 (Gen)</td></tr>
-                         <tr><td>BITS Pilani</td><td>May, June</td><td>BITSAT score, class 12 PCM</td><td>Pilani CSE ~304 marks</td></tr>`;
+            tableRows = `<tr><td style="padding: 8px;">IITs (Bombay, Delhi, Madras, Kanpur)</td><td style="padding: 8px;">April, May</td><td style="padding: 8px;">JEE Advanced rank, 75% in class 12</td><td>~88-90 percentile in JEE Main</td></tr>
+                          <tr><td>NITs (Trichy, Surathkal, Warangal, Delhi)</td><td>Jan, Feb, April</td><td>JEE Main score, 75% in class 12</td><td>CSE closing rank ~8,971 (NIT Delhi)</td></tr>
+                          <tr><td>IIIT Hyderabad</td><td>May</td><td>UGEE exam, class 12 PCM</td><td>UGEE rank 62-255 (Gen)</td></tr>
+                          <tr><td>BITS Pilani</td><td>May, June</td><td>BITSAT score, class 12 PCM</td><td>Pilani CSE ~304 marks</td></tr>`;
         } else if (path.includes("DESIGN")) {
             tableRows = `<tr><td>NID Ahmedabad</td><td>Jan, April</td><td>DAT Prelims + Mains</td><td>Merit based</td></tr>
                          <tr><td>NIFT Delhi</td><td>Nov, Feb</td><td>GAT + CAT, class 12</td><td>Closing rank ~62-74 (Gen)</td></tr>`;
@@ -395,6 +397,7 @@
         return `<div class="college-table"><table style="width:100%; border-collapse: collapse;">${tableRows}</table></div><br><small>*Cutoffs approximate. Months tentative.</small>`;
     }
 
+    // Other helper functions (same as before)
     function getFieldRecommendation(interests, strengths, weaknesses, tvshow) {
         let i = interests.toLowerCase();
         let s = strengths.toLowerCase();
@@ -526,10 +529,10 @@
         return { careerPath, S, W, O, T };
     }
 
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw559VNRqr7W66qAGW2ioIWpTLfepl5cKPv6ld9bzzbrpVWUF9zFgUfsZLaHJRwwrZ4/exec";  // REPLACE WITH YOUR ACTUAL APPS SCRIPT URL
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyIX-Tn8q_Rd4-E0JGdGJ4LS1j4oPegiutcgNkwZuMnw2IlQPIdjcTOTWdvcCGGo2az/exec";  // REPLACE WITH YOUR ACTUAL APPS SCRIPT URL
 
     async function submitAndGenerate() {
-        // Get all form values (same as before)
+        // Get all form values
         let parentName = document.getElementById('parentName').value.trim();
         let relationship = document.getElementById('relationship').value;
         let childName = document.getElementById('childName').value.trim();
@@ -553,11 +556,10 @@
         let studyHours = document.getElementById('studyHours').value;
         let currentClass = document.getElementById('currentClass').value.trim();
         let percentage = document.getElementById('percentage').value.trim();
-        let parentEmail = document.getElementById('parentEmail').value.trim().toLowerCase();
         let rating = document.getElementById('ratingValue').value;
 
-        // Validation
-        if(!parentName || !relationship || !childName || !childGender || !dob || !budget || !city || !alignment || !parentEmail || !tvshow || !parentDesiredField || !studyHours || !currentClass || !percentage) {
+        // Validation (email removed)
+        if(!parentName || !relationship || !childName || !childGender || !dob || !budget || !city || !alignment || !tvshow || !parentDesiredField || !studyHours || !currentClass || !percentage) {
             alert("Please fill all mandatory fields");
             return;
         }
@@ -602,7 +604,7 @@
             parentName, relationship, childName, childGender, dob, age, height, weight, interests, extracurricular, tvshow,
             strengths, weaknesses, mental, physical, budget, city, goal, alignment, parentDesiredField,
             studyHours, currentClass, percentage,
-            parentEmail, rating, skillScore, careerPath: analysis.careerPath, fieldRecommendation,
+            rating, skillScore, careerPath: analysis.careerPath, fieldRecommendation,
             swot_s: analysis.S, swot_w: analysis.W, swot_o: analysis.O, swot_t: analysis.T,
             zodiac, astrologyMsg
         };
@@ -612,7 +614,6 @@
         loadingDiv.style.display = 'block';
         btn.disabled = true;
 
-        // IMPORTANT: Use no-cors mode, no headers
         if(SCRIPT_URL && SCRIPT_URL !== "YOUR_GOOGLE_SCRIPT_URL") {
             try {
                 await fetch(SCRIPT_URL, {
@@ -679,7 +680,7 @@
                 <h3>🧘 Mental & Physical Wellness Plan</h3>
                 ${wellnessPlan}
                 <hr>
-                <p>✅ Report sent to <strong>${parentEmail}</strong> (if Google Sheet configured).</p>
+                <p>✅ Report generated. You can save as PDF using the button below.</p>
             </div>
             <button class="pdf-btn" onclick="window.print();">📄 Download as PDF (Print)</button>
             <button class="reload-btn" onclick="location.reload();">🔄 Fill Another Form</button>
