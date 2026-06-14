@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Neural Path 2.0 - Normal Case, Fixed Modal</title>
+    <title>Neural Path 2.0 - Fixed Modal Wrapping</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -48,7 +48,6 @@
             font-size: 14px;
             outline: none;
         }
-        /* Removed text-transform: uppercase from text inputs */
         .stars { display: flex; gap: 10px; font-size: 32px; cursor: pointer; justify-content: center; margin: 10px 0; }
         .star { color: #475569; transition: 0.1s; }
         .star.selected { color: #fbbf24; text-shadow: 0 0 4px gold; }
@@ -76,6 +75,7 @@
         .threat-card { border-color: #f97316; }
         .loading { display: none; text-align: center; margin-top: 15px; }
         hr { border-color: #334155; margin: 15px 0; }
+        /* Modal fix - critical for text wrapping */
         .modal {
             display: none;
             position: fixed;
@@ -112,7 +112,7 @@
             gap: 12px;
             margin-bottom: 20px;
         }
-        /* Fixed wrapping: no text cutoff */
+        /* CRITICAL FIX: ensures text wraps and doesn't cut off */
         .checkbox-group label {
             display: flex;
             align-items: flex-start;
@@ -120,8 +120,10 @@
             font-size: 15px;
             line-height: 1.4;
             white-space: normal;
+            word-wrap: break-word;
             word-break: normal;
             overflow-wrap: break-word;
+            width: 100%;
         }
         .checkbox-group input {
             flex-shrink: 0;
@@ -288,12 +290,12 @@
             stars.forEach((s, idx) => { if(idx < value) { s.innerHTML = '★'; s.classList.add('selected'); } else { s.innerHTML = '☆'; s.classList.remove('selected'); } });
         });
     });
-    function getHiddenValue(id) { let val = document.getElementById(id).value; return val; }  // no uppercase
+    function getHiddenValue(id) { let val = document.getElementById(id).value; return val; }
     function calculateAge(dob) { let birthDate = new Date(dob); let today = new Date(); let age = today.getFullYear() - birthDate.getFullYear(); let m = today.getMonth() - birthDate.getMonth(); if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--; return age; }
     function getZodiacSign(dob) { let date = new Date(dob); let month = date.getMonth() + 1, day = date.getDate(); if ((month == 1 && day >= 20) || (month == 2 && day <= 18)) return "Aquarius"; if ((month == 2 && day >= 19) || (month == 3 && day <= 20)) return "Pisces"; if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) return "Aries"; if ((month == 4 && day >= 20) || (month == 5 && day <= 20)) return "Taurus"; if ((month == 5 && day >= 21) || (month == 6 && day <= 20)) return "Gemini"; if ((month == 6 && day >= 21) || (month == 7 && day <= 22)) return "Cancer"; if ((month == 7 && day >= 23) || (month == 8 && day <= 22)) return "Leo"; if ((month == 8 && day >= 23) || (month == 9 && day <= 22)) return "Virgo"; if ((month == 9 && day >= 23) || (month == 10 && day <= 22)) return "Libra"; if ((month == 10 && day >= 23) || (month == 11 && day <= 21)) return "Scorpio"; if ((month == 11 && day >= 22) || (month == 12 && day <= 21)) return "Sagittarius"; return "Capricorn"; }
     function getAstrologySuggestion(zodiac) { let s = { "Aries":"Entrepreneurship, sports, army", "Taurus":"Finance, banking, music", "Gemini":"Media, coding, teaching", "Cancer":"Psychology, healthcare", "Leo":"Acting, politics, management", "Virgo":"Data science, research", "Libra":"Law, design, diplomacy", "Scorpio":"Psychology, finance, surgery", "Sagittarius":"Travel, sports coaching", "Capricorn":"Engineering, corporate", "Aquarius":"AI, social work", "Pisces":"Arts, nursing" }; return s[zodiac] || "Hard work brings success."; }
 
-    // College recommendations (same as before, but with normal case text inside)
+    // College recommendations (unchanged)
     function getCollegeRecommendations(careerPath, budget, city) {
         let recommendationsHTML = "";
         let path = careerPath.toUpperCase();
@@ -305,7 +307,7 @@
                         <td style="padding: 10px;">${timeline}</td>
                         <td style="padding: 10px;">${eligibility}</td>
                         <td style="padding: 10px;">${cutoff}</td>
-                     </tr>`;
+                      </td>`;
         }
         recommendationsHTML = `<div class="college-table"><table style="width:100%"><thead><tr style="background:#0f172a; color:#c084fc;"><th>College / Institute</th><th>🗓️ Admission Timeline</th><th>📝 Eligibility & Selection</th><th>🎯 Expected/Previous Year Cutoff</th></tr></thead><tbody>`;
         if (path.includes("AI") || path.includes("SOFTWARE") || path.includes("COMPUTER")) {
@@ -340,19 +342,19 @@
         return recommendationsHTML;
     }
 
-    // Helper functions (keep same, but ensure text is normal case where needed)
+    // Helper functions (unchanged but referenced)
     function getGrowthRoadmap(careerPath, age, childName) {
         let roadmap = `<ul style="margin-left:20px;">`;
-        if (careerPath.includes("SOFTWARE") || careerPath.includes("AI")) {
+        if (careerPath.includes("Software") || careerPath.includes("AI")) {
             roadmap += `<li><strong>Age ${age} - ${Math.min(age+2,18)}:</strong> Learn basics of coding (Python/JavaScript), participate in coding competitions, build small projects.</li>
                         <li><strong>Age ${Math.min(age+2,18)} - ${Math.min(age+4,20)}:</strong> Prepare for JEE/boards; master DSA; start competitive programming.</li>
                         <li><strong>Age ${Math.min(age+4,20)} - ${Math.min(age+6,22)}:</strong> Join B.Tech CSE/AI; do internships; build GitHub portfolio.</li>
                         <li><strong>After ${Math.min(age+6,22)}:</strong> Apply for jobs at top tech companies or pursue MS abroad.</li>`;
-        } else if (careerPath.includes("DESIGN")) {
+        } else if (careerPath.includes("Design")) {
             roadmap += `<li><strong>Age ${age} - ${Math.min(age+2,18)}:</strong> Practice sketching, learn design software (Figma, Adobe).</li>
                         <li><strong>Age ${Math.min(age+2,18)} - ${Math.min(age+4,20)}:</strong> Prepare for UCEED/NID DAT; create portfolio.</li>
                         <li><strong>After ${Math.min(age+4,20)}:</strong> Join design college; work on live projects; apply for UX roles.</li>`;
-        } else if (careerPath.includes("SPORTS")) {
+        } else if (careerPath.includes("Sports")) {
             roadmap += `<li><strong>Age ${age} - ${Math.min(age+2,18)}:</strong> Join professional coaching; participate in district/state tournaments.</li>
                         <li><strong>Age ${Math.min(age+2,18)} - ${Math.min(age+4,20)}:</strong> Prepare for sports quota in colleges; maintain fitness.</li>
                         <li><strong>After ${Math.min(age+4,20)}:</strong> Pursue B.P.Ed or sports management; aim for national teams.</li>`;
@@ -373,7 +375,7 @@
         if (weaknesses.includes("Delays Tasks") || weaknesses.includes("Postpones")) gap += `<li>Use Pomodoro technique (25 min work, 5 min break) and daily checklists.</li>`;
         if (weaknesses.includes("Lack of Discipline")) gap += `<li>Create a fixed daily schedule with apps like Google Calendar.</li>`;
         if (weaknesses.includes("Low Confidence")) gap += `<li>Celebrate small wins; maintain a success journal.</li>`;
-        if (weaknesses.includes("Weak in Maths") && (careerPath.includes("SOFTWARE") || careerPath.includes("AI"))) gap += `<li>Take foundational math courses (Khan Academy, NCERT) – spend 1 hour daily.</li>`;
+        if (weaknesses.includes("Weak in Maths") && (careerPath.includes("Software") || careerPath.includes("AI"))) gap += `<li>Take foundational math courses (Khan Academy, NCERT) – spend 1 hour daily.</li>`;
         if (!weaknesses.includes("Public Speaking Fear") && !weaknesses.includes("Delays Tasks") && !weaknesses.includes("Postpones")) gap += `<li>No major skill gaps – focus on advanced certifications.</li>`;
         gap += `</ul></div>`;
         return gap;
@@ -390,25 +392,25 @@
                             <li>🏅 <strong>Google Anita Borg Memorial Scholarship</strong> – for women in tech.</li>
                             <li>🏅 <strong>Aditya Birla Scholarship</strong> – for top performers in entrance exams.</li>`;
         }
-        if (careerPath.includes("SPORTS")) suggestions += `<li>⚽ <strong>Khelo India Scholarship</strong> – for young athletes (₹5L per year).</li>`;
-        if (careerPath.includes("DESIGN")) suggestions += `<li>🎨 <strong>NIFT/NID Merit Scholarships</strong> – based on entrance rank.</li>`;
+        if (careerPath.includes("Sports")) suggestions += `<li>⚽ <strong>Khelo India Scholarship</strong> – for young athletes (₹5L per year).</li>`;
+        if (careerPath.includes("Design")) suggestions += `<li>🎨 <strong>NIFT/NID Merit Scholarships</strong> – based on entrance rank.</li>`;
         suggestions += `</ul><p>Check state government websites for additional scholarships.</p>`;
         return suggestions;
     }
 
     function getEntranceExamPlanner(careerPath, age) {
         let planner = `<ul>`;
-        if (careerPath.includes("SOFTWARE") || careerPath.includes("AI")) {
+        if (careerPath.includes("Software") || careerPath.includes("AI")) {
             planner += `<li><strong>JEE Main:</strong> Usually April & June (Session 1 & 2). Register by Dec/Jan.</li>
                         <li><strong>JEE Advanced:</strong> Held in May/June. For top 2.5 lakh JEE Main rankers.</li>
                         <li><strong>BITSAT:</strong> May-June. Application opens Dec.</li>
                         <li><strong>VITEEE:</strong> April. Application Nov-Mar.</li>
                         <li><strong>CUET (for DU, BHU etc.):</strong> May-June. Register by March.</li>`;
-        } else if (careerPath.includes("DESIGN")) {
+        } else if (careerPath.includes("Design")) {
             planner += `<li><strong>UCEED (for IIT Design):</strong> January exam; register by Oct.</li>
                         <li><strong>NID DAT:</strong> Prelims Jan, Mains Apr-May. Register by Sep.</li>
                         <li><strong>NIFT entrance:</strong> February exam; application Nov-Dec.</li>`;
-        } else if (careerPath.includes("ENTREPRENEUR")) {
+        } else if (careerPath.includes("Entrepreneur")) {
             planner += `<li><strong>IPMAT (IIM Indore/Rohtak):</strong> April-May; register by Feb.</li>
                         <li><strong>CUET (for BBA/B.Com):</strong> May-June; register by March.</li>
                         <li><strong>NPAT (NMIMS):</strong> Dec-May (multiple slots).</li>`;
@@ -423,15 +425,15 @@
 
     function getTopCompanies(careerPath) {
         let companies = `<ul>`;
-        if (careerPath.includes("SOFTWARE") || careerPath.includes("AI")) {
+        if (careerPath.includes("Software") || careerPath.includes("AI")) {
             companies += `<li>Google, Microsoft, Amazon, Adobe, Flipkart, Ola, Uber, Razorpay, Zeta</li>
                           <li>Startups: Unacademy, Dream11, Postman, Groww</li>`;
-        } else if (careerPath.includes("DESIGN")) {
+        } else if (careerPath.includes("Design")) {
             companies += `<li>Figma, Adobe, Microsoft, Google (UX teams), Tata Elxsi, InfoEdge (Naukri.com)</li>
                           <li>Design studios: Elephant Design, Talented, FoxyMoron</li>`;
-        } else if (careerPath.includes("SPORTS")) {
+        } else if (careerPath.includes("Sports")) {
             companies += `<li>BCCI, IPL franchises, Decathlon, Nike, Adidas, Puma, Sportskeeda</li>`;
-        } else if (careerPath.includes("ENTREPRENEUR")) {
+        } else if (careerPath.includes("Entrepreneur")) {
             companies += `<li>Self-venture, VC firms, consulting (McKinsey, BCG), large corporates (Tata, Reliance)</li>`;
         } else {
             companies += `<li>Infosys, TCS, Wipro, Deloitte, KPMG, HDFC Bank, Amazon (non-tech)</li>`;
@@ -442,13 +444,13 @@
 
     function getIndustryTrendAnalysis(careerPath) {
         let trend = `<div>`;
-        if (careerPath.includes("SOFTWARE") || careerPath.includes("AI")) {
+        if (careerPath.includes("Software") || careerPath.includes("AI")) {
             trend += `<p>📈 <strong>Growth forecast 2030-2035:</strong> AI/ML jobs expected to grow by 30-40% in India. Demand for prompt engineers, AI ethicists, data scientists will rise. Automation may reduce entry-level coding jobs, but problem-solving and AI integration skills will be premium.</p>`;
-        } else if (careerPath.includes("DESIGN")) {
+        } else if (careerPath.includes("Design")) {
             trend += `<p>🎨 <strong>Growth forecast:</strong> UX/UI design demand increasing due to digital transformation. Companies investing in user experience. Rise of generative AI tools (Midjourney, DALL·E) – designers will need to co-create with AI.</p>`;
-        } else if (careerPath.includes("SPORTS")) {
+        } else if (careerPath.includes("Sports")) {
             trend += `<p>⚽ <strong>Growth forecast:</strong> Sports management and analytics growing fast in India (IPL, Pro Kabaddi). Jobs in sports marketing, event management, data analytics.</p>`;
-        } else if (careerPath.includes("ENTREPRENEUR")) {
+        } else if (careerPath.includes("Entrepreneur")) {
             trend += `<p>🚀 <strong>Growth forecast:</strong> Startup ecosystem booming (India has 3rd largest startup hub). Government schemes (Startup India) support entrepreneurship. Future lies in green energy, edtech, healthtech, and AI-first startups.</p>`;
         } else {
             trend += `<p>📊 <strong>Growth forecast:</strong> Traditional jobs are evolving with digital skills. Upskilling in data analysis, digital marketing, and AI tools will be essential for career growth.</p>`;
@@ -469,7 +471,7 @@
         return plan;
     }
 
-    // Main analysis (all text normal case)
+    // Main analysis
     function generateAnalysis(age, height, weight, interests, extracurricular, tvshow, strengths, weaknesses, mental, physical, budget, goal, alignment) {
         let careerPath = "";
         if (interests.includes("Coding") || interests.includes("Gaming") || extracurricular.includes("Coding")) careerPath = "AI/ML Software Engineer";
