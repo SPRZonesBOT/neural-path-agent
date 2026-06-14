@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Neural Path 2.0 - Parent Details</title>
+    <title>Neural Path 2.0 - With Parent Details</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -140,10 +140,10 @@
 <body>
 <div class="container">
     <h1>🧠 NEURAL PATH 2.0</h1>
-    <div class="sub">COMPLETE CAREER AGENT</div>
+    <div class="sub">PARENT + CHILD DETAILS | AI REPORT</div>
 
     <form id="parentForm">
-        <!-- Parent Details -->
+        <!-- === PARENT DETAILS (NEW) === -->
         <div class="form-group"><label class="main-label">👨‍👩 PARENT/GUARDIAN NAME</label><input type="text" id="parentName" required placeholder="e.g., Rajesh Sharma or Neha Sharma"></div>
         <div class="form-group"><label class="main-label">RELATIONSHIP TO CHILD</label>
             <select id="relationship" required>
@@ -239,7 +239,7 @@
             <input type="hidden" id="goal" value="">
         </div>
 
-        <!-- Question 14: English only -->
+        <!-- Q14 -->
         <div class="form-group"><label class="main-label">14. PARENT-CHILD AGREEMENT LEVEL (1-10)</label>
             <select id="alignment" required>
                 <option value="">SELECT</option>
@@ -277,7 +277,7 @@
     <div id="result" class="result"></div>
 </div>
 
-<!-- Modal Popup -->
+<!-- Modal popup (same as before) -->
 <div id="modal" class="modal">
     <div class="modal-content">
         <div id="modalQuestion" class="modal-question"></div>
@@ -292,34 +292,13 @@
 <script>
     // All multiple-select fields (same as before)
     const fieldsConfig = {
-        interests: {
-            label: "3. FAVORITE ACTIVITIES / SUBJECTS",
-            options: ["GAMING & COMPUTERS", "CODING & PROGRAMMING", "DRAWING & DESIGN", "SPORTS & PHYSICAL", "READING & WRITING", "MATHS & LOGIC", "SCIENCE & EXPERIMENTS", "MUSIC & ARTS", "BUSINESS & MONEY"]
-        },
-        extracurricular: {
-            label: "4. EXTRA CURRICULAR ACTIVITIES",
-            options: ["SPORTS (CRICKET/FOOTBALL)", "CHESS / BOARD GAMES", "MUSIC / DANCE", "CODING CLUB / ROBOTICS", "DEBATE / DRAMA", "ART & CRAFT", "VOLUNTEERING / SOCIAL WORK"]
-        },
-        strengths: {
-            label: "7. STRENGTHS",
-            options: ["PROBLEM SOLVING", "CREATIVE THINKING", "LEADERSHIP", "HARD WORKING", "QUICK LEARNER", "GOOD MEMORY", "TEAM PLAYER"]
-        },
-        weaknesses: {
-            label: "8. WEAKNESSES",
-            options: ["PUBLIC SPEAKING FEAR", "LACK OF DISCIPLINE", "WEAK IN MATHS", "POOR WRITING SKILLS", "LOW CONFIDENCE", "DELAYS TASKS / POSTPONES"]
-        },
-        mental: {
-            label: "9. MENTAL CONDITION",
-            options: ["ANXIOUS / WORRIED", "LOW CONFIDENCE", "STRESSED OFTEN", "HAPPY & CALM", "SHORT TEMPER"]
-        },
-        physical: {
-            label: "10. PHYSICAL HEALTH",
-            options: ["EYE SIGHT ISSUE", "OBESITY / WEIGHT", "LOW STAMINA", "FIT & ACTIVE", "FREQUENT SICKNESS"]
-        },
-        goal: {
-            label: "13. LONG TERM GOAL",
-            options: ["SETTLE ABROAD", "START MY OWN BUSINESS", "STABLE GOVERNMENT JOB", "HIGH PAYING PRIVATE JOB", "BECOME A RESEARCHER/SCIENTIST"]
-        }
+        interests: { label: "3. FAVORITE ACTIVITIES / SUBJECTS", options: ["GAMING & COMPUTERS", "CODING & PROGRAMMING", "DRAWING & DESIGN", "SPORTS & PHYSICAL", "READING & WRITING", "MATHS & LOGIC", "SCIENCE & EXPERIMENTS", "MUSIC & ARTS", "BUSINESS & MONEY"] },
+        extracurricular: { label: "4. EXTRA CURRICULAR ACTIVITIES", options: ["SPORTS (CRICKET/FOOTBALL)", "CHESS / BOARD GAMES", "MUSIC / DANCE", "CODING CLUB / ROBOTICS", "DEBATE / DRAMA", "ART & CRAFT", "VOLUNTEERING / SOCIAL WORK"] },
+        strengths: { label: "7. STRENGTHS", options: ["PROBLEM SOLVING", "CREATIVE THINKING", "LEADERSHIP", "HARD WORKING", "QUICK LEARNER", "GOOD MEMORY", "TEAM PLAYER"] },
+        weaknesses: { label: "8. WEAKNESSES", options: ["PUBLIC SPEAKING FEAR", "LACK OF DISCIPLINE", "WEAK IN MATHS", "POOR WRITING SKILLS", "LOW CONFIDENCE", "DELAYS TASKS / POSTPONES"] },
+        mental: { label: "9. MENTAL CONDITION", options: ["ANXIOUS / WORRIED", "LOW CONFIDENCE", "STRESSED OFTEN", "HAPPY & CALM", "SHORT TEMPER"] },
+        physical: { label: "10. PHYSICAL HEALTH", options: ["EYE SIGHT ISSUE", "OBESITY / WEIGHT", "LOW STAMINA", "FIT & ACTIVE", "FREQUENT SICKNESS"] },
+        goal: { label: "13. LONG TERM GOAL", options: ["SETTLE ABROAD", "START MY OWN BUSINESS", "STABLE GOVERNMENT JOB", "HIGH PAYING PRIVATE JOB", "BECOME A RESEARCHER/SCIENTIST"] }
     };
 
     let currentModalField = null;
@@ -330,12 +309,9 @@
         const modal = document.getElementById('modal');
         const questionDiv = document.getElementById('modalQuestion');
         const checkboxesDiv = document.getElementById('modalCheckboxes');
-        
         questionDiv.innerHTML = `${config.label} <small>(select one or more)</small>`;
-        
         let hiddenValue = document.getElementById(fieldId).value;
         let selectedArr = hiddenValue ? hiddenValue.split(", ") : [];
-        
         checkboxesDiv.innerHTML = "";
         config.options.forEach(opt => {
             let isChecked = selectedArr.includes(opt);
@@ -350,33 +326,23 @@
         if (!currentModalField) return;
         const checkboxes = document.querySelectorAll('#modalCheckboxes input[type="checkbox"]');
         let selected = [];
-        checkboxes.forEach(cb => {
-            if (cb.checked) selected.push(cb.value);
-        });
+        checkboxes.forEach(cb => { if (cb.checked) selected.push(cb.value); });
         let selectedStr = selected.join(", ");
         document.getElementById(currentModalField).value = selectedStr;
         let btn = document.getElementById(currentModalField + "Btn");
-        if (selectedStr) btn.innerText = selectedStr;
-        else btn.innerText = "Select options...";
+        if (selectedStr) btn.innerText = selectedStr; else btn.innerText = "Select options...";
         closeModal();
     }
 
-    function closeModal() {
-        document.getElementById('modal').style.display = 'none';
-        currentModalField = null;
-    }
+    function closeModal() { document.getElementById('modal').style.display = 'none'; currentModalField = null; }
 
     for (let fieldId in fieldsConfig) {
         let btn = document.getElementById(fieldId + "Btn");
         if (btn) btn.addEventListener('click', () => openModal(fieldId));
     }
-
     document.getElementById('modalSave').addEventListener('click', saveModal);
     document.getElementById('modalCancel').addEventListener('click', closeModal);
-    window.onclick = function(event) {
-        let modal = document.getElementById('modal');
-        if (event.target === modal) closeModal();
-    };
+    window.onclick = function(event) { let modal = document.getElementById('modal'); if (event.target === modal) closeModal(); };
 
     // Star rating
     let stars = document.querySelectorAll('.star');
@@ -385,31 +351,21 @@
         star.addEventListener('click', function() {
             let value = parseInt(this.getAttribute('data-value'));
             ratingInput.value = value;
-            stars.forEach((s, idx) => {
-                if(idx < value) { s.innerHTML = '★'; s.classList.add('selected'); }
-                else { s.innerHTML = '☆'; s.classList.remove('selected'); }
-            });
+            stars.forEach((s, idx) => { if(idx < value) { s.innerHTML = '★'; s.classList.add('selected'); } else { s.innerHTML = '☆'; s.classList.remove('selected'); } });
         });
     });
 
-    function getHiddenValue(id) {
-        let val = document.getElementById(id).value;
-        return val ? val : "";
-    }
+    function getHiddenValue(id) { let val = document.getElementById(id).value; return val ? val : ""; }
 
-    // AI analysis
     function generateAnalysis(childName, age, height, weight, interests, extracurricular, tvshow, targetOrg, strengths, weaknesses, mental, physical, budget, goal, alignment) {
         let careerPath = "";
         if (interests.includes("CODING") || interests.includes("GAMING") || extracurricular.includes("CODING")) careerPath = "AI/ML SOFTWARE ENGINEER";
         else if (interests.includes("DRAWING") || interests.includes("DESIGN")) careerPath = "UI/UX DESIGNER";
-        else if (interests.includes("SPORTS") || extracurricular.includes("SPORTS")) {
-            if (height && height > 170) careerPath = "PROFESSIONAL ATHLETE";
-            else careerPath = "SPORTS MANAGEMENT";
-        } else if (interests.includes("BUSINESS") || tvshow.toLowerCase().includes("shark tank")) careerPath = "ENTREPRENEUR";
+        else if (interests.includes("SPORTS") || extracurricular.includes("SPORTS")) { if (height && height > 170) careerPath = "PROFESSIONAL ATHLETE"; else careerPath = "SPORTS MANAGEMENT"; }
+        else if (interests.includes("BUSINESS") || tvshow.toLowerCase().includes("shark tank")) careerPath = "ENTREPRENEUR";
         else careerPath = "DIGITAL MARKETING";
         if (targetOrg.toLowerCase().includes("google")) careerPath = "SOFTWARE ENGINEER AT GOOGLE";
         else if (targetOrg.toLowerCase().includes("isro")) careerPath = "AEROSPACE SCIENTIST";
-        
         let S = strengths ? "✅ " + strengths : "✅ Basic strengths";
         let W = weaknesses ? "⚠️ " + weaknesses : "⚠️ No major weakness";
         let O = (parseInt(budget)>=500000) ? "💰 Good budget" : "💰 Limited budget, use free resources";
@@ -418,11 +374,10 @@
         return { careerPath, S, W, O, T, companies };
     }
 
-    // Replace with your actual Google Apps Script URL
+    // IMPORTANT: Replace with your actual Google Apps Script URL
     const SCRIPT_URL = "https://docs.google.com/spreadsheets/d/13I3XJNo_JLPYUO8qW2PS4E-48T-Uqr7saAgSyDbzwDw/edit?gid=0#gid=0";
 
     async function submitAndGenerate() {
-        // Parent info
         let parentName = document.getElementById('parentName').value.trim();
         let relationship = document.getElementById('relationship').value;
         let childName = document.getElementById('childName').value.trim();
@@ -455,7 +410,6 @@
         }
 
         let analysis = generateAnalysis(childName, age, height, weight, interests, extracurricular, tvshow, targetOrg, strengths, weaknesses, mental, physical, budget, goal, alignment);
-
         let skillScore = 50;
         if(strengths.includes("PROBLEM SOLVING")) skillScore += 15;
         if(weaknesses.includes("PUBLIC SPEAKING")) skillScore -= 10;
@@ -476,16 +430,9 @@
 
         if(SCRIPT_URL && SCRIPT_URL !== "YOUR_GOOGLE_SCRIPT_URL") {
             try {
-                await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
+                await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
             } catch(e) { console.error(e); }
-        } else {
-            alert("Google Sheet URL not configured. Data not saved.");
-        }
+        } else { alert("Google Sheet URL not configured. Data not saved."); }
 
         let resultDiv = document.getElementById('result');
         resultDiv.style.display = 'block';
