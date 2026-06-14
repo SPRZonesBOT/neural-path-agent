@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Neural Path 2.0 - Modal Wrap Fixed</title>
+    <title>Neural Path 2.0 - Modal Gap Fixed</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -75,7 +75,7 @@
         .threat-card { border-color: #f97316; }
         .loading { display: none; text-align: center; margin-top: 15px; }
         hr { border-color: #334155; margin: 15px 0; }
-        /* Modal fix - critical */
+        /* Modal styles - fixed gap and wrapping */
         .modal {
             display: none;
             position: fixed;
@@ -112,22 +112,24 @@
             gap: 12px;
             margin-bottom: 20px;
         }
-        /* FIXED: text will not break incorrectly, full words visible */
+        /* Fixed: no extra gap, normal text spacing */
         .checkbox-group label {
             display: flex;
             align-items: baseline;
-            gap: 10px;
+            gap: 8px;
             font-size: 15px;
             line-height: 1.4;
             white-space: normal;
             word-break: normal;
             overflow-wrap: normal;
-            word-wrap: normal;
             width: 100%;
+            margin: 0;
         }
         .checkbox-group input {
             flex-shrink: 0;
-            margin-top: 2px;
+            margin: 0;
+            width: 18px;
+            height: 18px;
         }
         .modal-buttons { display: flex; gap: 10px; justify-content: flex-end; margin-top: 10px; }
         .modal-buttons button { width: auto; padding: 8px 16px; margin-top: 0; }
@@ -214,11 +216,11 @@
 <div id="modal" class="modal"><div class="modal-content"><div id="modalQuestion" class="modal-question"></div><div id="modalCheckboxes" class="checkbox-group"></div><div class="modal-buttons"><button id="modalCancel">Cancel</button><button id="modalSave">Save</button></div></div></div>
 
 <script>
-    // All multiple-select fields with normal case options (full text)
+    // All multiple-select fields with full text (no breaks)
     const fieldsConfig = {
         interests: {
             label: "3. Favorite Activities / Subjects",
-            options: ["Gaming & Computers", "Coding & Programming", "Drawing & Design", "Sports & Physical", "Reading & Writing", "Maths & Logic", "Science & Experiments", "Music & Arts", "Business & Money"]
+            options: ["Gaming & Computers", "Coding & Programming", "Drawing & Design", "Sports & Physical", "Reading & Writing", "Maths & Logic", "Science & Experiments", "Music & Arts", "Business & Management"]
         },
         extracurricular: {
             label: "4. Extra Curricular Activities",
@@ -259,14 +261,13 @@
         checkboxesDiv.innerHTML = "";
         config.options.forEach(opt => {
             let isChecked = selectedArr.includes(opt);
-            // Create label with proper structure
             let label = document.createElement('label');
             let cb = document.createElement('input');
             cb.type = 'checkbox';
             cb.value = opt;
             cb.checked = isChecked;
             label.appendChild(cb);
-            label.appendChild(document.createTextNode(' ' + opt));
+            label.appendChild(document.createTextNode(opt));
             checkboxesDiv.appendChild(label);
         });
         modal.style.display = 'flex';
@@ -340,7 +341,7 @@
             recommendationsHTML += buildCollegeRow("University of Delhi","May-June 2025","Class 12 45-60%","Cutoffs 90-99% for popular courses");
             recommendationsHTML += buildCollegeRow("Mumbai University","May-June 2025","Class 12 45-60%","Cutoffs vary by college");
         }
-        recommendationsHTML += `</tbody></td></div><br><small style="color:#94a3b8;">*Cutoffs are approximate; aim higher.</small>`;
+        recommendationsHTML += `</tbody></table></div><br><small style="color:#94a3b8;">*Cutoffs are approximate; aim higher.</small>`;
         let cityUpper = city.toUpperCase();
         if (cityUpper.includes("DELHI")) recommendationsHTML += `<br><div style="margin-top:10px;"><strong>📍 Local (Delhi-NCR):</strong> DTU, NSUT, IIIT Delhi, JMI, Amity.</div>`;
         else if (cityUpper.includes("MUMBAI")) recommendationsHTML += `<br><div style="margin-top:10px;"><strong>📍 Local (Mumbai):</strong> VJTI, SPCE, NMIMS, Mumbai University.</div>`;
@@ -349,7 +350,7 @@
         return recommendationsHTML;
     }
 
-    // Helper functions (same as before, shortened for brevity)
+    // Helper functions (same as before)
     function getGrowthRoadmap(careerPath, age, childName) {
         let roadmap = `<ul style="margin-left:20px;">`;
         if (careerPath.includes("Software") || careerPath.includes("AI")) {
