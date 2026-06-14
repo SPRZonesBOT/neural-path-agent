@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Neural Path 2.0 - World's Best Career Counselor</title>
+    <title>Neural Path 2.0 - Final Fixed</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -121,7 +121,8 @@
         .modal-buttons { display: flex; gap: 10px; justify-content: flex-end; margin-top: 10px; }
         .modal-buttons button { width: auto; padding: 8px 16px; margin-top: 0; }
         .alignment-scale { display: flex; flex-wrap: wrap; justify-content: space-between; margin-top: 5px; font-size: 11px; color: #94a3b8; }
-        .reload-btn { background: #334155; margin-top: 20px; }
+        .reload-btn, .pdf-btn { background: #334155; margin-top: 20px; width: auto; display: inline-block; margin-right: 10px; }
+        .button-group { text-align: center; margin-top: 20px; }
         .disclaimer {
             background: rgba(0,0,0,0.4);
             border-left: 4px solid #f97316;
@@ -140,11 +141,10 @@
             border-left: 4px solid #fbbf24;
             font-size: 13px;
         }
-        .college-table { overflow-x: auto; }
+        .college-table { overflow-x: auto; margin-top: 15px; }
         .college-table table { width: 100%; border-collapse: collapse; background: #1e293b; border-radius: 16px; }
         .college-table th, .college-table td { padding: 10px; text-align: left; border-bottom: 1px solid #334155; }
         .college-table th { background: #0f172a; color: #c084fc; }
-        .pdf-btn { background: #334155; margin-top: 20px; }
         .financial-advice { background: #0f172a; padding: 12px; border-radius: 16px; margin: 10px 0; border-left: 4px solid #22c55e; }
         .report-header {
             background: #0f172a;
@@ -183,7 +183,7 @@
             .result { display: block !important; background: white; color: black; }
             .result h3 { color: #2c3e66; }
             .swot-card, .astrology-card, .college-table table, .report-header, .time-estimate, .skill-note { background: #f0f0f0; color: black; border-color: #ccc; }
-            .pdf-btn { display: block; }
+            .pdf-btn { display: inline-block; }
         }
     </style>
 </head>
@@ -207,10 +207,10 @@
             <div style="display: flex; gap: 10px;"><input type="number" id="height" placeholder="Height (cm)" style="width:50%"><input type="number" id="weight" placeholder="Weight (kg)" style="width:50%"></div>
         </div>
         
-        <!-- Expanded Interests (no option left) -->
+        <!-- Interests -->
         <div class="form-group"><label class="main-label">3. Favorite Activities / Subjects (Select all that apply)</label><button type="button" class="custom-select-btn" id="interestsBtn">Select options...</button><input type="hidden" id="interests" value=""></div>
         
-        <!-- Expanded Extracurricular -->
+        <!-- Extracurricular -->
         <div class="form-group"><label class="main-label">4. Extra Curricular Activities (Select all that apply)</label><button type="button" class="custom-select-btn" id="extracurricularBtn">Select options...</button><input type="hidden" id="extracurricular" value=""></div>
         
         <!-- TV Genre -->
@@ -244,7 +244,7 @@
         <!-- Physical Health -->
         <div class="form-group"><label class="main-label">9. Physical Health (Select all that apply)</label><button type="button" class="custom-select-btn" id="physicalBtn">Select options...</button><input type="hidden" id="physical" value=""></div>
         
-        <!-- Budget (expanded) -->
+        <!-- Budget -->
         <div class="form-group"><label class="main-label">10. Annual Budget (₹ per year) - Includes tuition, coaching, living, etc.</label>
             <select id="budget" required>
                 <option value="">Select</option>
@@ -458,44 +458,60 @@
     function getZodiacSign(dob) { let date = new Date(dob); let month = date.getMonth() + 1, day = date.getDate(); if ((month == 1 && day >= 20) || (month == 2 && day <= 18)) return "Aquarius"; if ((month == 2 && day >= 19) || (month == 3 && day <= 20)) return "Pisces"; if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) return "Aries"; if ((month == 4 && day >= 20) || (month == 5 && day <= 20)) return "Taurus"; if ((month == 5 && day >= 21) || (month == 6 && day <= 20)) return "Gemini"; if ((month == 6 && day >= 21) || (month == 7 && day <= 22)) return "Cancer"; if ((month == 7 && day >= 23) || (month == 8 && day <= 22)) return "Leo"; if ((month == 8 && day >= 23) || (month == 9 && day <= 22)) return "Virgo"; if ((month == 9 && day >= 23) || (month == 10 && day <= 22)) return "Libra"; if ((month == 10 && day >= 23) || (month == 11 && day <= 21)) return "Scorpio"; if ((month == 11 && day >= 22) || (month == 12 && day <= 21)) return "Sagittarius"; return "Capricorn"; }
     function getAstrologySuggestion(zodiac) { let s = { "Aries":"Entrepreneurship, sports, army", "Taurus":"Finance, banking, music", "Gemini":"Media, coding, teaching", "Cancer":"Psychology, healthcare", "Leo":"Acting, politics, management", "Virgo":"Data science, research", "Libra":"Law, design, diplomacy", "Scorpio":"Psychology, finance, surgery", "Sagittarius":"Travel, sports coaching", "Capricorn":"Engineering, corporate", "Aquarius":"AI, social work", "Pisces":"Arts, nursing" }; return s[zodiac] || "Hard work brings success."; }
 
-    // ---------- EXPANDED COLLEGE RECOMMENDATIONS (Career-specific) ----------
+    // ---------- CORRECTED College Recommendations (proper 4-column table) ----------
     function getCollegeRecommendations(careerPath, budget, city) {
         let path = careerPath.toLowerCase();
-        let tableRows = "";
+        let rows = "";
         if (path.includes("medical") || path.includes("doctor")) {
-            tableRows = `<tr><td>AIIMS Delhi</td><td>June</td><td>NEET rank (top 50)</td><td>~1-50 rank</td></tr>
-                         <tr><td>CMC Vellore</td><td>May</td><td>NEET score</td><td>~100 rank</td></tr>
-                         <tr><td>JIPMER Puducherry</td><td>June</td><td>NEET score</td><td>Top 200 rank</td></tr>
-                         <tr><td>State Medical Colleges</td><td>July-Aug</td><td>NEET + state quota</td><td>Varies by state</td></tr>`;
+            rows = `
+                <tr><td>AIIMS Delhi</td><td>June</td><td>NEET rank (top 50)</td><td>~1-50 rank</td></tr>
+                <tr><td>CMC Vellore</td><td>May</td><td>NEET score</td><td>~100 rank</td></tr>
+                <tr><td>JIPMER Puducherry</td><td>June</td><td>NEET score</td><td>Top 200 rank</td></tr>
+                <tr><td>State Medical Colleges</td><td>July-Aug</td><td>NEET + state quota</td><td>Varies by state</td></tr>
+            `;
         } else if (path.includes("software") || path.includes("ai") || path.includes("data")) {
-            tableRows = `<tr><td>IITs (Bombay, Delhi, Madras, Kanpur)</td><td>April, May</td><td>JEE Advanced rank, 75% in class 12</td><td>~88-90 percentile</td></tr>
-                         <tr><td>NITs (Trichy, Surathkal, Warangal, Delhi)</td><td>Jan, Feb, April</td><td>JEE Main score, 75% in class 12</td><td>CSE closing rank ~8,971</td></tr>
-                         <tr><td>IIIT Hyderabad</td><td>May</td><td>UGEE exam</td><td>UGEE rank 62-255</td></tr>
-                         <tr><td>BITS Pilani</td><td>May, June</td><td>BITSAT score</td><td>~304 marks</td></tr>`;
+            rows = `
+                <tr><td>IITs (Bombay, Delhi, Madras, Kanpur)</td><td>April, May</td><td>JEE Advanced rank, 75% in class 12</td><td>~88-90 percentile</td></tr>
+                <tr><td>NITs (Trichy, Surathkal, Warangal, Delhi)</td><td>Jan, Feb, April</td><td>JEE Main score, 75% in class 12</td><td>CSE closing rank ~8,971</td></tr>
+                <tr><td>IIIT Hyderabad</td><td>May</td><td>UGEE exam</td><td>UGEE rank 62-255</td></tr>
+                <tr><td>BITS Pilani</td><td>May, June</td><td>BITSAT score</td><td>~304 marks</td></tr>
+            `;
         } else if (path.includes("lawyer") || path.includes("legal")) {
-            tableRows = `<tr><td>NLU Delhi (NLSIU)</td><td>Dec (CLAT)</td><td>CLAT rank</td><td>Top 100 rank</td></tr>
-                         <tr><td>Faculty of Law, DU</td><td>June (CUET)</td><td>CUET score</td><td>~750+ out of 800</td></tr>
-                         <tr><td>Symbiosis Law School</td><td>May</td><td>SLAT exam</td><td>Top 500 rank</td></tr>`;
+            rows = `
+                <tr><td>NLU Delhi (NLSIU)</td><td>Dec (CLAT)</td><td>CLAT rank</td><td>Top 100 rank</td></tr>
+                <tr><td>Faculty of Law, DU</td><td>June (CUET)</td><td>CUET score</td><td>~750+ out of 800</td></tr>
+                <tr><td>Symbiosis Law School</td><td>May</td><td>SLAT exam</td><td>Top 500 rank</td></tr>
+            `;
         } else if (path.includes("engineering") && !path.includes("software")) {
-            tableRows = `<tr><td>IITs (Mech/Civil/Electrical)</td><td>April, May</td><td>JEE Advanced rank</td><td>~5k-20k rank</td></tr>
-                         <tr><td>NITs (Core branches)</td><td>Jan, April</td><td>JEE Main rank</td><td>~15k-50k rank</td></tr>
-                         <tr><td>DTU/NSUT (Delhi)</td><td>June, July</td><td>JEE Main (Delhi quota)</td><td>~20k-40k rank</td></tr>`;
+            rows = `
+                <tr><td>IITs (Mech/Civil/Electrical)</td><td>April, May</td><td>JEE Advanced rank</td><td>~5k-20k rank</td></tr>
+                <tr><td>NITs (Core branches)</td><td>Jan, April</td><td>JEE Main rank</td><td>~15k-50k rank</td></tr>
+                <tr><td>DTU/NSUT (Delhi)</td><td>June, July</td><td>JEE Main (Delhi quota)</td><td>~20k-40k rank</td></tr>
+            `;
         } else if (path.includes("defence") || path.includes("army")) {
-            tableRows = `<tr><td>NDA (National Defence Academy)</td><td>April, Sept</td><td>NDA exam + SSB</td><td>Written cutoffs vary</td></tr>
-                         <tr><td>CDS (IMA, AFA, NA)</td><td>Feb, Sept</td><td>CDS exam + SSB</td><td>~40-60% marks</td></tr>
-                         <tr><td>Officers Training Academy (OTA)</td><td>Feb, Sept</td><td>CDS exam (OTA)</td><td>~50-60% marks</td></tr>`;
+            rows = `
+                <tr><td>NDA (National Defence Academy)</td><td>April, Sept</td><td>NDA exam + SSB</td><td>Written cutoffs vary</td></tr>
+                <tr><td>CDS (IMA, AFA, NA)</td><td>Feb, Sept</td><td>CDS exam + SSB</td><td>~40-60% marks</td></tr>
+                <tr><td>Officers Training Academy (OTA)</td><td>Feb, Sept</td><td>CDS exam (OTA)</td><td>~50-60% marks</td></tr>
+            `;
         } else if (path.includes("design")) {
-            tableRows = `<tr><td>NID Ahmedabad</td><td>Jan, April</td><td>DAT Prelims + Mains</td><td>Merit list</td></tr>
-                         <tr><td>NIFT Delhi</td><td>Nov, Feb</td><td>GAT + CAT</td><td>Closing rank ~62-74</td></tr>
-                         <tr><td>IIT Bombay IDC (UCEED)</td><td>March, May</td><td>UCEED + portfolio</td><td>Valid UCEED score</td></tr>`;
+            rows = `
+                <tr><td>NID Ahmedabad</td><td>Jan, April</td><td>DAT Prelims + Mains</td><td>Merit list</td></tr>
+                <tr><td>NIFT Delhi</td><td>Nov, Feb</td><td>GAT + CAT</td><td>Closing rank ~62-74</td></tr>
+                <tr><td>IIT Bombay IDC (UCEED)</td><td>March, May</td><td>UCEED + portfolio</td><td>Valid UCEED score</td></tr>
+            `;
         } else if (path.includes("business") || path.includes("entrepreneur") || path.includes("finance")) {
-            tableRows = `<tr><td>IIMs (IPM Indore, Rohtak)</td><td>April, May</td><td>IPMAT + WAT + PI</td><td>~90-95 percentile</td></tr>
-                         <tr><td>NMIMS Mumbai</td><td>Dec, May</td><td>NPAT + PI</td><td>~95-99 percentile</td></tr>
-                         <tr><td>SRCC (DU)</td><td>May, June</td><td>CUET score</td><td>99+ percentile</td></tr>`;
+            rows = `
+                <tr><td>IIMs (IPM Indore, Rohtak)</td><td>April, May</td><td>IPMAT + WAT + PI</td><td>~90-95 percentile</td></tr>
+                <tr><td>NMIMS Mumbai</td><td>Dec, May</td><td>NPAT + PI</td><td>~95-99 percentile</td></tr>
+                <tr><td>SRCC (DU)</td><td>May, June</td><td>CUET score</td><td>99+ percentile</td></tr>
+            `;
         } else {
-            tableRows = `<tr><td>University of Delhi</td><td>May, June</td><td>CUET score</td><td>90-99%</td></tr>
-                         <tr><td>Mumbai University</td><td>May, June</td><td>HSC + CET</td><td>Varies</td></tr>
-                         <tr><td>Christ University</td><td>Feb, April</td><td>CUET + PI</td><td>CUET 600+</td></tr>`;
+            rows = `
+                <tr><td>University of Delhi</td><td>May, June</td><td>CUET score</td><td>90-99%</td></tr>
+                <tr><td>Mumbai University</td><td>May, June</td><td>HSC + CET</td><td>Varies</td></tr>
+                <tr><td>Christ University</td><td>Feb, April</td><td>CUET + PI</td><td>CUET 600+</td></tr>
+            `;
         }
         let local = "";
         let cityUpper = city.toUpperCase();
@@ -503,10 +519,19 @@
         else if (cityUpper.includes("MUMBAI")) local = "<br><strong>📍 Local (Mumbai):</strong> VJTI, SPCE, NMIMS, KJ Somaiya.";
         else if (cityUpper.includes("BANGALORE")) local = "<br><strong>📍 Local (Bangalore):</strong> RVCE, PESIT, Christ, Jain.";
         else if (cityUpper.includes("PUNE")) local = "<br><strong>📍 Local (Pune):</strong> COEP, VIT Pune, Symbiosis, MIT.";
-        return `<div class="college-table"><table style="width:100%; border-collapse: collapse;">${tableRows}</tr></div><br><small>*Cutoffs approximate. Months tentative.</small>${local}`;
+        
+        return `<div class="college-table">
+                    <table>
+                        <thead>
+                            <tr><th>College / Institute</th><th>Admission Timeline (tentative)</th><th>Eligibility & Selection</th><th>Expected Cutoff</th></tr>
+                        </thead>
+                        <tbody>${rows}</tbody>
+                    </table>
+                </div>
+                <br><small>*Cutoffs approximate. Months tentative.</small>${local}`;
     }
 
-    // ---------- ENHANCED getFieldRecommendation (Stream Recommendation) ----------
+    // ---------- ENHANCED getFieldRecommendation ----------
     function getFieldRecommendation(interests, strengths, weaknesses, tvshow, extracurricular) {
         let i = interests.toLowerCase();
         let s = strengths.toLowerCase();
@@ -624,10 +649,8 @@
             careerPath = "📊 Digital Marketing / General Management / BBA / MBA / Retail Management";
         }
         
-        // Override for very high budget / study abroad goal
         if (goal.includes("abroad") && isHighBudget) careerPath += " (with Study Abroad option)";
         
-        // SWOT
         let S = strengths ? "✅ " + strengths : "✅ Basic strengths";
         let W = weaknesses ? "⚠️ " + weaknesses : "⚠️ No major weakness";
         let O = (bud >= 500000) ? "💰 Good budget" : "💰 Limited budget, use free resources";
@@ -635,7 +658,7 @@
         return { careerPath, S, W, O, T };
     }
 
-    // ---------- Other helper functions (unchanged) ----------
+    // ---------- Other helper functions (unchanged but included) ----------
     function getScholarshipSuggestions(careerPath, budget, city) {
         let budgetNum = parseInt(budget);
         let suggestions = `<ul>`;
@@ -800,7 +823,6 @@
         let percentage = document.getElementById('percentage').value.trim();
         let rating = document.getElementById('ratingValue').value;
 
-        // Validation
         if(!parentName || !relationship || !childName || !childGender || !dob || !budget || !city || !alignment || !tvshow || !parentDesiredField || !studyHours || !currentClass || !percentage) {
             alert("Please fill all mandatory fields");
             return;
@@ -842,7 +864,6 @@
         let today = new Date();
         let formattedDate = today.toLocaleDateString('en-GB');
 
-        // Payload for Google Sheet
         let payload = {
             timestamp: new Date().toISOString(),
             parentName, relationship, childName, childGender, dob, age, height, weight, interests, extracurricular, tvshow,
@@ -925,9 +946,11 @@
                 ${wellnessPlan}
                 <hr>
                 <p>✅ Report generated. You can save as PDF using the button below.</p>
+                <div class="button-group">
+                    <button class="pdf-btn" onclick="window.print();">📄 Download as PDF (Print)</button>
+                    <button class="reload-btn" onclick="location.reload();">🔄 Fill Another Form</button>
+                </div>
             </div>
-            <button class="pdf-btn" onclick="window.print();">📄 Download as PDF (Print)</button>
-            <button class="reload-btn" onclick="location.reload();">🔄 Fill Another Form</button>
         `;
         loadingDiv.style.display = 'none';
         btn.disabled = false;
