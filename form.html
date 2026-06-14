@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Neural Path 2.0 - Question Form</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #f1f5f9;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 650px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 32px;
+            padding: 20px;
+            box-shadow: 0 25px 45px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        h1 { font-size: 28px; text-align: center; background: linear-gradient(135deg, #a855f7, #3b82f6); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .sub { text-align: center; font-size: 14px; opacity: 0.8; margin-bottom: 20px; }
+        .form-group { margin-bottom: 20px; border-bottom: 1px solid #334155; padding-bottom: 15px; }
+        label.main-label { display: block; font-weight: 700; margin-bottom: 8px; font-size: 14px; letter-spacing: 0.5px; color: #cbd5e1; }
+        select, input[type="text"], input[type="number"] { width: 100%; padding: 12px; border-radius: 24px; border: none; background: #334155; color: white; font-size: 14px; outline: none; }
+        select[multiple] {
+            height: auto;
+            min-height: 100px;
+            background: #1e293b;
+            border-radius: 16px;
+            padding: 8px;
+        }
+        select[multiple] option {
+            padding: 8px 12px;
+            border-radius: 12px;
+            margin: 4px 0;
+            background: #334155;
+            color: white;
+        }
+        select[multiple] option:checked {
+            background: #a855f7 linear-gradient(0deg, #a855f7, #a855f7);
+            color: white;
+        }
+        .instruction {
+            font-size: 11px;
+            color: #94a3b8;
+            margin-top: 5px;
+        }
+        .stars { display: flex; gap: 10px; font-size: 32px; cursor: pointer; justify-content: center; margin: 10px 0; }
+        .star { color: #475569; transition: 0.1s; }
+        .star.selected { color: #fbbf24; text-shadow: 0 0 4px gold; }
+        button { width: 100%; padding: 14px; background: linear-gradient(135deg, #a855f7, #3b82f6); border: none; border-radius: 40px; font-size: 18px; font-weight: bold; color: white; cursor: pointer; margin-top: 10px; }
+        button:active { transform: scale(0.98); }
+        .result { margin-top: 30px; background: #0f172a; border-radius: 24px; padding: 20px; display: none; }
+        .result h3 { color: #c084fc; margin-top: 20px; border-left: 4px solid #c084fc; padding-left: 12px; }
+        .swot-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 10px;
+        }
+        .swot-card {
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 12px;
+            border-top: 4px solid;
+        }
+        .swot-card h4 { margin-bottom: 8px; font-size: 16px; }
+        .swot-card p { font-size: 13px; line-height: 1.4; }
+        .strength-card { border-color: #22c55e; }
+        .weakness-card { border-color: #ef4444; }
+        .opportunity-card { border-color: #3b82f6; }
+        .threat-card { border-color: #f97316; }
+        .loading { display: none; text-align: center; margin-top: 15px; }
+        hr { border-color: #334155; margin: 15px 0; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🧠 NEURAL PATH 2.0</h1>
+    <div class="sub">MULTIPLE-SELECT DROPDOWNS | SWOT ANALYSIS | CLEAR BUDGET HEADING</div>
+
+    <form id="parentForm">
+        <div class="form-group"><label class="main-label">👶 CHILD'S FULL NAME</label><input type="text" id="childName" required placeholder="e.g., Aryan Sharma"></div>
+        
+        <div class="form-group"><label class="main-label">1. CHILD'S AGE (YEARS)</label>
+            <select id="age" required><option value="">SELECT AGE</option>
+            <option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+            <option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option>
+            <option>17</option><option>18</option><option>19</option><option>20</option><option>21</option><option>22</option>
+            <option>23</option><option>24</option><option>25</option></select>
+        </div>
+
+        <div class="form-group"><label class="main-label">2. FAVORITE ACTIVITIES / SUBJECTS (HOLD CTRL/CMD FOR MULTIPLE)</label>
+            <select id="interests" multiple size="5">
+                <option value="GAMING & COMPUTERS">GAMING & COMPUTERS</option>
+                <option value="CODING & PROGRAMMING">CODING & PROGRAMMING</option>
+                <option value="DRAWING & DESIGN">DRAWING & DESIGN</option>
+                <option value="SPORTS & PHYSICAL">SPORTS & PHYSICAL</option>
+                <option value="READING & WRITING">READING & WRITING</option>
+                <option value="MATHS & LOGIC">MATHS & LOGIC</option>
+                <option value="SCIENCE & EXPERIMENTS">SCIENCE & EXPERIMENTS</option>
+                <option value="MUSIC & ARTS">MUSIC & ARTS</option>
+                <option value="BUSINESS & MONEY">BUSINESS & MONEY</option>
+            </select>
+            <div class="instruction">💡 Mobile: Tap & hold to select multiple. Desktop: Hold Ctrl (Cmd on Mac).</div>
+        </div>
+
+        <div class="form-group"><label class="main-label">3. STRENGTHS (HOLD CTRL/CMD FOR MULTIPLE)</label>
+            <select id="strengths" multiple size="5">
+                <option value="PROBLEM SOLVING">PROBLEM SOLVING</option>
+                <option value="CREATIVE THINKING">CREATIVE THINKING</option>
+                <option value="LEADERSHIP">LEADERSHIP</option>
+                <option value="HARD WORKING">HARD WORKING</option>
+                <option value="QUICK LEARNER">QUICK LEARNER</option>
+                <option value="GOOD MEMORY">GOOD MEMORY</option>
+                <option value="TEAM PLAYER">TEAM PLAYER</option>
+            </select>
+        </div>
+
+        <div class="form-group"><label class="main-label">4. WEAKNESSES (HOLD CTRL/CMD FOR MULTIPLE)</label>
+            <select id="weaknesses" multiple size="5">
+                <option value="PUBLIC SPEAKING FEAR">PUBLIC SPEAKING FEAR</option>
+                <option value="LACK OF DISCIPLINE">LACK OF DISCIPLINE</option>
+                <option value="WEAK IN MATHS">WEAK IN MATHS</option>
+                <option value="POOR WRITING SKILLS">POOR WRITING SKILLS</option>
+                <option value="LOW CONFIDENCE">LOW CONFIDENCE</option>
+                <option value="PROCRASTINATION">PROCRASTINATION</option>
+            </select>
+        </div>
+
+        <div class="form-group"><label class="main-label">5. MENTAL CONDITION (HOLD CTRL/CMD FOR MULTIPLE)</label>
+            <select id="mental" multiple size="5">
+                <option value="ANXIOUS / WORRIED">ANXIOUS / WORRIED</option>
+                <option value="LOW CONFIDENCE">LOW CONFIDENCE</option>
+                <option value="STRESSED OFTEN">STRESSED OFTEN</option>
+                <option value="HAPPY & CALM">HAPPY & CALM</option>
+                <option value="SHORT TEMPER">SHORT TEMPER</option>
+            </select>
+        </div>
+
+        <div class="form-group"><label class="main-label">6. PHYSICAL HEALTH (HOLD CTRL/CMD FOR MULTIPLE)</label>
+            <select id="physical" multiple size="5">
+                <option value="EYE SIGHT ISSUE">EYE SIGHT ISSUE</option>
+                <option value="OBESITY / WEIGHT">OBESITY / WEIGHT</option>
+                <option value="LOW STAMINA">LOW STAMINA</option>
+                <option value="FIT & ACTIVE">FIT & ACTIVE</option>
+                <option value="FREQUENT SICKNESS">FREQUENT SICKNESS</option>
+            </select>
+        </div>
+
+        <!-- UPDATED BUDGET HEADING -->
+        <div class="form-group"><label class="main-label">7. ANNUAL BUDGET FOR CHILD'S EDUCATION & SKILL DEVELOPMENT (₹ PER YEAR)</label>
+            <select id="budget" required>
+                <option value="">SELECT</option>
+                <option value="100000">LESS THAN ₹1 LAKH</option>
+                <option value="300000">₹1 LAKH - ₹3 LAKH</option>
+                <option value="500000">₹3 LAKH - ₹5 LAKH</option>
+                <option value="800000">₹5 LAKH - ₹8 LAKH</option>
+                <option value="1200000">₹8 LAKH - ₹12 LAKH</option>
+                <option value="2000000">ABOVE ₹12 LAKH</option>
+            </select>
+            <div class="instruction">💡 This includes tuition, courses, coaching, books, activities, and any other child-related annual expense.</div>
+        </div>
+
+        <div class="form-group"><label class="main-label">8. CITY / STATE</label><input type="text" id="city" required placeholder="e.g., DELHI, MUMBAI"></div>
+
+        <div class="form-group"><label class="main-label">9. LONG TERM GOAL (HOLD CTRL/CMD FOR MULTIPLE)</label>
+            <select id="goal" multiple size="5">
+                <option value="SETTLE ABROAD">SETTLE ABROAD</option>
+                <option value="START MY OWN BUSINESS">START MY OWN BUSINESS</option>
+                <option value="STABLE GOVERNMENT JOB">STABLE GOVERNMENT JOB</option>
+                <option value="HIGH PAYING PRIVATE JOB">HIGH PAYING PRIVATE JOB</option>
+                <option value="BECOME A RESEARCHER/SCIENTIST">RESEARCHER/SCIENTIST</option>
+            </select>
+        </div>
+
+        <div class="form-group"><label class="main-label">10. PARENT'S EXPECTATION VS CHILD'S WISH (1-10)</label>
+            <select id="alignment" required><option value="">SELECT</option>
+            <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+            <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select>
+        </div>
+
+        <div class="form-group"><label class="main-label">⭐ RATE THIS APP (1 TO 5 STARS)</label>
+            <div class="stars" id="starRating">
+                <span class="star" data-value="1">☆</span><span class="star" data-value="2">☆</span>
+                <span class="star" data-value="3">☆</span><span class="star" data-value="4">☆</span><span class="star" data-value="5">☆</span>
+            </div>
+            <input type="hidden" id="ratingValue" value="0">
+        </div>
+
+        <button type="button" onclick="submitAndGenerate()">✨ GENERATE & SAVE REPORT (WITH SWOT) ✨</button>
+    </form>
+    <div class="loading" id="loading">⏳ SAVING DATA & GENERATING SWOT REPORT...</div>
+    <div id="result" class="result"></div>
+    <!-- FOOTER REMOVED AS REQUESTED -->
+</div>
+
+<script>
+    function getMultipleSelectValues(selectId) {
+        let select = document.getElementById(selectId);
+        let values = [];
+        for(let i = 0; i < select.options.length; i++) {
+            if(select.options[i].selected) {
+                values.push(select.options[i].value);
+            }
+        }
+        return values.join(", ");
+    }
+    
+    // Star rating
+    let stars = document.querySelectorAll('.star');
+    let ratingInput = document.getElementById('ratingValue');
+    stars.forEach(star => {
+        star.addEventListener('click', function() {
+            let value = parseInt(this.getAttribute('data-value'));
+            ratingInput.value = value;
+            stars.forEach((s, idx) => {
+                if(idx < value) { s.innerHTML = '★'; s.classList.add('selected'); }
+                else { s.innerHTML = '☆'; s.classList.remove('selected'); }
+            });
+        });
+    });
+    
+    function generateSWOT(interests, strengths, weaknesses, mental, physical, goal, budget, alignment) {
+        let swot = { S: "", W: "", O: "", T: "" };
+        let strengthList = strengths.split(", ");
+        if(strengthList.includes("PROBLEM SOLVING")) swot.S += "✅ Strong analytical & problem-solving skills. ";
+        if(strengthList.includes("CREATIVE THINKING")) swot.S += "✅ Highly creative — great for design, arts, or innovation roles. ";
+        if(strengthList.includes("LEADERSHIP")) swot.S += "✅ Natural leadership quality — can manage teams or start ventures. ";
+        if(strengthList.includes("HARD WORKING")) swot.S += "✅ Persistent and hardworking — key for competitive exams. ";
+        if(strengthList.includes("QUICK LEARNER")) swot.S += "✅ Quick learner — adapts fast to new technologies. ";
+        if(interests.includes("CODING") || interests.includes("GAMING")) swot.S += "✅ Tech-savvy — future-ready for AI/IT fields. ";
+        if(swot.S === "") swot.S = "✅ Basic strengths present; encourage self-belief.";
+        
+        let weakList = weaknesses.split(", ");
+        if(weakList.includes("PUBLIC SPEAKING FEAR")) swot.W += "⚠️ Hesitant in public speaking — may affect interviews & presentations. ";
+        if(weakList.includes("LACK OF DISCIPLINE")) swot.W += "⚠️ Needs structured routine & accountability. ";
+        if(weakList.includes("WEAK IN MATHS")) swot.W += "⚠️ Maths weak — but many creative careers don't require advanced maths. ";
+        if(weakList.includes("LOW CONFIDENCE")) swot.W += "⚠️ Low confidence — needs small wins & mentorship. ";
+        if(weakList.includes("PROCRASTINATION")) swot.W += "⚠️ Procrastination — use pomodoro & goal breakdown. ";
+        if(mental.includes("ANXIOUS") || mental.includes("STRESSED")) swot.W += "⚠️ Prone to stress — mindfulness & counseling recommended. ";
+        if(swot.W === "") swot.W = "⚠️ No major weakness detected. Still, work on consistency.";
+        
+        let budgetNum = parseInt(budget);
+        if(budgetNum >= 500000) swot.O += "💸 Good budget — can afford quality coaching, online courses, or private colleges. ";
+        else swot.O += "💸 Budget limited — but many free resources (NPTEL, YouTube) and scholarships available. ";
+        if(interests.includes("CODING") || interests.includes("GAMING")) swot.O += "📈 High demand for AI/Game Dev in India & abroad by 2030. ";
+        if(interests.includes("DESIGN") || interests.includes("DRAWING")) swot.O += "🎨 UI/UX and digital design market growing rapidly. ";
+        if(goal.includes("ABROAD")) swot.O += "🌍 Opportunity to study abroad via scholarships or education loans. ";
+        if(goal.includes("BUSINESS")) swot.O += "🚀 Startup ecosystem in India thriving — govt schemes for young entrepreneurs. ";
+        if(alignment >= 8) swot.O += "🤝 Parents & child aligned — smooth decision making. ";
+        else swot.O += "⚠️ Alignment gap — family counseling may open new opportunities.";
+        swot.O += " Also, online certifications (Google, Microsoft) can boost resume at low cost.";
+        
+        if(weakList.includes("LACK OF DISCIPLINE") || weakList.includes("PROCRASTINATION")) swot.T += "⛔ Risk of missing deadlines or not completing courses. ";
+        if(mental.includes("ANXIOUS")) swot.T += "⛔ Mental stress may lead to burnout — regular breaks needed. ";
+        if(physical.includes("EYE SIGHT") || physical.includes("LOW STAMINA")) swot.T += "⛔ Physical health may limit high-screen or high-stamina careers (pilot, army). ";
+        if(budgetNum < 300000) swot.T += "⛔ Budget constraints may limit access to premium institutes. Explore scholarships. ";
+        if(!interests.includes("CODING") && !interests.includes("GAMING") && !interests.includes("DESIGN")) swot.T += "⛔ Traditional career paths might face AI disruption by 2035. Encourage digital skills. ";
+        if(swot.T === "") swot.T = "⛔ No major threats identified, but keep updating skills every 6 months.";
+        return swot;
+    }
+    
+    // GOOGLE APPS SCRIPT URL - CHANGE THIS TO YOUR OWN
+    const SCRIPT_URL = "YOUR_GOOGLE_SCRIPT_URL";  // PASTE YOUR WEB APP URL HERE
+    
+    async function submitAndGenerate() {
+        let childName = document.getElementById('childName').value.trim();
+        let age = document.getElementById('age').value;
+        let interests = getMultipleSelectValues('interests');
+        let strengths = getMultipleSelectValues('strengths');
+        let weaknesses = getMultipleSelectValues('weaknesses');
+        let mental = getMultipleSelectValues('mental');
+        let physical = getMultipleSelectValues('physical');
+        let budget = document.getElementById('budget').value;
+        let city = document.getElementById('city').value.trim();
+        let goal = getMultipleSelectValues('goal');
+        let alignment = document.getElementById('alignment').value;
+        let rating = document.getElementById('ratingValue').value;
+        
+        if(!childName || !age || !budget || !city || !alignment) {
+            alert("PLEASE FILL ALL MANDATORY FIELDS (CHILD NAME, AGE, BUDGET, CITY, ALIGNMENT)");
+            return;
+        }
+        if(rating == "0") { alert("PLEASE GIVE A STAR RATING (1-5)"); return; }
+        if(!interests || !strengths || !weaknesses || !mental || !physical || !goal) {
+            alert("PLEASE SELECT AT LEAST ONE OPTION IN EACH MULTIPLE-SELECT DROPDOWN");
+            return;
+        }
+        
+        let skillScore = 50;
+        if(strengths.includes("PROBLEM SOLVING")) skillScore += 15;
+        if(strengths.includes("CREATIVE")) skillScore += 12;
+        if(weaknesses.includes("PUBLIC SPEAKING")) skillScore -= 10;
+        if(mental.includes("ANXIOUS")) skillScore -= 12;
+        skillScore = Math.min(100, Math.max(20, skillScore));
+        
+        let careerPath = "GAME DESIGNER";
+        if(interests.includes("CODING") || interests.includes("PROGRAMMING")) careerPath = "AI/ML ENGINEER";
+        else if(interests.includes("DRAWING") || interests.includes("DESIGN")) careerPath = "UI/UX DESIGNER";
+        else if(interests.includes("SPORTS")) careerPath = "SPORTS MANAGEMENT";
+        
+        let swot = generateSWOT(interests, strengths, weaknesses, mental, physical, goal, budget, alignment);
+        
+        let payload = {
+            timestamp: new Date().toISOString(),
+            childName, age, interests, strengths, weaknesses, mental, physical,
+            budget, city, goal, alignment, skillScore, rating, careerPath,
+            swot_s: swot.S, swot_w: swot.W, swot_o: swot.O, swot_t: swot.T
+        };
+        
+        let loadingDiv = document.getElementById('loading');
+        let btn = document.querySelector('button');
+        loadingDiv.style.display = 'block';
+        btn.disabled = true;
+        
+        if(SCRIPT_URL && SCRIPT_URL !== "YOUR_GOOGLE_SCRIPT_URL") {
+            try {
+                await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+            } catch(e) { console.error("SAVE ERROR", e); }
+        } else {
+            console.warn("GOOGLE SHEET URL NOT SET. DATA NOT SAVED.");
+        }
+        
+        let freeCourses = ["UNITY LEARN (FREE)", "YOUTUBE GAME DEV", "NPTEL DESIGN", "GOOGLE UX DESIGN (Coursera audit)"];
+        let personalDev = "MORNING JOURNAL + 20 MIN SKILL PRACTICE + WEEKLY SWOT REVIEW";
+        let whatToFollow = "BRACKEYS, GMTK, INDIAN GAME DEV COMMUNITY, TEDx Talks";
+        let agenticAI = "USE AUTOGPT FOR BRAINSTORMING, CHATGPT FOR SKILL PLAN, MIDJOURNEY FOR PROTOTYPES";
+        let financialAdvice = (parseInt(budget) < 300000) ? "FOCUS ON FREE COURSES & SCHOLARSHIPS. Apply for NSP, state schemes." : "GOOD BUDGET FOR QUALITY COLLEGES & ONLINE DEGREES. Still check ROI.";
+        
+        let resultDiv = document.getElementById('result');
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = `
+            <h3>🎯 SKILL SCORE: ${skillScore}/100</h3>
+            <p>${skillScore<50 ? "NEEDS COMMUNICATION & CONFIDENCE BOOST" : "GOOD FOUNDATION. KEEP BUILDING."}</p>
+            
+            <h3>📊 SWOT ANALYSIS (STRENGTHS, WEAKNESSES, OPPORTUNITIES, THREATS)</h3>
+            <div class="swot-grid">
+                <div class="swot-card strength-card"><h4>💪 STRENGTHS</h4><p>${swot.S}</p></div>
+                <div class="swot-card weakness-card"><h4>🔻 WEAKNESSES</h4><p>${swot.W}</p></div>
+                <div class="swot-card opportunity-card"><h4>🌟 OPPORTUNITIES</h4><p>${swot.O}</p></div>
+                <div class="swot-card threat-card"><h4>⚠️ THREATS</h4><p>${swot.T}</p></div>
+            </div>
+            
+            <h3>🧘 PERSONAL DEVELOPMENT (BASED ON WEAKNESSES)</h3>
+            <p>${weaknesses.includes("PUBLIC SPEAKING") ? "Join Toastmasters or record 1-min selfie video daily. " : ""}${weaknesses.includes("LACK OF DISCIPLINE") ? "Use Google Calendar & set daily alarms. " : ""}${weaknesses.includes("LOW CONFIDENCE") ? "Celebrate small wins & maintain win journal. " : ""}Recommended: Morning routine, meditation, and weekly mentor check.</p>
+            
+            <h3>📌 WHAT TO FOLLOW TO ACHIEVE GOAL (${careerPath})</h3>
+            <p>${whatToFollow}</p>
+            
+            <h3>🤖 AGENTIC AI TOOLS</h3>
+            <p>${agenticAI}</p>
+            
+            <h3>📚 FREE COURSES (ZERO COST)</h3>
+            <ul>${freeCourses.map(c=>`<li>${c}</li>`).join('')}</ul>
+            <p>➕ Also: SWAYAM, DIKSHA, freeCodeCamp, Khan Academy.</p>
+            
+            <h3>💰 FINANCIAL DECISION</h3>
+            <p>${financialAdvice}</p>
+            
+            <h3>🚀 RECOMMENDED CAREER PATH</h3>
+            <p><strong>${careerPath}</strong> | Entry Salary ₹4L-8L | Senior ₹20L+ | Exams: Portfolio, Aptitude, or GATE (for AI/ML).</p>
+            
+            <h3>📆 MONTHLY ACTION PLAN (INTEGRATING SWOT)</h3>
+            <p>📅 WEEK 1-2: Complete 1 free course (address weakness: discipline).<br>
+            📅 WEEK 3: Build a small project (use strength like creativity).<br>
+            📅 WEEK 4: Share with online community, get feedback, revisit SWOT.<br>
+            🔁 Repeat every month — threats will reduce, opportunities will increase.</p>
+            
+            <hr>
+            <p style="font-size:12px">✅ DATA SAVED. THANK YOU FOR RATING ${rating} ★ | SWOT analysis will help parents & child take informed decisions.</p>
+        `;
+        loadingDiv.style.display = 'none';
+        btn.disabled = false;
+        resultDiv.scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+</body>
+</html>
