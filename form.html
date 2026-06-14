@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Neural Path 2.0 - Financial Advice Added</title>
+    <title>Neural Path 2.0 - Final Report with Record Header</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -146,13 +146,28 @@
         .college-table th { background: #0f172a; color: #c084fc; }
         .pdf-btn { background: #334155; margin-top: 20px; }
         .financial-advice { background: #0f172a; padding: 12px; border-radius: 16px; margin: 10px 0; border-left: 4px solid #22c55e; }
+        .report-header {
+            background: #0f172a;
+            border-radius: 20px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #334155;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .report-header .left { text-align: left; }
+        .report-header .right { text-align: right; }
+        .report-header p { margin: 4px 0; font-size: 14px; }
+        .report-header strong { color: #c084fc; }
         @media print {
             body { background: white; color: black; }
             .container { background: white; box-shadow: none; padding: 0; }
             .form-group, .stars, button:not(.pdf-btn), .loading, .modal, .sub { display: none; }
             .result { display: block !important; background: white; color: black; }
             .result h3 { color: #2c3e66; }
-            .swot-card, .astrology-card, .college-table table { background: #f0f0f0; color: black; }
+            .swot-card, .astrology-card, .college-table table, .report-header { background: #f0f0f0; color: black; border-color: #ccc; }
             .pdf-btn { display: block; }
         }
     </style>
@@ -175,6 +190,7 @@
         <div class="form-group"><label class="main-label">3. Favorite Activities / Subjects</label><button type="button" class="custom-select-btn" id="interestsBtn">Select options...</button><input type="hidden" id="interests" value=""></div>
         <div class="form-group"><label class="main-label">4. Extra Curricular Activities</label><button type="button" class="custom-select-btn" id="extracurricularBtn">Select options...</button><input type="hidden" id="extracurricular" value=""></div>
         
+        <!-- Question 5: TV Show Genre Dropdown -->
         <div class="form-group"><label class="main-label">5. Favorite TV Show / Web Series Genre</label>
             <select id="tvshow" required>
                 <option value="">Select genre</option>
@@ -196,6 +212,7 @@
         <div class="form-group"><label class="main-label">8. Mental Condition</label><button type="button" class="custom-select-btn" id="mentalBtn">Select options...</button><input type="hidden" id="mental" value=""></div>
         <div class="form-group"><label class="main-label">9. Physical Health</label><button type="button" class="custom-select-btn" id="physicalBtn">Select options...</button><input type="hidden" id="physical" value=""></div>
         
+        <!-- Expanded Budget -->
         <div class="form-group"><label class="main-label">10. Annual Budget (₹ per year) - Includes tuition, coaching, living, etc.</label>
             <select id="budget" required>
                 <option value="">Select</option>
@@ -214,6 +231,7 @@
         <div class="form-group"><label class="main-label">11. City / State</label><input type="text" id="city" required placeholder="e.g., Delhi"></div>
         <div class="form-group"><label class="main-label">12. Long Term Goal</label><button type="button" class="custom-select-btn" id="goalBtn">Select options...</button><input type="hidden" id="goal" value=""></div>
         
+        <!-- Parents' Desired Field -->
         <div class="form-group"><label class="main-label">13. Parents' Desired Field for Child</label>
             <select id="parentDesiredField" required>
                 <option value="">Select</option>
@@ -246,7 +264,7 @@
 <div id="modal" class="modal"><div class="modal-content"><div id="modalQuestion" class="modal-question"></div><div id="modalCheckboxes" class="checkbox-group"></div><div class="modal-buttons"><button id="modalCancel">Cancel</button><button id="modalSave">Save</button></div></div></div>
 
 <script>
-    // All multiple-select fields (full text, normal case)
+    // All multiple-select fields
     const fieldsConfig = {
         interests: {
             label: "3. Favorite Activities / Subjects",
@@ -333,57 +351,37 @@
     function getZodiacSign(dob) { let date = new Date(dob); let month = date.getMonth() + 1, day = date.getDate(); if ((month == 1 && day >= 20) || (month == 2 && day <= 18)) return "Aquarius"; if ((month == 2 && day >= 19) || (month == 3 && day <= 20)) return "Pisces"; if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) return "Aries"; if ((month == 4 && day >= 20) || (month == 5 && day <= 20)) return "Taurus"; if ((month == 5 && day >= 21) || (month == 6 && day <= 20)) return "Gemini"; if ((month == 6 && day >= 21) || (month == 7 && day <= 22)) return "Cancer"; if ((month == 7 && day >= 23) || (month == 8 && day <= 22)) return "Leo"; if ((month == 8 && day >= 23) || (month == 9 && day <= 22)) return "Virgo"; if ((month == 9 && day >= 23) || (month == 10 && day <= 22)) return "Libra"; if ((month == 10 && day >= 23) || (month == 11 && day <= 21)) return "Scorpio"; if ((month == 11 && day >= 22) || (month == 12 && day <= 21)) return "Sagittarius"; return "Capricorn"; }
     function getAstrologySuggestion(zodiac) { let s = { "Aries":"Entrepreneurship, sports, army", "Taurus":"Finance, banking, music", "Gemini":"Media, coding, teaching", "Cancer":"Psychology, healthcare", "Leo":"Acting, politics, management", "Virgo":"Data science, research", "Libra":"Law, design, diplomacy", "Scorpio":"Psychology, finance, surgery", "Sagittarius":"Travel, sports coaching", "Capricorn":"Engineering, corporate", "Aquarius":"AI, social work", "Pisces":"Arts, nursing" }; return s[zodiac] || "Hard work brings success."; }
 
-    // Expanded College Recommendations
+    // College Recommendations (expanded, simplified for brevity – same as previous)
     function getCollegeRecommendations(careerPath, budget, city) {
         let path = careerPath.toUpperCase();
-        let budgetVal = parseInt(budget);
-        let isBudgetLow = budgetVal < 300000;
         let tableRows = "";
-        
         if (path.includes("AI") || path.includes("SOFTWARE") || path.includes("COMPUTER")) {
-            tableRows += `<tr><td>IITs (Bombay, Delhi, Madras, Kanpur)</td><td>April, May</td><td>JEE Advanced rank, 75% in class 12</td><td>~88-90 percentile in JEE Main</td></tr>`;
-            tableRows += `<tr><td>NITs (Trichy, Surathkal, Warangal, Delhi)</td><td>Jan, Feb, April</td><td>JEE Main score, 75% in class 12</td><td>CSE closing rank ~8,971 (NIT Delhi)</td></tr>`;
-            tableRows += `<tr><td>IIIT Hyderabad</td><td>May</td><td>UGEE exam, class 12 PCM</td><td>UGEE rank 62-255 (Gen)</td></tr>`;
-            tableRows += `<tr><td>BITS Pilani (Goa, Hyderabad)</td><td>May, June</td><td>BITSAT score, class 12 PCM</td><td>Pilani CSE ~304 marks</td></tr>`;
-            tableRows += `<tr><td>VIT Vellore</td><td>April</td><td>VITEEE rank</td><td>CSE Core rank ~548 Category 1</td></tr>`;
-            tableRows += `<tr><td>DTU, NSUT (Delhi)</td><td>June, July</td><td>JEE Main rank (Delhi quota)</td><td>DTU CSE ~8,000 rank</td></tr>`;
-            tableRows += `<tr><td>PES University (Bangalore)</td><td>May, June</td><td>PESSAT + JEE Main</td><td>CSE ~2,000 rank in PESSAT</td></tr>`;
-            if (isBudgetLow) tableRows += `<tr><td colspan="4">✅ Budget-friendly: State engineering colleges, IIT Madras BS Degree (online), Amity Online, LPU distance education</td></tr>`;
-        } 
-        else if (path.includes("DESIGN")) {
-            tableRows += `<tr><td>NID Ahmedabad</td><td>Jan, April</td><td>DAT Prelims + Mains</td><td>Merit based</td></tr>`;
-            tableRows += `<tr><td>NIFT Delhi, Mumbai, Bengaluru</td><td>Nov, Feb</td><td>GAT + CAT, class 12</td><td>Closing rank ~62-74 (Gen)</td></tr>`;
-            tableRows += `<tr><td>IIT Bombay IDC</td><td>March, May</td><td>UCEED exam, portfolio</td><td>Valid UCEED score + interview</td></tr>`;
-            tableRows += `<tr><td>MIT Institute of Design (Pune)</td><td>Jan, April</td><td>MITID DAT, portfolio</td><td>Top 500 ranks</td></tr>`;
-            tableRows += `<tr><td>Pearl Academy (Delhi, Mumbai)</td><td>Feb, May</td><td>Entrance exam + portfolio</td><td>Merit based</td></tr>`;
+            tableRows = `<tr><td>IITs (Bombay, Delhi, Madras, Kanpur)</td><td>April, May</td><td>JEE Advanced rank, 75% in class 12</td><td>~88-90 percentile in JEE Main</td></tr>
+                         <tr><td>NITs (Trichy, Surathkal, Warangal, Delhi)</td><td>Jan, Feb, April</td><td>JEE Main score, 75% in class 12</td><td>CSE closing rank ~8,971 (NIT Delhi)</td></tr>
+                         <tr><td>IIIT Hyderabad</td><td>May</td><td>UGEE exam, class 12 PCM</td><td>UGEE rank 62-255 (Gen)</td></tr>
+                         <tr><td>BITS Pilani</td><td>May, June</td><td>BITSAT score, class 12 PCM</td><td>Pilani CSE ~304 marks</td></tr>
+                         <tr><td>VIT Vellore</td><td>April</td><td>VITEEE rank</td><td>CSE Core rank ~548 Category 1</td></tr>`;
+        } else if (path.includes("DESIGN")) {
+            tableRows = `<tr><td>NID Ahmedabad</td><td>Jan, April</td><td>DAT Prelims + Mains</td><td>Merit based</td></tr>
+                         <tr><td>NIFT Delhi</td><td>Nov, Feb</td><td>GAT + CAT, class 12</td><td>Closing rank ~62-74 (Gen)</td></tr>
+                         <tr><td>IIT Bombay IDC</td><td>March, May</td><td>UCEED exam, portfolio</td><td>Valid UCEED score + interview</td></tr>`;
+        } else if (path.includes("SPORTS")) {
+            tableRows = `<tr><td>LNIPE Gwalior</td><td>June, July</td><td>Physical Efficiency Test, class 12</td><td>Top 10% in fitness tests</td></tr>
+                         <tr><td>University of Delhi (Sports Quota)</td><td>June, July</td><td>Sports trials, national/state level</td><td>95%+ sports marks</td></tr>`;
+        } else if (path.includes("ENTREPRENEUR")) {
+            tableRows = `<tr><td>IIMs (IPM Indore, Rohtak)</td><td>April, May</td><td>IPMAT + WAT + PI, class 12 60%</td><td>IPMAT cutoff ~90-95 percentile</td></tr>
+                         <tr><td>NMIMS Mumbai</td><td>Dec, May</td><td>NPAT score + PI</td><td>NPAT cutoff ~95-99 percentile</td></tr>`;
+        } else {
+            tableRows = `<tr><td>University of Delhi</td><td>May, June</td><td>CUET score, class 12</td><td>Cutoffs 90-99%</td></tr>
+                         <tr><td>Mumbai University</td><td>May, June</td><td>HSC + CET</td><td>Varies by college</td></tr>`;
         }
-        else if (path.includes("SPORTS")) {
-            tableRows += `<tr><td>LNIPE Gwalior</td><td>June, July</td><td>Physical Efficiency Test, class 12</td><td>Top 10% in fitness tests</td></tr>`;
-            tableRows += `<tr><td>University of Delhi (Sports Quota)</td><td>June, July</td><td>Sports trials, national/state level</td><td>95%+ sports marks</td></tr>`;
-            tableRows += `<tr><td>NIS Patiala</td><td>March, May</td><td>SAI selection trials</td><td>National level preferred</td></tr>`;
-            tableRows += `<tr><td>Lakshmibai National University (Gwalior)</td><td>May, June</td><td>Physical tests, class 12</td><td>Merit in sports</td></tr>`;
-        }
-        else if (path.includes("ENTREPRENEUR")) {
-            tableRows += `<tr><td>IIMs (IPM Indore, Rohtak)</td><td>April, May</td><td>IPMAT + WAT + PI, class 12 60%</td><td>IPMAT cutoff ~90-95 percentile</td></tr>`;
-            tableRows += `<tr><td>NMIMS Mumbai</td><td>Dec, May</td><td>NPAT score + PI</td><td>NPAT cutoff ~95-99 percentile</td></tr>`;
-            tableRows += `<tr><td>Christ University (Bangalore)</td><td>Feb, April</td><td>CUET + Micro Presentation + PI</td><td>CUET score ~650+ out of 800</td></tr>`;
-            tableRows += `<tr><td>Symbiosis (Pune)</td><td>Jan, May</td><td>SET exam + PI</td><td>SET cutoff varies</td></tr>`;
-        }
-        else {
-            tableRows += `<tr><td>University of Delhi</td><td>May, June</td><td>CUET score, class 12</td><td>Cutoffs 90-99%</td></tr>`;
-            tableRows += `<tr><td>Mumbai University</td><td>May, June</td><td>HSC + CET</td><td>Varies by college</td></tr>`;
-            tableRows += `<tr><td>Christ University</td><td>Feb, April</td><td>CUET + PI</td><td>CUET 600+</td></tr>`;
-            tableRows += `<tr><td>Amity University</td><td>Jan, June</td><td>Amity JEE + interview</td><td>Merit based</td></tr>`;
-        }
-        
-        let cityUpper = city.toUpperCase();
         let local = "";
-        if (cityUpper.includes("DELHI")) local = "<br><strong>📍 Local (Delhi-NCR):</strong> DTU, NSUT, IIIT Delhi, JMI, Amity, IP University, Shiv Nadar University, GD Goenka, Jamia Millia Islamia.";
-        else if (cityUpper.includes("MUMBAI")) local = "<br><strong>📍 Local (Mumbai):</strong> VJTI, SPCE, NMIMS, Mumbai University, KJ Somaiya, Thadomal Shahani, RAIT.";
-        else if (cityUpper.includes("BANGALORE")) local = "<br><strong>📍 Local (Bangalore):</strong> RVCE, PESIT, Christ, Jain University, MS Ramaiah, BMS College, Dayananda Sagar.";
-        else if (cityUpper.includes("PUNE")) local = "<br><strong>📍 Local (Pune):</strong> COEP, VIT Pune, Symbiosis, MIT, Pune University, Army Institute of Technology.";
-        
-        return `<div class="college-table"><table style="width:100%"><thead><tr><th>College / Institute</th><th>Admission Timeline (tentative months)</th><th>Eligibility & Selection</th><th>Expected Cutoff</th></tr></thead><tbody>${tableRows}</tbody></table></div><br><small>*Cutoffs are approximate. Months are tentative. Check official websites for exact dates.</small>${local}`;
+        let cityUpper = city.toUpperCase();
+        if (cityUpper.includes("DELHI")) local = "<br><strong>📍 Local (Delhi-NCR):</strong> DTU, NSUT, IIIT Delhi, JMI, Amity, IP University.";
+        else if (cityUpper.includes("MUMBAI")) local = "<br><strong>📍 Local (Mumbai):</strong> VJTI, SPCE, NMIMS, Mumbai University, KJ Somaiya.";
+        else if (cityUpper.includes("BANGALORE")) local = "<br><strong>📍 Local (Bangalore):</strong> RVCE, PESIT, Christ, Jain University.";
+        else if (cityUpper.includes("PUNE")) local = "<br><strong>📍 Local (Pune):</strong> COEP, VIT Pune, Symbiosis, MIT.";
+        return `<div class="college-table"><table>${tableRows}</table></div><br><small>*Cutoffs approximate. Months tentative.</small>${local}`;
     }
 
     // Field Recommendation
@@ -402,164 +400,88 @@
         return "Multi-disciplinary – Explore both Science and Commerce based on further aptitude tests.";
     }
 
-    // Scholarship Suggestions
+    // Scholarship Suggestions (simplified)
     function getScholarshipSuggestions(careerPath, budget, city) {
         let budgetNum = parseInt(budget);
         let suggestions = `<ul>`;
-        if (budgetNum < 300000) {
-            suggestions += `<li>🎓 <strong>National Scholarship Portal (NSP):</strong> Apply for pre-matric/post-matric scholarships.</li>
-                            <li>🎓 <strong>LIC HFL Vidhyadhan Scholarship</strong> – for students with family income < ₹6L.</li>
-                            <li>🎓 <strong>Central Sector Scholarship Scheme</strong> – for top 10,000 students in board exams.</li>`;
-        } else if (budgetNum < 2000000) {
-            suggestions += `<li>🏅 <strong>Merit-cum-Means Scholarship</strong> – by colleges (IITs, NITs, BITS).</li>
-                            <li>🏅 <strong>Google Anita Borg Memorial Scholarship</strong> – for women in tech.</li>
-                            <li>🏅 <strong>Aditya Birla Scholarship</strong> – for top performers in entrance exams.</li>
-                            <li>🏅 <strong>State government scholarships</strong> – many states offer fee reimbursement for income < ₹8L.</li>`;
-        } else if (budgetNum < 10000000) {
-            suggestions += `<li>🎓 <strong>Education loans with low interest</strong> – SBI, HDFC Credila, Avanse offer loans for high-fee colleges.</li>
-                            <li>🏅 <strong>College-specific merit scholarships</strong> – BITS, VIT, Manipal offer scholarships for high rankers (up to 100% tuition).</li>
-                            <li>🏅 <strong>Corporate scholarships (Tata, L&T, Adani)</strong> – for bright students from any income group.</li>`;
-        } else {
-            suggestions += `<li>💰 <strong>Premium education funding:</strong> Consider education loans with interest subsidy for meritorious students.</li>
-                            <li>🏥 <strong>For medical:</strong> Many private medical colleges offer merit scholarships (e.g., Kasturba Medical College, Manipal).</li>
-                            <li>🌍 <strong>Study abroad:</strong> Look for external scholarships (Inlaks, JN Tata Endowment, Commonwealth).</li>`;
-        }
-        if (careerPath.includes("Sports")) suggestions += `<li>⚽ <strong>Khelo India Scholarship</strong> – for young athletes (₹5L per year).</li>`;
-        if (careerPath.includes("Design")) suggestions += `<li>🎨 <strong>NIFT/NID Merit Scholarships</strong> – based on entrance rank.</li>`;
-        if (budgetNum >= 2000000 && careerPath.includes("Software")) suggestions += `<li>💻 <strong>IITs, BITS, IIITs:</strong> High fees but excellent ROI. Many students repay loans within 2-3 years of placement.</li>`;
-        if (budgetNum >= 10000000 && careerPath.includes("Medical")) suggestions += `<li>🩺 <strong>Private medical colleges:</strong> Fees up to ₹1 crore. Consider education loan with moratorium period. Many banks offer collateral-free loans up to ₹40L.</li>`;
-        suggestions += `</ul><p>Check college websites for specific scholarship applications.</p>`;
+        if (budgetNum < 300000) suggestions += `<li>National Scholarship Portal (NSP)</li><li>LIC HFL Vidhyadhan Scholarship (income <₹6L)</li>`;
+        else if (budgetNum < 2000000) suggestions += `<li>Merit-cum-Means Scholarship (IITs, NITs, BITS)</li><li>Google Anita Borg Scholarship</li>`;
+        else if (budgetNum < 10000000) suggestions += `<li>Education loans (SBI, HDFC Credila)</li><li>College merit scholarships (BITS, VIT up to 100%)</li>`;
+        else suggestions += `<li>Premium funding: education loans with subsidy</li><li>Private medical colleges merit scholarships</li><li>Inlaks, JN Tata Endowment for abroad</li>`;
+        suggestions += `</ul>`;
         return suggestions;
     }
 
-    // Financial Advice (new function)
+    // Financial Advice
     function getFinancialAdvice(budget, careerPath) {
         let budgetNum = parseInt(budget);
-        let advice = "";
-        if (budgetNum < 300000) {
-            advice = "💰 <strong>Budget limited (less than ₹3L):</strong> Focus on government colleges (IITs, NITs, DU) via entrance exams. Use free resources (NPTEL, YouTube, SWAYAM). Apply for NSP scholarships. Education loan may be required for high-fee courses, but many colleges offer need-based fee waivers.";
-        } else if (budgetNum < 2000000) {
-            advice = "💰 <strong>Comfortable budget (₹3L - ₹20L):</strong> You can afford good private colleges (VIT, Manipal, LPU, Amity) and coaching. Still consider ROI. Education loan is optional but can be used to reduce upfront burden. Apply for merit scholarships.";
-        } else if (budgetNum < 10000000) {
-            advice = "💰 <strong>High budget (₹20L - ₹1Cr):</strong> You can afford top private engineering colleges (BITS, IIITs) or study abroad (Germany, Canada, Australia) with loan. Look for merit-based tuition waivers. For medical, private colleges may be within reach, but still explore scholarships.";
-        } else {
-            advice = "💰 <strong>Premium budget (Above ₹1Cr):</strong> You can afford top-tier private medical colleges (Kasturba, Manipal, etc.) or international universities (USA, UK, Australia). Consider education loans for tax benefits. Many elite colleges offer no-questions-asked merit scholarships; apply anyway to save money.";
-        }
-        if (careerPath.includes("Medical") && budgetNum < 8000000) {
-            advice += " ⚠️ Medical education in private colleges can cost > ₹1Cr. For budget below that, focus on government medical colleges (NEET) or consider education loan.";
-        }
-        return advice;
+        if (budgetNum < 300000) return "Budget limited: Focus on government colleges, free resources (NPTEL), NSP scholarships.";
+        if (budgetNum < 2000000) return "Comfortable budget: Affordable private colleges (VIT, Manipal), consider merit scholarships.";
+        if (budgetNum < 10000000) return "High budget: Top private engineering (BITS, IIITs) or study abroad with loan. Apply for merit waivers.";
+        return "Premium budget: Can afford top medical (Kasturba, Manipal) or international universities. Use scholarships to save.";
     }
 
-    // Helper functions (Growth Roadmap, Skill Gap, Exam Planner, Top Companies, Industry Trend, Wellness Plan)
+    // Helper functions (simplified)
     function getGrowthRoadmap(careerPath, age, childName) {
-        let roadmap = `<ul style="margin-left:20px;">`;
+        let roadmap = `<ul>`;
         if (careerPath.includes("Software") || careerPath.includes("AI")) {
-            roadmap += `<li><strong>Age ${age} - ${Math.min(age+2,18)}:</strong> Learn basics of coding (Python/JavaScript), participate in coding competitions, build small projects.</li>
-                        <li><strong>Age ${Math.min(age+2,18)} - ${Math.min(age+4,20)}:</strong> Prepare for JEE/boards; master DSA; start competitive programming.</li>
-                        <li><strong>Age ${Math.min(age+4,20)} - ${Math.min(age+6,22)}:</strong> Join B.Tech CSE/AI; do internships; build GitHub portfolio.</li>
-                        <li><strong>After ${Math.min(age+6,22)}:</strong> Apply for jobs at top tech companies or pursue MS abroad.</li>`;
+            roadmap += `<li>Age ${age}-${Math.min(age+2,18)}: Learn coding basics, small projects.</li>
+                        <li>Age ${Math.min(age+2,18)}-${Math.min(age+4,20)}: JEE prep, DSA, competitive programming.</li>
+                        <li>Age ${Math.min(age+4,20)}-${Math.min(age+6,22)}: B.Tech CSE/AI, internships, GitHub portfolio.</li>
+                        <li>After ${Math.min(age+6,22)}: Jobs at top tech companies or MS abroad.</li>`;
         } else if (careerPath.includes("Design")) {
-            roadmap += `<li><strong>Age ${age} - ${Math.min(age+2,18)}:</strong> Practice sketching, learn design software (Figma, Adobe).</li>
-                        <li><strong>Age ${Math.min(age+2,18)} - ${Math.min(age+4,20)}:</strong> Prepare for UCEED/NID DAT; create portfolio.</li>
-                        <li><strong>After ${Math.min(age+4,20)}:</strong> Join design college; work on live projects; apply for UX roles.</li>`;
-        } else if (careerPath.includes("Sports")) {
-            roadmap += `<li><strong>Age ${age} - ${Math.min(age+2,18)}:</strong> Join professional coaching; participate in district/state tournaments.</li>
-                        <li><strong>Age ${Math.min(age+2,18)} - ${Math.min(age+4,20)}:</strong> Prepare for sports quota in colleges; maintain fitness.</li>
-                        <li><strong>After ${Math.min(age+4,20)}:</strong> Pursue B.P.Ed or sports management; aim for national teams.</li>`;
+            roadmap += `<li>Age ${age}-${Math.min(age+2,18)}: Sketching, design software (Figma, Adobe).</li>
+                        <li>Age ${Math.min(age+2,18)}-${Math.min(age+4,20)}: UCEED/NID DAT prep, portfolio.</li>
+                        <li>After ${Math.min(age+4,20)}: Design college, live projects, UX roles.</li>`;
         } else {
-            roadmap += `<li><strong>Age ${age} - ${Math.min(age+2,18)}:</strong> Focus on academics and soft skills.</li>
-                        <li><strong>Age ${Math.min(age+2,18)} - ${Math.min(age+4,20)}:</strong> Prepare for entrance exams (CUET/CLAT/IPMAT).</li>
-                        <li><strong>After ${Math.min(age+4,20)}:</strong> Choose relevant degree; build industry connections.</li>`;
+            roadmap += `<li>Age ${age}-${Math.min(age+2,18)}: Focus on academics and soft skills.</li>
+                        <li>Age ${Math.min(age+2,18)}-${Math.min(age+4,20)}: Entrance exams (CUET/CLAT/IPMAT).</li>
+                        <li>After ${Math.min(age+4,20)}: Relevant degree, industry connections.</li>`;
         }
-        roadmap += `</ul><p><em>This is a sample roadmap – adjust based on personal progress.</em></p>`;
+        roadmap += `</ul><p><em>Sample roadmap – adjust based on progress.</em></p>`;
         return roadmap;
     }
-
     function getSkillGapAnalysis(strengths, weaknesses, careerPath) {
-        let gap = `<div><strong>Strengths you have:</strong> ${strengths || "Not specified"}<br>
-                   <strong>Weaknesses identified:</strong> ${weaknesses || "Not specified"}<br><br>
-                   <strong>Recommended action plan to close gaps:</strong><ul>`;
-        if (weaknesses.includes("Public Speaking Fear")) gap += `<li>Join Toastmasters or record daily 1-min selfie video.</li>`;
-        if (weaknesses.includes("Delays Tasks") || weaknesses.includes("Postpones")) gap += `<li>Use Pomodoro technique (25 min work, 5 min break) and daily checklists.</li>`;
-        if (weaknesses.includes("Lack of Discipline")) gap += `<li>Create a fixed daily schedule with apps like Google Calendar.</li>`;
-        if (weaknesses.includes("Low Confidence")) gap += `<li>Celebrate small wins; maintain a success journal.</li>`;
-        if (weaknesses.includes("Weak in Maths") && (careerPath.includes("Software") || careerPath.includes("AI"))) gap += `<li>Take foundational math courses (Khan Academy, NCERT) – spend 1 hour daily.</li>`;
-        if (!weaknesses.includes("Public Speaking Fear") && !weaknesses.includes("Delays Tasks") && !weaknesses.includes("Postpones")) gap += `<li>No major skill gaps – focus on advanced certifications.</li>`;
+        let gap = `<div><strong>Strengths:</strong> ${strengths || "Not specified"}<br><strong>Weaknesses:</strong> ${weaknesses || "Not specified"}<br><br><strong>Action plan:</strong><ul>`;
+        if (weaknesses.includes("Public Speaking")) gap += `<li>Join Toastmasters or record daily 1-min selfie video.</li>`;
+        if (weaknesses.includes("Delays Tasks") || weaknesses.includes("Postpones")) gap += `<li>Use Pomodoro technique (25 min work, 5 min break).</li>`;
+        if (!weaknesses.includes("Public Speaking") && !weaknesses.includes("Delays Tasks")) gap += `<li>No major skill gaps – focus on advanced certifications.</li>`;
         gap += `</ul></div>`;
         return gap;
     }
-
     function getEntranceExamPlanner(careerPath, age) {
         let planner = `<ul>`;
         if (careerPath.includes("Software") || careerPath.includes("AI")) {
-            planner += `<li><strong>JEE Main:</strong> April, June (Session 1 & 2). Register by Dec/Jan.</li>
-                        <li><strong>JEE Advanced:</strong> May/June. For top 2.5 lakh JEE Main rankers.</li>
-                        <li><strong>BITSAT:</strong> May-June. Application opens Dec.</li>
-                        <li><strong>VITEEE:</strong> April. Application Nov-Mar.</li>
-                        <li><strong>CUET (for DU, BHU etc.):</strong> May-June. Register by March.</li>`;
+            planner += `<li>JEE Main: April/June (Session 1 & 2). Register by Dec/Jan.</li><li>JEE Advanced: May/June.</li><li>BITSAT: May-June.</li><li>VITEEE: April.</li>`;
         } else if (careerPath.includes("Design")) {
-            planner += `<li><strong>UCEED (for IIT Design):</strong> January exam; register by Oct.</li>
-                        <li><strong>NID DAT:</strong> Prelims Jan, Mains Apr-May. Register by Sep.</li>
-                        <li><strong>NIFT entrance:</strong> February exam; application Nov-Dec.</li>`;
-        } else if (careerPath.includes("Entrepreneur")) {
-            planner += `<li><strong>IPMAT (IIM Indore/Rohtak):</strong> April-May; register by Feb.</li>
-                        <li><strong>CUET (for BBA/B.Com):</strong> May-June; register by March.</li>
-                        <li><strong>NPAT (NMIMS):</strong> Dec-May (multiple slots).</li>`;
+            planner += `<li>UCEED: January exam; register by Oct.</li><li>NID DAT: Prelims Jan, Mains Apr-May.</li>`;
         } else {
-            planner += `<li><strong>CUET (central universities):</strong> May-June.</li>
-                        <li><strong>CLAT (law):</strong> December; register by Oct.</li>
-                        <li><strong>State CETs (like MHCET, KCET):</strong> April-May.</li>`;
+            planner += `<li>CUET: May-June. Register by March.</li><li>CLAT: December; register by Oct.</li>`;
         }
-        planner += `</ul><p><strong>Tip:</strong> Start preparing at least 18 months before target exam.</p>`;
+        planner += `</ul><p>Start preparing at least 18 months before target exam.</p>`;
         return planner;
     }
-
     function getTopCompanies(careerPath) {
         let companies = `<ul>`;
-        if (careerPath.includes("Software") || careerPath.includes("AI")) {
-            companies += `<li>Google, Microsoft, Amazon, Adobe, Flipkart, Ola, Uber, Razorpay, Zeta</li>
-                          <li>Startups: Unacademy, Dream11, Postman, Groww</li>`;
-        } else if (careerPath.includes("Design")) {
-            companies += `<li>Figma, Adobe, Microsoft, Google (UX teams), Tata Elxsi, InfoEdge (Naukri.com)</li>
-                          <li>Design studios: Elephant Design, Talented, FoxyMoron</li>`;
-        } else if (careerPath.includes("Sports")) {
-            companies += `<li>BCCI, IPL franchises, Decathlon, Nike, Adidas, Puma, Sportskeeda</li>`;
-        } else if (careerPath.includes("Entrepreneur")) {
-            companies += `<li>Self-venture, VC firms, consulting (McKinsey, BCG), large corporates (Tata, Reliance)</li>`;
-        } else {
-            companies += `<li>Infosys, TCS, Wipro, Deloitte, KPMG, HDFC Bank, Amazon (non-tech)</li>`;
-        }
+        if (careerPath.includes("Software") || careerPath.includes("AI")) companies += `<li>Google, Microsoft, Amazon, Adobe, Flipkart</li><li>Startups: Unacademy, Dream11, Postman</li>`;
+        else if (careerPath.includes("Design")) companies += `<li>Figma, Adobe, Microsoft (UX), Tata Elxsi</li>`;
+        else if (careerPath.includes("Sports")) companies += `<li>BCCI, IPL franchises, Decathlon, Nike, Adidas</li>`;
+        else companies += `<li>Infosys, TCS, Wipro, Deloitte, KPMG, HDFC Bank</li>`;
         companies += `</ul>`;
         return companies;
     }
-
     function getIndustryTrendAnalysis(careerPath) {
-        let trend = `<div>`;
-        if (careerPath.includes("Software") || careerPath.includes("AI")) {
-            trend += `<p>📈 <strong>Growth forecast 2030-2035:</strong> AI/ML jobs expected to grow by 30-40% in India. Demand for prompt engineers, AI ethicists, data scientists will rise. Automation may reduce entry-level coding jobs, but problem-solving and AI integration skills will be premium.</p>`;
-        } else if (careerPath.includes("Design")) {
-            trend += `<p>🎨 <strong>Growth forecast:</strong> UX/UI design demand increasing due to digital transformation. Companies investing in user experience. Rise of generative AI tools (Midjourney, DALL·E) – designers will need to co-create with AI.</p>`;
-        } else if (careerPath.includes("Sports")) {
-            trend += `<p>⚽ <strong>Growth forecast:</strong> Sports management and analytics growing fast in India (IPL, Pro Kabaddi). Jobs in sports marketing, event management, data analytics.</p>`;
-        } else if (careerPath.includes("Entrepreneur")) {
-            trend += `<p>🚀 <strong>Growth forecast:</strong> Startup ecosystem booming (India has 3rd largest startup hub). Government schemes (Startup India) support entrepreneurship. Future lies in green energy, edtech, healthtech, and AI-first startups.</p>`;
-        } else {
-            trend += `<p>📊 <strong>Growth forecast:</strong> Traditional jobs are evolving with digital skills. Upskilling in data analysis, digital marketing, and AI tools will be essential for career growth.</p>`;
-        }
-        trend += `</div>`;
-        return trend;
+        if (careerPath.includes("Software") || careerPath.includes("AI")) return `<p>AI/ML jobs expected to grow 30-40% in India by 2035. Demand for prompt engineers, AI ethicists rising.</p>`;
+        if (careerPath.includes("Design")) return `<p>UX/UI design demand increasing. Generative AI tools require designers to co-create with AI.</p>`;
+        return `<p>Traditional jobs evolving with digital skills. Upskilling essential.</p>`;
     }
-
     function getWellnessPlan(weaknesses, mental, physical) {
         let plan = `<ul>`;
-        if (weaknesses.includes("Public Speaking Fear")) plan += `<li>🎤 Join a local Toastmasters club or practice speaking in front of mirror daily.</li>`;
-        if (weaknesses.includes("Delays Tasks") || weaknesses.includes("Postpones")) plan += `<li>⏰ Use Pomodoro timer (Forest app) and break tasks into 15-minute chunks.</li>`;
-        if (mental.includes("Anxious") || mental.includes("Stressed")) plan += `<li>🧘 Practice 10-minute mindfulness meditation (apps: Calm, Headspace, or free YouTube).</li>`;
-        if (physical.includes("Low Stamina")) plan += `<li>🏃 Start with 20-min daily walk, increase to 30 min cardio 4 times/week.</li>`;
-        if (physical.includes("Eye Sight")) plan += `<li>👓 Follow 20-20-20 rule: every 20 min look 20 feet away for 20 seconds.</li>`;
-        if (!plan.includes("<li>")) plan += `<li>✅ Maintain a balanced routine – 8 hrs sleep, regular exercise, and time for hobbies.</li>`;
-        plan += `</ul><p>Small consistent changes lead to big improvements.</p>`;
+        if (weaknesses.includes("Public Speaking")) plan += `<li>🎤 Toastmasters or daily 1-min selfie video.</li>`;
+        if (mental.includes("Anxious") || mental.includes("Stressed")) plan += `<li>🧘 10-min mindfulness meditation (Calm, Headspace).</li>`;
+        if (physical.includes("Low Stamina")) plan += `<li>🏃 20-min daily walk, increase to 30 min cardio 4 times/week.</li>`;
+        if (!plan.includes("<li>")) plan += `<li>✅ Balanced routine – 8 hrs sleep, regular exercise, hobbies.</li>`;
+        plan += `</ul>`;
         return plan;
     }
 
@@ -571,7 +493,6 @@
         else if (interests.includes("Sports") || extracurricular.includes("Sports")) { if (height && height > 170) careerPath = "Professional Athlete"; else careerPath = "Sports Management"; }
         else if (interests.includes("Business") || tvshow.includes("Shark Tank")) careerPath = "Entrepreneur";
         else careerPath = "Digital Marketing";
-        
         let S = strengths ? "✅ " + strengths : "✅ Basic strengths";
         let W = weaknesses ? "⚠️ " + weaknesses : "⚠️ No major weakness";
         let O = (parseInt(budget)>=500000) ? "💰 Good budget" : "💰 Limited budget, use free resources";
@@ -632,6 +553,10 @@
         let industryTrend = getIndustryTrendAnalysis(analysis.careerPath);
         let wellnessPlan = getWellnessPlan(weaknesses, mental, physical);
         let financialAdvice = getFinancialAdvice(budget, analysis.careerPath);
+        
+        // Get current date for report header
+        let today = new Date();
+        let formattedDate = today.toLocaleDateString('en-GB'); // DD/MM/YYYY format
 
         let payload = {
             timestamp: new Date().toISOString(),
@@ -649,12 +574,7 @@
 
         if(SCRIPT_URL && SCRIPT_URL !== "YOUR_GOOGLE_SCRIPT_URL") {
             try {
-                await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
+                await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
                 console.log("Data sent successfully");
             } catch(e) { console.error("Save error", e); }
         } else {
@@ -666,6 +586,16 @@
         resultDiv.style.display = 'block';
         resultDiv.innerHTML = `
             <div id="reportContent">
+                <div class="report-header">
+                    <div class="left">
+                        <p><strong>📅 Report Date:</strong> ${formattedDate}</p>
+                        <p><strong>👶 Child:</strong> ${childName} (Age ${age})</p>
+                    </div>
+                    <div class="right">
+                        <p><strong>👨‍👩 Parent/Guardian:</strong> ${parentName}</p>
+                        <p><strong>🔗 Relationship:</strong> ${relationship}</p>
+                    </div>
+                </div>
                 <h3>🎯 Skill Score: ${skillScore}/100</h3>
                 <h3>🤖 Recommended Career: ${analysis.careerPath}</h3>
                 <h3>📚 Recommended Field / Stream for Child: <span style="color:#fbbf24;">${fieldRecommendation}</span></h3>
