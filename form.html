@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Neural Path 2.0 - Final Roadmap</title>
+    <title>Neural Path 2.0 - Final</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -107,7 +107,16 @@
         }
         .modal-question small { font-size: 12px; color: #94a3b8; display: block; margin-top: 5px; }
         .checkbox-group { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
-        .checkbox-group label { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; line-height: 1.4; white-space: normal; word-break: break-word; }
+        /* FIX: full text wrap */
+        .checkbox-group label {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 14px;
+            line-height: 1.4;
+            white-space: normal;
+            word-break: break-word;
+        }
         .checkbox-group input { flex-shrink: 0; margin-top: 2px; }
         .modal-buttons { display: flex; gap: 10px; justify-content: flex-end; }
         .modal-buttons button { width: auto; padding: 8px 16px; margin-top: 0; }
@@ -139,7 +148,7 @@
         @media print {
             body { background: white; color: black; }
             .container { background: white; box-shadow: none; padding: 0; }
-            .form-group, .stars, button:not(.pdf-btn), .loading, .modal, .qr-section, .sub { display: none; }
+            .form-group, .stars, button:not(.pdf-btn), .loading, .modal, .sub { display: none; }
             .result { display: block !important; background: white; color: black; }
             .result h3 { color: #2c3e66; }
             .swot-card, .astrology-card, .college-table table { background: #f0f0f0; color: black; }
@@ -150,7 +159,7 @@
 <body>
 <div class="container">
     <h1>🧠 NEURAL PATH 2.0</h1>
-    <div class="sub">FINAL CAREER ROADMAP</div>
+    <div class="sub">COMPLETE CAREER ROADMAP</div>
 
     <form id="parentForm">
         <div class="form-group"><label class="main-label">👨‍👩 PARENT/GUARDIAN NAME</label><input type="text" id="parentName" required placeholder="E.G., RAJESH SHARMA" oninput="this.value = this.value.toUpperCase()"></div>
@@ -165,17 +174,17 @@
         <div class="form-group"><label class="main-label">3. FAVORITE ACTIVITIES / SUBJECTS</label><button type="button" class="custom-select-btn" id="interestsBtn">SELECT OPTIONS...</button><input type="hidden" id="interests" value=""></div>
         <div class="form-group"><label class="main-label">4. EXTRA CURRICULAR ACTIVITIES</label><button type="button" class="custom-select-btn" id="extracurricularBtn">SELECT OPTIONS...</button><input type="hidden" id="extracurricular" value=""></div>
         <div class="form-group"><label class="main-label">5. FAVORITE TV SHOW / WEB SERIES</label><input type="text" id="tvshow" placeholder="E.G., SHARK TANK" oninput="this.value = this.value.toUpperCase()"></div>
-        <div class="form-group"><label class="main-label">6. FUTURE TARGET COMPANY / ORGANIZATION</label><input type="text" id="targetOrg" placeholder="E.G., GOOGLE, ISRO" oninput="this.value = this.value.toUpperCase()"></div>
-        <div class="form-group"><label class="main-label">7. STRENGTHS</label><button type="button" class="custom-select-btn" id="strengthsBtn">SELECT OPTIONS...</button><input type="hidden" id="strengths" value=""></div>
-        <div class="form-group"><label class="main-label">8. WEAKNESSES</label><button type="button" class="custom-select-btn" id="weaknessesBtn">SELECT OPTIONS...</button><input type="hidden" id="weaknesses" value=""></div>
-        <div class="form-group"><label class="main-label">9. MENTAL CONDITION</label><button type="button" class="custom-select-btn" id="mentalBtn">SELECT OPTIONS...</button><input type="hidden" id="mental" value=""></div>
-        <div class="form-group"><label class="main-label">10. PHYSICAL HEALTH</label><button type="button" class="custom-select-btn" id="physicalBtn">SELECT OPTIONS...</button><input type="hidden" id="physical" value=""></div>
-        <div class="form-group"><label class="main-label">11. ANNUAL BUDGET (₹ PER YEAR)</label>
+        <!-- QUESTION 6 REMOVED (FUTURE TARGET COMPANY) -->
+        <div class="form-group"><label class="main-label">6. STRENGTHS</label><button type="button" class="custom-select-btn" id="strengthsBtn">SELECT OPTIONS...</button><input type="hidden" id="strengths" value=""></div>
+        <div class="form-group"><label class="main-label">7. WEAKNESSES</label><button type="button" class="custom-select-btn" id="weaknessesBtn">SELECT OPTIONS...</button><input type="hidden" id="weaknesses" value=""></div>
+        <div class="form-group"><label class="main-label">8. MENTAL CONDITION</label><button type="button" class="custom-select-btn" id="mentalBtn">SELECT OPTIONS...</button><input type="hidden" id="mental" value=""></div>
+        <div class="form-group"><label class="main-label">9. PHYSICAL HEALTH</label><button type="button" class="custom-select-btn" id="physicalBtn">SELECT OPTIONS...</button><input type="hidden" id="physical" value=""></div>
+        <div class="form-group"><label class="main-label">10. ANNUAL BUDGET (₹ PER YEAR)</label>
             <select id="budget" required><option value="">SELECT</option><option value="100000">LESS THAN ₹1 LAKH</option><option value="300000">₹1 LAKH - ₹3 LAKH</option><option value="500000">₹3 LAKH - ₹5 LAKH</option><option value="800000">₹5 LAKH - ₹8 LAKH</option><option value="1200000">₹8 LAKH - ₹12 LAKH</option><option value="2000000">ABOVE ₹12 LAKH</option></select>
         </div>
-        <div class="form-group"><label class="main-label">12. CITY / STATE</label><input type="text" id="city" required placeholder="E.G., DELHI" oninput="this.value = this.value.toUpperCase()"></div>
-        <div class="form-group"><label class="main-label">13. LONG TERM GOAL</label><button type="button" class="custom-select-btn" id="goalBtn">SELECT OPTIONS...</button><input type="hidden" id="goal" value=""></div>
-        <div class="form-group"><label class="main-label">14. PARENT-CHILD AGREEMENT LEVEL (1-10)</label>
+        <div class="form-group"><label class="main-label">11. CITY / STATE</label><input type="text" id="city" required placeholder="E.G., DELHI" oninput="this.value = this.value.toUpperCase()"></div>
+        <div class="form-group"><label class="main-label">12. LONG TERM GOAL</label><button type="button" class="custom-select-btn" id="goalBtn">SELECT OPTIONS...</button><input type="hidden" id="goal" value=""></div>
+        <div class="form-group"><label class="main-label">13. PARENT-CHILD AGREEMENT LEVEL (1-10)</label>
             <select id="alignment" required><option value="">SELECT</option><option value="1">1 – COMPLETE DISAGREEMENT</option><option value="2">2 – MOSTLY DISAGREE</option><option value="3">3 – SLIGHT DISAGREEMENT</option><option value="4">4 – SLIGHTLY AGREE BUT CONFUSED</option><option value="5">5 – NEUTRAL</option><option value="6">6 – SOMEWHAT AGREE</option><option value="7">7 – MOSTLY AGREE</option><option value="8">8 – STRONGLY AGREE</option><option value="9">9 – ALMOST PERFECT MATCH</option><option value="10">10 – PERFECT AGREEMENT</option></select>
             <div class="alignment-scale">💡 1 = DIFFERENT GOALS | 10 = SAME VISION</div>
         </div>
@@ -199,12 +208,13 @@
     const fieldsConfig = {
         interests: { label: "3. FAVORITE ACTIVITIES / SUBJECTS", options: ["GAMING & COMPUTERS", "CODING & PROGRAMMING", "DRAWING & DESIGN", "SPORTS & PHYSICAL", "READING & WRITING", "MATHS & LOGIC", "SCIENCE & EXPERIMENTS", "MUSIC & ARTS", "BUSINESS & MONEY"] },
         extracurricular: { label: "4. EXTRA CURRICULAR ACTIVITIES", options: ["SPORTS (CRICKET/FOOTBALL)", "CHESS / BOARD GAMES", "MUSIC / DANCE", "CODING CLUB / ROBOTICS", "DEBATE / DRAMA", "ART & CRAFT", "VOLUNTEERING / SOCIAL WORK"] },
-        strengths: { label: "7. STRENGTHS", options: ["PROBLEM SOLVING", "CREATIVE THINKING", "LEADERSHIP", "HARD WORKING", "QUICK LEARNER", "GOOD MEMORY", "TEAM PLAYER"] },
-        weaknesses: { label: "8. WEAKNESSES", options: ["PUBLIC SPEAKING FEAR", "LACK OF DISCIPLINE", "WEAK IN MATHS", "POOR WRITING SKILLS", "LOW CONFIDENCE", "DELAYS TASKS / POSTPONES"] },
-        mental: { label: "9. MENTAL CONDITION", options: ["ANXIOUS / WORRIED", "LOW CONFIDENCE", "STRESSED OFTEN", "HAPPY & CALM", "SHORT TEMPER"] },
-        physical: { label: "10. PHYSICAL HEALTH", options: ["EYE SIGHT ISSUE", "OBESITY / WEIGHT", "LOW STAMINA", "FIT & ACTIVE", "FREQUENT SICKNESS"] },
-        goal: { label: "13. LONG TERM GOAL", options: ["SETTLE ABROAD", "START MY OWN BUSINESS", "STABLE GOVERNMENT JOB", "HIGH PAYING PRIVATE JOB", "BECOME A RESEARCHER/SCIENTIST"] }
+        strengths: { label: "6. STRENGTHS", options: ["PROBLEM SOLVING", "CREATIVE THINKING", "LEADERSHIP", "HARD WORKING", "QUICK LEARNER", "GOOD MEMORY", "TEAM PLAYER"] },
+        weaknesses: { label: "7. WEAKNESSES", options: ["PUBLIC SPEAKING FEAR", "LACK OF DISCIPLINE", "WEAK IN MATHS", "POOR WRITING SKILLS", "LOW CONFIDENCE", "DELAYS TASKS / POSTPONES"] },
+        mental: { label: "8. MENTAL CONDITION", options: ["ANXIOUS / WORRIED", "LOW CONFIDENCE", "STRESSED OFTEN", "HAPPY & CALM", "SHORT TEMPER"] },
+        physical: { label: "9. PHYSICAL HEALTH", options: ["EYE SIGHT ISSUE", "OBESITY / WEIGHT", "LOW STAMINA", "FIT & ACTIVE", "FREQUENT SICKNESS"] },
+        goal: { label: "12. LONG TERM GOAL", options: ["SETTLE ABROAD", "START MY OWN BUSINESS", "STABLE GOVERNMENT JOB", "HIGH PAYING PRIVATE JOB", "BECOME A RESEARCHER/SCIENTIST"] }
     };
+
     let currentModalField = null;
     function openModal(fieldId) {
         currentModalField = fieldId;
@@ -266,10 +276,10 @@
                         <td style="padding: 10px;">${timeline}</td>
                         <td style="padding: 10px;">${eligibility}</td>
                         <td style="padding: 10px;">${cutoff}</td>
-                     </td>`;
+                      </tr>`;
         }
         recommendationsHTML = `<div class="college-table"><table style="width:100%"><thead><tr style="background:#0f172a; color:#c084fc;"><th>College / Institute</th><th>🗓️ Admission Timeline</th><th>📝 Eligibility & Selection</th><th>🎯 Expected/Previous Year Cutoff</th></tr></thead><tbody>`;
-        if (path.includes("AI") || path.includes("SOFTWARE") || path.includes("COMPUTER") || path.includes("GOOGLE")) {
+        if (path.includes("AI") || path.includes("SOFTWARE") || path.includes("COMPUTER")) {
             recommendationsHTML += buildCollegeRow("IITs (via JEE Advanced)","Registration: Apr 23 - May 2, 2025","Top 2,50,000 JEE Main rankers; 75% in Class 12","~88-90 percentile in JEE Main");
             recommendationsHTML += buildCollegeRow("NITs (via JEE Main)","Exam: Jan/Feb & Apr 2025","75% in Class 12; JEE Main score","CSE at NIT Delhi: Closing rank ~8,971");
             recommendationsHTML += buildCollegeRow("IIIT Hyderabad (UGEE)","Exam: May 2025","Class 12 PCM; UGEE exam","UGEE rank 62-255 (Gen)");
@@ -301,7 +311,7 @@
         return recommendationsHTML;
     }
 
-    // ---------- New helper functions (only required ones) ----------
+    // ---------- Helper functions (growth roadmap, skill gap, scholarships, exam planner, top companies, industry trend, wellness) ----------
     function getGrowthRoadmap(careerPath, age, childName) {
         let roadmap = `<ul style="margin-left:20px;">`;
         if (careerPath.includes("SOFTWARE") || careerPath.includes("AI")) {
@@ -430,16 +440,14 @@
         return plan;
     }
 
-    // ---------- Main analysis ----------
-    function generateAnalysis(age, height, weight, interests, extracurricular, tvshow, targetOrg, strengths, weaknesses, mental, physical, budget, goal, alignment) {
+    // ---------- Main analysis (without targetOrg) ----------
+    function generateAnalysis(age, height, weight, interests, extracurricular, tvshow, strengths, weaknesses, mental, physical, budget, goal, alignment) {
         let careerPath = "";
         if (interests.includes("CODING") || interests.includes("GAMING") || extracurricular.includes("CODING")) careerPath = "AI/ML SOFTWARE ENGINEER";
         else if (interests.includes("DRAWING") || interests.includes("DESIGN")) careerPath = "UI/UX DESIGNER";
         else if (interests.includes("SPORTS") || extracurricular.includes("SPORTS")) { if (height && height > 170) careerPath = "PROFESSIONAL ATHLETE"; else careerPath = "SPORTS MANAGEMENT"; }
         else if (interests.includes("BUSINESS") || tvshow.includes("SHARK TANK")) careerPath = "ENTREPRENEUR";
         else careerPath = "DIGITAL MARKETING";
-        if (targetOrg.includes("GOOGLE")) careerPath = "SOFTWARE ENGINEER AT GOOGLE";
-        else if (targetOrg.includes("ISRO")) careerPath = "AEROSPACE SCIENTIST";
         let S = strengths ? "✅ " + strengths : "✅ BASIC STRENGTHS";
         let W = weaknesses ? "⚠️ " + weaknesses : "⚠️ NO MAJOR WEAKNESS";
         let O = (parseInt(budget)>=500000) ? "💰 GOOD BUDGET" : "💰 LIMITED BUDGET, USE FREE RESOURCES";
@@ -460,7 +468,6 @@
         let interests = getHiddenValue('interests');
         let extracurricular = getHiddenValue('extracurricular');
         let tvshow = document.getElementById('tvshow').value.trim().toUpperCase();
-        let targetOrg = document.getElementById('targetOrg').value.trim().toUpperCase();
         let strengths = getHiddenValue('strengths');
         let weaknesses = getHiddenValue('weaknesses');
         let mental = getHiddenValue('mental');
@@ -484,7 +491,7 @@
 
         let zodiac = getZodiacSign(dob);
         let astrologyMsg = getAstrologySuggestion(zodiac);
-        let analysis = generateAnalysis(age, height, weight, interests, extracurricular, tvshow, targetOrg, strengths, weaknesses, mental, physical, budget, goal, alignment);
+        let analysis = generateAnalysis(age, height, weight, interests, extracurricular, tvshow, strengths, weaknesses, mental, physical, budget, goal, alignment);
         let skillScore = 50;
         if(strengths.includes("PROBLEM SOLVING")) skillScore += 15;
         if(weaknesses.includes("PUBLIC SPEAKING")) skillScore -= 10;
@@ -499,10 +506,10 @@
         let industryTrend = getIndustryTrendAnalysis(analysis.careerPath);
         let wellnessPlan = getWellnessPlan(weaknesses, mental, physical);
 
-        // Payload for Google Sheet (optional)
+        // Payload (targetOrg removed)
         let payload = {
             timestamp: new Date().toISOString(),
-            parentName, relationship, childName, dob, age, height, weight, interests, extracurricular, tvshow, targetOrg,
+            parentName, relationship, childName, dob, age, height, weight, interests, extracurricular, tvshow,
             strengths, weaknesses, mental, physical, budget, city, goal, alignment,
             parentEmail, rating, skillScore, careerPath: analysis.careerPath,
             swot_s: analysis.S, swot_w: analysis.W, swot_o: analysis.O, swot_t: analysis.T,
