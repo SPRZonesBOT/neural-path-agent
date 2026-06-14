@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Neural Path 2.0 - Skill Score Explanation</title>
+    <title>Neural Path 2.0 - Final</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -383,14 +383,14 @@
         let tableRows = "";
         if (path.includes("AI") || path.includes("SOFTWARE") || path.includes("COMPUTER")) {
             tableRows = `<tr><td style="padding: 8px;">IITs (Bombay, Delhi, Madras, Kanpur)</td><td style="padding: 8px;">April, May</td><td>JEE Advanced rank, 75% in class 12</td><td>~88-90 percentile in JEE Main</td></tr>
-                          <tr><td style="padding: 8px;">NITs (Trichy, Surathkal, Warangal, Delhi)</td><td style="padding: 8px;">Jan, Feb, April</td><td>JEE Main score, 75% in class 12</td><td>CSE closing rank ~8,971 (NIT Delhi)</td></tr>
-                          <tr><td style="padding: 8px;">IIIT Hyderabad</td><td style="padding: 8px;">May</td><td>UGEE exam, class 12 PCM</td><td>UGEE rank 62-255 (Gen)</td></tr>
-                          <tr><td style="padding: 8px;">BITS Pilani</td><td style="padding: 8px;">May, June</td><td>BITSAT score, class 12 PCM</td><td>Pilani CSE ~304 marks</td></tr>`;
+                          <tr><td>NITs (Trichy, Surathkal, Warangal, Delhi)</td><td>Jan, Feb, April</td><td>JEE Main score, 75% in class 12</td><td>CSE closing rank ~8,971 (NIT Delhi)</td></tr>
+                          <tr><td>IIIT Hyderabad</td><td>May</td><td>UGEE exam, class 12 PCM</td><td>UGEE rank 62-255 (Gen)</td></tr>
+                          <tr><td>BITS Pilani</td><td>May, June</td><td>BITSAT score, class 12 PCM</td><td>Pilani CSE ~304 marks</td></tr>`;
         } else if (path.includes("DESIGN")) {
-            tableRows = `<tr><td style="padding: 8px;">NID Ahmedabad</td><td style="padding: 8px;">Jan, April</td><td>DAT Prelims + Mains</td><td>Merit based</td></tr>
-                         <tr><td style="padding: 8px;">NIFT Delhi</td><td style="padding: 8px;">Nov, Feb</td><td>GAT + CAT, class 12</td><td>Closing rank ~62-74 (Gen)</td></tr>`;
+            tableRows = `<tr><td>NID Ahmedabad</td><td>Jan, April</td><td>DAT Prelims + Mains</td><td>Merit based</td></tr>
+                         <tr><td>NIFT Delhi</td><td>Nov, Feb</td><td>GAT + CAT, class 12</td><td>Closing rank ~62-74 (Gen)</td></tr>`;
         } else {
-            tableRows = `<tr><td style="padding: 8px;">University of Delhi</td><td style="padding: 8px;">May, June</td><td>CUET score, class 12</td><td>Cutoffs 90-99%</td></tr>`;
+            tableRows = `<tr><td>University of Delhi</td><td>May, June</td><td>CUET score, class 12</td><td>Cutoffs 90-99%</td></tr>`;
         }
         return `<div class="college-table"><table style="width:100%; border-collapse: collapse;">${tableRows}</table></div><br><small>*Cutoffs approximate. Months tentative.</small>`;
     }
@@ -456,7 +456,7 @@
         return `${yearsToClass12Text}approximately ${totalYears} years from now (including graduation).`;
     }
 
-    // Helper functions (simplified)
+    // Helper functions
     function getGrowthRoadmap(careerPath, age, childName) {
         let roadmap = `<ul>`;
         if (careerPath.includes("Software") || careerPath.includes("AI")) {
@@ -535,7 +535,8 @@
         return { careerPath, S, W, O, T };
     }
 
-    const SCRIPT_URL = "https://script.google.com/home/projects/1Er_k7ZiDGYl2uI_ffF3U0_oM2by3e9Vq-fy_OA14HyZe0rHHome7BV_B/edit";  // REPLACE WITH YOUR ACTUAL APPS SCRIPT URL
+    // REPLACE WITH YOUR ACTUAL APPS SCRIPT URL
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyDcr37gtyJi8p55fdBdHWEA9oLsHMIwS9BWXuFIuVaSgCKWU_EvNxQ9uFQ5AAbJb3M/exec";
 
     async function submitAndGenerate() {
         let parentName = document.getElementById('parentName').value.trim();
@@ -582,7 +583,6 @@
         if(weaknesses.includes("Public Speaking Fear")) skillScore -= 10;
         skillScore = Math.min(100, Math.max(20, skillScore));
 
-        // Explanation of skill score calculation
         let skillExplanation = "";
         if (strengths.includes("Problem Solving")) skillExplanation += "+15 for Problem Solving; ";
         if (strengths.includes("Creative")) skillExplanation += "+12 for Creative Thinking; ";
@@ -622,9 +622,15 @@
 
         if(SCRIPT_URL && SCRIPT_URL !== "YOUR_GOOGLE_SCRIPT_URL") {
             try {
-                await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-                console.log("Data sent successfully");
-            } catch(e) { console.error("Save error", e); }
+                // IMPORTANT: mode: 'cors' (removed no-cors)
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.text();
+                console.log("Server response:", result);
+            } catch(e) { console.error("Fetch error:", e); }
         } else {
             console.warn("Google Sheet URL not configured. Data will not be saved.");
             alert("⚠️ Google Sheet URL not set. Data will not be saved. Please set SCRIPT_URL.");
