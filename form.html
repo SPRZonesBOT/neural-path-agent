@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Neural Path 2.0 - Complete</title>
+    <title>Neural Path 2.0 - With Feedback</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -23,7 +23,7 @@
             box-shadow: 0 25px 45px rgba(0,0,0,0.3);
             border: 1px solid rgba(255,255,255,0.2);
         }
-        h1 { font-size: 28px; text-align: center; background: linear-gradient(135deg, #a855f7, #3b82f6); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 4px; }
+        h1 { font-size: 28px; text-align: center; background: linear-gradient(135deg, #a855f7, #3b82f6); -webkit-background-clip: text; background-clip: text; color: transparent; }
         .sub { text-align: center; font-size: 14px; opacity: 0.8; margin-bottom: 20px; }
         .form-group { margin-bottom: 20px; border-bottom: 1px solid #334155; padding-bottom: 15px; }
         label.main-label { display: block; font-weight: 700; margin-bottom: 8px; font-size: 14px; letter-spacing: 0.5px; color: #cbd5e1; }
@@ -38,7 +38,7 @@
             font-size: 14px;
             cursor: pointer;
         }
-        input, input[type="text"], input[type="number"], input[type="date"], select {
+        input, input[type="text"], input[type="number"], input[type="date"], select, textarea {
             width: 100%;
             padding: 12px;
             border-radius: 24px;
@@ -47,47 +47,18 @@
             color: white;
             font-size: 14px;
             outline: none;
+            resize: vertical;
+        }
+        textarea {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         .stars { display: flex; gap: 10px; font-size: 32px; cursor: pointer; justify-content: center; margin: 10px 0; }
         .star { color: #475569; transition: 0.1s; }
         .star.selected { color: #fbbf24; text-shadow: 0 0 4px gold; }
-        button, .pdf-btn, .reload-btn {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #a855f7, #3b82f6);
-            border: none;
-            border-radius: 40px;
-            font-size: 18px;
-            font-weight: bold;
-            color: white;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: transform 0.2s ease;
-        }
+        button { width: 100%; padding: 14px; background: linear-gradient(135deg, #a855f7, #3b82f6); border: none; border-radius: 40px; font-size: 18px; font-weight: bold; color: white; cursor: pointer; margin-top: 10px; }
         button:active { transform: scale(0.98); }
-        .result {
-            margin-top: 30px;
-            background: #0f172a;
-            border-radius: 32px;
-            padding: 20px;
-            display: none;
-            animation: fadeInUp 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-        }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .result h3 {
-            color: #c084fc;
-            margin-top: 24px;
-            margin-bottom: 12px;
-            border-left: 4px solid #c084fc;
-            padding-left: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .result h3:first-of-type { margin-top: 0; }
+        .result { margin-top: 30px; background: #0f172a; border-radius: 24px; padding: 20px; display: none; }
+        .result h3 { color: #c084fc; margin-top: 20px; border-left: 4px solid #c084fc; padding-left: 12px; }
         .swot-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -99,9 +70,9 @@
             border-radius: 20px;
             padding: 12px;
             border-top: 4px solid;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-        .swot-card:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+        .swot-card h4 { margin-bottom: 8px; font-size: 16px; }
+        .swot-card p { font-size: 13px; line-height: 1.4; }
         .strength-card { border-color: #22c55e; }
         .weakness-card { border-color: #ef4444; }
         .opportunity-card { border-color: #3b82f6; }
@@ -149,47 +120,31 @@
         .modal-buttons { display: flex; gap: 10px; justify-content: flex-end; margin-top: 10px; }
         .modal-buttons button { width: auto; padding: 8px 16px; margin-top: 0; }
         .alignment-scale { display: flex; flex-wrap: wrap; justify-content: space-between; margin-top: 5px; font-size: 11px; color: #94a3b8; }
-        .skill-container {
-            background: #1e293b;
-            border-radius: 30px;
-            padding: 3px;
-            margin: 10px 0 5px;
-        }
-        .skill-bar {
-            width: 0%;
-            height: 16px;
-            background: linear-gradient(90deg, #22c55e, #eab308);
-            border-radius: 30px;
-            transition: width 1.2s ease-out;
-            position: relative;
-        }
-        .skill-percent { font-weight: bold; margin-left: 8px; }
-        .roadmap-steps { display: flex; flex-direction: column; gap: 16px; margin-top: 12px; }
-        .step {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            background: #1e293b;
+        .reload-btn { background: #334155; margin-top: 20px; }
+        .disclaimer {
+            background: rgba(0,0,0,0.4);
+            border-left: 4px solid #f97316;
             padding: 12px;
-            border-radius: 20px;
-            transition: all 0.2s;
+            border-radius: 16px;
+            margin: 20px 0 10px 0;
+            font-size: 12px;
+            color: #facc15;
+            text-align: center;
         }
-        .step:hover { background: #2d3a5c; transform: translateX(5px); }
-        .step-icon { font-size: 28px; min-width: 48px; text-align: center; animation: bounceSlow 2s infinite; }
-        @keyframes bounceSlow { 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-5px); } }
-        .step-content { flex: 1; }
-        .step-title { font-weight: bold; color: #fbbf24; }
-        .college-table { overflow-x: auto; margin: 15px 0; }
+        .astrology-card {
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 12px;
+            margin: 15px 0;
+            border-left: 4px solid #fbbf24;
+            font-size: 13px;
+        }
+        .college-table { overflow-x: auto; }
         .college-table table { width: 100%; border-collapse: collapse; background: #1e293b; border-radius: 16px; }
         .college-table th, .college-table td { padding: 10px; text-align: left; border-bottom: 1px solid #334155; }
         .college-table th { background: #0f172a; color: #c084fc; }
-        .financial-advice, .time-estimate, .astrology-card, .skill-note {
-            background: #1e293b;
-            border-radius: 20px;
-            padding: 12px;
-            margin: 12px 0;
-            border-left: 4px solid #fbbf24;
-        }
+        .pdf-btn { background: #334155; margin-top: 20px; }
+        .financial-advice { background: #0f172a; padding: 12px; border-radius: 16px; margin: 10px 0; border-left: 4px solid #22c55e; }
         .report-header {
             background: #0f172a;
             border-radius: 20px;
@@ -201,93 +156,165 @@
             justify-content: space-between;
             align-items: center;
         }
+        .report-header .left { text-align: left; }
+        .report-header .right { text-align: right; }
+        .report-header p { margin: 4px 0; font-size: 14px; }
         .report-header strong { color: #c084fc; }
-        .button-group { display: flex; gap: 12px; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
-        .pdf-btn, .reload-btn { width: auto; padding: 10px 24px; margin: 0; }
-        .disclaimer {
-            background: rgba(0,0,0,0.4);
-            border-left: 4px solid #f97316;
+        .time-estimate {
+            background: #0f172a;
             padding: 12px;
             border-radius: 16px;
-            margin: 20px 0 10px 0;
+            margin: 15px 0;
+            border-left: 4px solid #fbbf24;
+        }
+        .skill-note {
+            background: #1e293b;
+            padding: 8px 12px;
+            border-radius: 12px;
             font-size: 12px;
-            color: #facc15;
-            text-align: center;
+            color: #94a3b8;
+            margin: 5px 0 10px 0;
+        }
+        .feedback-box {
+            background: #0f172a;
+            padding: 12px;
+            border-radius: 16px;
+            margin: 10px 0;
+            border-left: 4px solid #fbbf24;
         }
         @media print {
             body { background: white; color: black; }
-            .container { background: white; box-shadow: none; }
+            .container { background: white; box-shadow: none; padding: 0; }
             .form-group, .stars, button:not(.pdf-btn), .loading, .modal, .sub { display: none; }
-            .result { display: block !important; background: white; color: black; animation: none; }
-            .skill-bar { background: #22c55e; }
-            .step-icon { animation: none; }
-            .pdf-btn { display: inline-block; }
+            .result { display: block !important; background: white; color: black; }
+            .result h3 { color: #2c3e66; }
+            .swot-card, .astrology-card, .college-table table, .report-header, .time-estimate, .skill-note, .feedback-box { background: #f0f0f0; color: black; border-color: #ccc; }
+            .pdf-btn { display: block; }
         }
     </style>
 </head>
 <body>
 <div class="container">
     <h1>🧠 Neural Path 2.0</h1>
-    <div class="sub">✨ Complete Career Intelligence ✨</div>
+    <div class="sub">Complete Career Roadmap + Feedback</div>
 
     <form id="parentForm">
-        <!-- BASIC INFO -->
+        <!-- ===== ALL EXISTING FIELDS ===== -->
         <div class="form-group"><label class="main-label">👨‍👩 Parent/Guardian Name</label><input type="text" id="parentName" required placeholder="e.g., Rajesh Sharma"></div>
-        <div class="form-group"><label class="main-label">Relationship to Child</label><select id="relationship" required><option value="">Select</option><option value="Father">Father</option><option value="Mother">Mother</option><option value="Guardian">Guardian</option></select></div>
+        <div class="form-group"><label class="main-label">Relationship to Child</label>
+            <select id="relationship" required><option value="">Select</option><option value="Father">Father</option><option value="Mother">Mother</option><option value="Guardian">Guardian</option></select>
+        </div>
         <div class="form-group"><label class="main-label">👶 Child's Full Name</label><input type="text" id="childName" required placeholder="e.g., Aryan Sharma"></div>
-        <div class="form-group"><label class="main-label">Child's Gender</label><select id="childGender" required><option value="">Select</option><option value="Male">Male</option><option value="Female">Female</option><option value="Other">Other</option></select></div>
+        <div class="form-group"><label class="main-label">Child's Gender</label>
+            <select id="childGender" required><option value="">Select</option><option value="Male">Male</option><option value="Female">Female</option><option value="Other">Other</option></select>
+        </div>
         <div class="form-group"><label class="main-label">1. Child's Date of Birth (DOB)</label><input type="date" id="dob" required></div>
-        <div class="form-group"><label class="main-label">2. Height (cm) & Weight (kg)</label><div style="display: flex; gap: 10px;"><input type="number" id="height" placeholder="Height (cm)" style="width:50%"><input type="number" id="weight" placeholder="Weight (kg)" style="width:50%"></div></div>
-
-        <!-- 3. Interests -->
+        <div class="form-group"><label class="main-label">2. Height (cm) & Weight (kg)</label>
+            <div style="display: flex; gap: 10px;"><input type="number" id="height" placeholder="Height (cm)" style="width:50%"><input type="number" id="weight" placeholder="Weight (kg)" style="width:50%"></div>
+        </div>
+        
         <div class="form-group"><label class="main-label">3. Favorite Activities / Subjects</label><button type="button" class="custom-select-btn" id="interestsBtn">Select options...</button><input type="hidden" id="interests" value=""></div>
-
-        <!-- 4. Extracurricular -->
         <div class="form-group"><label class="main-label">4. Extra Curricular Activities</label><button type="button" class="custom-select-btn" id="extracurricularBtn">Select options...</button><input type="hidden" id="extracurricular" value=""></div>
-
-        <!-- 5. TV Show -->
-        <div class="form-group"><label class="main-label">5. Favorite TV Show / Web Series Genre</label><select id="tvshow" required><option value="">Select genre</option><option value="Animated">Animated</option><option value="Thriller">Thriller</option><option value="Fiction">Fiction</option><option value="Documentary">Documentary</option><option value="Sci-Fi">Sci-Fi</option><option value="Comedy">Comedy</option><option value="Drama">Drama</option><option value="Reality Show">Reality Show</option><option value="Action">Action</option><option value="Romance">Romance</option><option value="Travel">Travel</option><option value="News">News / Politics</option></select></div>
-
-        <!-- 6. Strengths -->
+        <div class="form-group"><label class="main-label">5. Favorite TV Show / Web Series Genre</label>
+            <select id="tvshow" required>
+                <option value="">Select genre</option>
+                <option value="Animated">Animated</option>
+                <option value="Thriller">Thriller</option>
+                <option value="Fiction">Fiction</option>
+                <option value="Documentary">Documentary</option>
+                <option value="Sci-Fi">Sci-Fi</option>
+                <option value="Comedy">Comedy</option>
+                <option value="Drama">Drama</option>
+                <option value="Reality Show">Reality Show</option>
+                <option value="Action">Action</option>
+                <option value="Romance">Romance</option>
+                <option value="Travel">Travel</option>
+                <option value="News">News / Politics</option>
+            </select>
+        </div>
         <div class="form-group"><label class="main-label">6. Strengths</label><button type="button" class="custom-select-btn" id="strengthsBtn">Select options...</button><input type="hidden" id="strengths" value=""></div>
-
-        <!-- 7. Weaknesses -->
         <div class="form-group"><label class="main-label">7. Weaknesses</label><button type="button" class="custom-select-btn" id="weaknessesBtn">Select options...</button><input type="hidden" id="weaknesses" value=""></div>
-
-        <!-- 8. Mental Condition -->
         <div class="form-group"><label class="main-label">8. Mental Condition</label><button type="button" class="custom-select-btn" id="mentalBtn">Select options...</button><input type="hidden" id="mental" value=""></div>
-
-        <!-- 9. Physical Health -->
         <div class="form-group"><label class="main-label">9. Physical Health</label><button type="button" class="custom-select-btn" id="physicalBtn">Select options...</button><input type="hidden" id="physical" value=""></div>
-
-        <!-- 10. Budget -->
-        <div class="form-group"><label class="main-label">10. Annual Budget (₹ per year)</label><select id="budget" required><option value="">Select</option><option value="100000">Less than ₹1 lakh</option><option value="300000">₹1-3L</option><option value="500000">₹3-5L</option><option value="800000">₹5-8L</option><option value="1200000">₹8-12L</option><option value="2000000">₹12-20L</option><option value="4000000">₹20-40L</option><option value="10000000">₹40L-1Cr</option><option value="15000000">Above ₹1Cr</option></select></div>
-
-        <!-- 11. City -->
+        <div class="form-group"><label class="main-label">10. Annual Budget (₹ per year)</label>
+            <select id="budget" required>
+                <option value="">Select</option>
+                <option value="100000">Less than ₹1 lakh</option>
+                <option value="300000">₹1-3L</option>
+                <option value="500000">₹3-5L</option>
+                <option value="800000">₹5-8L</option>
+                <option value="1200000">₹8-12L</option>
+                <option value="2000000">₹12-20L</option>
+                <option value="4000000">₹20-40L</option>
+                <option value="10000000">₹40L-1Cr</option>
+                <option value="15000000">Above ₹1Cr</option>
+            </select>
+        </div>
         <div class="form-group"><label class="main-label">11. City / State</label><input type="text" id="city" required placeholder="e.g., Delhi"></div>
-
-        <!-- 12. Long Term Goal -->
         <div class="form-group"><label class="main-label">12. Long Term Goal</label><button type="button" class="custom-select-btn" id="goalBtn">Select options...</button><input type="hidden" id="goal" value=""></div>
-
-        <!-- 13. Parents' Desired Field -->
-        <div class="form-group"><label class="main-label">13. Parents' Desired Field for Child</label><select id="parentDesiredField" required><option value="">Select</option><option value="Science">Science (Engg/Research)</option><option value="Arts">Arts/Humanities</option><option value="Commerce">Commerce/Business</option><option value="Army">Army/Defence</option><option value="Medical">Medical/Healthcare</option><option value="Self Business">Self Business/Entrepreneurship</option><option value="Not Sure">Not sure / Open to any</option></select></div>
-
-        <!-- 14. Agreement Level -->
-        <div class="form-group"><label class="main-label">14. Parent-Child Agreement Level (1-10)</label><select id="alignment" required><option value="">Select</option><option value="1">1 – Complete disagreement</option><option value="2">2 – Mostly disagree</option><option value="3">3 – Slight disagreement</option><option value="4">4 – Slightly agree but confused</option><option value="5">5 – Neutral</option><option value="6">6 – Somewhat agree</option><option value="7">7 – Mostly agree</option><option value="8">8 – Strongly agree</option><option value="9">9 – Almost perfect match</option><option value="10">10 – Perfect agreement</option></select><div class="alignment-scale">💡 1 = different goals | 10 = same vision</div></div>
-
-        <!-- 15. Study Hours -->
-        <div class="form-group"><label class="main-label">15. After school, how many hours does the child study daily?</label><select id="studyHours" required><option value="">Select</option><option value="Less than 1 hour">Less than 1 hour</option><option value="1-2 hours">1-2 hours</option><option value="2-3 hours">2-3 hours</option><option value="3-4 hours">3-4 hours</option><option value="4-5 hours">4-5 hours</option><option value="More than 5 hours">More than 5 hours</option></select></div>
-
-        <!-- 16. Current Class & Percentage -->
-        <div class="form-group"><label class="main-label">16. Current class and percentage / CGPA</label><div style="display: flex; gap: 10px;"><input type="text" id="currentClass" placeholder="Class (e.g., 10th)" style="width:50%" required><input type="text" id="percentage" placeholder="Percentage / CGPA" style="width:50%" required></div></div>
-
-        <!-- Rating -->
-        <div class="form-group"><label class="main-label">⭐ Rate this app</label><div class="stars" id="starRating"><span class="star" data-value="1">☆</span><span class="star" data-value="2">☆</span><span class="star" data-value="3">☆</span><span class="star" data-value="4">☆</span><span class="star" data-value="5">☆</span></div><input type="hidden" id="ratingValue" value="0"></div>
-
+        <div class="form-group"><label class="main-label">13. Parents' Desired Field for Child</label>
+            <select id="parentDesiredField" required>
+                <option value="">Select</option>
+                <option value="Science">Science (Engg/Research)</option>
+                <option value="Arts">Arts/Humanities</option>
+                <option value="Commerce">Commerce/Business</option>
+                <option value="Army">Army/Defence</option>
+                <option value="Medical">Medical/Healthcare</option>
+                <option value="Self Business">Self Business/Entrepreneurship</option>
+                <option value="Not Sure">Not sure / Open to any</option>
+            </select>
+        </div>
+        <div class="form-group"><label class="main-label">14. Parent-Child Agreement Level (1-10)</label>
+            <select id="alignment" required>
+                <option value="">Select</option>
+                <option value="1">1 – Complete disagreement</option>
+                <option value="2">2 – Mostly disagree</option>
+                <option value="3">3 – Slight disagreement</option>
+                <option value="4">4 – Slightly agree but confused</option>
+                <option value="5">5 – Neutral</option>
+                <option value="6">6 – Somewhat agree</option>
+                <option value="7">7 – Mostly agree</option>
+                <option value="8">8 – Strongly agree</option>
+                <option value="9">9 – Almost perfect match</option>
+                <option value="10">10 – Perfect agreement</option>
+            </select>
+            <div class="alignment-scale">💡 1 = different goals | 10 = same vision</div>
+        </div>
+        <div class="form-group"><label class="main-label">15. After school, how many hours does the child study daily?</label>
+            <select id="studyHours" required>
+                <option value="">Select</option>
+                <option value="Less than 1 hour">Less than 1 hour</option>
+                <option value="1-2 hours">1-2 hours</option>
+                <option value="2-3 hours">2-3 hours</option>
+                <option value="3-4 hours">3-4 hours</option>
+                <option value="4-5 hours">4-5 hours</option>
+                <option value="More than 5 hours">More than 5 hours</option>
+            </select>
+        </div>
+        <div class="form-group"><label class="main-label">16. Current class and percentage / CGPA</label>
+            <div style="display: flex; gap: 10px;">
+                <input type="text" id="currentClass" placeholder="Class (e.g., 10th)" style="width:50%" required>
+                <input type="text" id="percentage" placeholder="Percentage / CGPA" style="width:50%" required>
+            </div>
+        </div>
+        
+        <!-- ===== FEEDBACK SECTION ===== -->
+        <div class="form-group">
+            <label class="main-label">💬 Your Feedback / Suggestions</label>
+            <textarea id="feedbackText" rows="3" placeholder="Share your experience, suggestions, or any specific questions about your child's career..." style="width:100%; padding:12px; border-radius:24px; border:none; background:#334155; color:white; font-size:14px; outline:none; resize:vertical; font-family:inherit;"></textarea>
+            <div style="font-size:11px; color:#94a3b8; margin-top:6px;">Your feedback helps us improve and serve you better.</div>
+        </div>
+        
+        <!-- ===== RATING ===== -->
+        <div class="form-group"><label class="main-label">⭐ Rate this app</label>
+            <div class="stars" id="starRating"><span class="star" data-value="1">☆</span><span class="star" data-value="2">☆</span><span class="star" data-value="3">☆</span><span class="star" data-value="4">☆</span><span class="star" data-value="5">☆</span></div>
+            <input type="hidden" id="ratingValue" value="0">
+        </div>
+        
         <div class="disclaimer">⚠️ <strong>Disclaimer:</strong> AI-generated approximate analysis. Use as reference only.</div>
         <button type="button" onclick="submitAndGenerate()">✨ Generate Complete Report ✨</button>
     </form>
-    <div class="loading" id="loading">⏳ Generating roadmap... <span style="font-size:24px;">🚀</span></div>
+    <div class="loading" id="loading">⏳ Generating roadmap...</div>
     <div id="result" class="result"></div>
 </div>
 
@@ -296,7 +323,7 @@
 
 <script>
     // ============================================================
-    // UPDATED fieldsConfig – with new options
+    // fieldsConfig (all options with "Others", "No Strength", etc.)
     // ============================================================
     const fieldsConfig = {
         interests: {
@@ -416,7 +443,7 @@
     window.onclick = function(event) { let modal = document.getElementById('modal'); if (event.target === modal) closeModal(); };
 
     // ============================================================
-    // Stars, helpers, getters (unchanged)
+    // Stars
     // ============================================================
     let stars = document.querySelectorAll('.star');
     let ratingInput = document.getElementById('ratingValue');
@@ -456,7 +483,7 @@
     }
 
     // ============================================================
-    // Field Recommendation & Career Analysis (unchanged)
+    // Field Recommendation & Career Analysis
     // ============================================================
     function getFieldRecommendation(interests, strengths, weaknesses, tvshow, extracurricular) {
         let i=interests.toLowerCase(), s=strengths.toLowerCase(), w=weaknesses.toLowerCase(), tv=tvshow.toLowerCase(), ex=extracurricular.toLowerCase();
@@ -477,11 +504,6 @@
         let i=interests.toLowerCase(), ex=extracurricular.toLowerCase(), tv=tvshow.toLowerCase(), s=strengths.toLowerCase(), w=weaknesses.toLowerCase();
         let bud=parseInt(budget), isHighBudget=bud>=2000000, heightNum=parseFloat(height), weightNum=parseFloat(weight);
         let careerPath = "";
-        // Check if user selected "No Strength" or "No Weakness" or "No Idea" – they act as neutral
-        let hasStrength = strengths && !strengths.includes("No Strength");
-        let hasWeakness = weaknesses && !weaknesses.includes("No Weakness");
-        let hasMental = mental && !mental.includes("No Idea");
-
         if ((i.includes("science")&&i.includes("experiments"))||i.includes("biology")||ex.includes("science")) {
             if(s.includes("problem solving")||s.includes("quick learner")) careerPath="🩺 Medical Doctor (MBBS) / Surgeon";
             else if(i.includes("animals")) careerPath="🐾 Veterinary Doctor";
@@ -535,12 +557,11 @@
     }
 
     // ============================================================
-    // Scholarship, Financial, etc. (unchanged)
+    // Helper Functions (Scholarship, Financial, Growth Roadmap, etc.)
     // ============================================================
     function getScholarshipSuggestions(careerPath,budget,city){ let b=parseInt(budget); let s=`<ul>`; if(b<300000) s+=`<li>National Scholarship Portal (NSP)</li><li>LIC HFL Vidhyadhan Scholarship</li>`; else if(b<2000000) s+=`<li>Merit-cum-Means Scholarship (IITs, NITs, BITS)</li><li>Google Anita Borg Scholarship</li>`; else if(b<10000000) s+=`<li>Education loans (SBI, HDFC Credila)</li><li>College merit scholarships (BITS, VIT up to 100%)</li>`; else s+=`<li>Premium funding: education loans with subsidy</li><li>Private medical colleges merit scholarships</li><li>Inlaks, JN Tata Endowment</li>`; s+=`</ul>`; return s; }
     function getFinancialAdvice(budget,careerPath){ let b=parseInt(budget); if(b<300000) return "Budget limited: Focus on government colleges, free resources, NSP scholarships."; if(b<2000000) return "Comfortable budget: Affordable private colleges, consider merit scholarships."; if(b<10000000) return "High budget: Top private engineering or study abroad with loan. Apply for merit waivers."; return "Premium budget: Can afford top medical or international universities. Use scholarships to save."; }
     function getEstimatedYears(currentClass,careerPath){ let classNum=parseInt(currentClass); if(isNaN(classNum)){ let match=currentClass.match(/\d+/); classNum=match?parseInt(match[0]):null; } let yearsTo12=0; if(classNum&&classNum<12) yearsTo12=12-classNum; else if(classNum&&classNum>=12) yearsTo12=0; else yearsTo12=2; let yearsAfter=0; let p=careerPath.toLowerCase(); if(p.includes("medical")||p.includes("doctor")) yearsAfter=5.5; else if(p.includes("lawyer")||p.includes("legal")) yearsAfter=5; else if(p.includes("software")||p.includes("engineering")) yearsAfter=4; else if(p.includes("design")||p.includes("arts")) yearsAfter=4; else if(p.includes("defence")||p.includes("army")) yearsAfter=3; else if(p.includes("business")||p.includes("entrepreneur")) yearsAfter=3; else yearsAfter=3; let total=yearsTo12+yearsAfter; let txt=yearsTo12>0?`${yearsTo12} years to complete 12th, then `:""; return `${txt}approximately ${total} years from now (including graduation).`; }
-
     function getGrowthRoadmap(careerPath,age,childName){ let p=careerPath.toLowerCase(); let steps=""; if(p.includes("software")||p.includes("ai")){ steps=`<div class="step"><div class="step-icon">💻</div><div class="step-content"><div class="step-title">Age ${age}-${Math.min(age+2,18)}</div>Learn coding basics, small projects.</div></div><div class="step"><div class="step-icon">📚</div><div class="step-content"><div class="step-title">Age ${Math.min(age+2,18)}-${Math.min(age+4,20)}</div>JEE prep, DSA, competitive programming.</div></div><div class="step"><div class="step-icon">🎓</div><div class="step-content"><div class="step-title">Age ${Math.min(age+4,20)}-${Math.min(age+6,22)}</div>B.Tech CSE/AI, internships, GitHub.</div></div><div class="step"><div class="step-icon">🚀</div><div class="step-content"><div class="step-title">After ${Math.min(age+6,22)}</div>Jobs at top tech companies or MS abroad.</div></div>`; } else if(p.includes("medical")||p.includes("doctor")){ steps=`<div class="step"><div class="step-icon">🔬</div><div class="step-content"><div class="step-title">Age ${age}-${Math.min(age+2,18)}</div>Focus on PCB, NEET prep.</div></div><div class="step"><div class="step-icon">📖</div><div class="step-content"><div class="step-title">Age ${Math.min(age+2,18)}-${Math.min(age+4,20)}</div>NEET coaching, class 12 boards.</div></div><div class="step"><div class="step-icon">🏥</div><div class="step-content"><div class="step-title">Age ${Math.min(age+4,20)}-${Math.min(age+6,22)}</div>MBBS, internships.</div></div><div class="step"><div class="step-icon">🎓</div><div class="step-content"><div class="step-title">After ${Math.min(age+6,22)}</div>PG, specialization, practice.</div></div>`; } else if(p.includes("defence")||p.includes("army")){ steps=`<div class="step"><div class="step-icon">🏋️</div><div class="step-content"><div class="step-title">Age ${age}-${Math.min(age+2,18)}</div>Physical fitness, NDA exam prep.</div></div><div class="step"><div class="step-icon">📝</div><div class="step-content"><div class="step-title">Age ${Math.min(age+2,18)}-${Math.min(age+4,20)}</div>NDA entrance, SSB interview.</div></div><div class="step"><div class="step-icon">🎖️</div><div class="step-content"><div class="step-title">After ${Math.min(age+4,20)}</div>Training at NDA, service in armed forces.</div></div>`; } else { steps=`<div class="step"><div class="step-icon">📖</div><div class="step-content"><div class="step-title">Age ${age}-${Math.min(age+2,18)}</div>Focus on academics and soft skills.</div></div><div class="step"><div class="step-icon">📚</div><div class="step-content"><div class="step-title">Age ${Math.min(age+2,18)}-${Math.min(age+4,20)}</div>Entrance exams (CUET/CLAT/IPMAT).</div></div><div class="step"><div class="step-icon">🎓</div><div class="step-content"><div class="step-title">After ${Math.min(age+4,20)}</div>Relevant degree, industry connections.</div></div>`; } return `<div class="roadmap-steps">${steps}</div><p><em>Sample roadmap – adjust based on progress.</em></p>`; }
     function getSkillGapAnalysis(strengths,weaknesses,careerPath){ let gap=`<div><strong>💪 Strengths:</strong> ${strengths||"Not specified"}<br><strong>⚠️ Weaknesses:</strong> ${weaknesses||"Not specified"}<br><br><strong>📌 Action plan:</strong><ul>`; if(weaknesses.includes("Public Speaking")) gap+=`<li>🎤 Join Toastmasters or record daily 1-min selfie video.</li>`; if(weaknesses.includes("Delays Tasks")||weaknesses.includes("Postpones")) gap+=`<li>⏰ Use Pomodoro technique (25 min work, 5 min break).</li>`; if(weaknesses.includes("Lack of Discipline")) gap+=`<li>📅 Create a fixed daily schedule with Google Calendar.</li>`; if(weaknesses.includes("Low Confidence")) gap+=`<li>🏆 Celebrate small wins; maintain a success journal.</li>`; if(weaknesses.includes("Weak in Maths")&&(careerPath.includes("Engineering")||careerPath.includes("AI"))) gap+=`<li>📐 Take foundational math courses (Khan Academy, NCERT).</li>`; if(!weaknesses.includes("Public Speaking")&&!weaknesses.includes("Delays Tasks")) gap+=`<li>✅ No major skill gaps – focus on advanced certifications.</li>`; gap+=`</ul></div>`; return gap; }
     function getEntranceExamPlanner(careerPath,age){ let p=careerPath.toLowerCase(); let planner=`<ul>`; if(p.includes("software")||p.includes("ai")||p.includes("engineering")) planner+=`<li>📅 JEE Main: April/June. Register by Dec/Jan.</li><li>📅 JEE Advanced: May/June.</li><li>📅 BITSAT: May-June.</li><li>📅 VITEEE: April.</li>`; else if(p.includes("medical")) planner+=`<li>📅 NEET: May. Register by March.</li><li>📅 AIIMS MBBS: Integrated with NEET now.</li><li>📅 State medical entrance exams: May-June.</li>`; else if(p.includes("law")) planner+=`<li>📅 CLAT: December. Register by Oct.</li><li>📅 AILET: May.</li><li>📅 LSAT India: June.</li>`; else if(p.includes("defence")) planner+=`<li>📅 NDA: April, September. Register 2 months prior.</li><li>📅 CDS: February, September.</li>`; else planner+=`<li>📅 CUET: May-June. Register by March.</li><li>📅 State CETs: April-May.</li>`; planner+=`</ul><p>💡 Start preparing at least 18 months before target exam.</p>`; return planner; }
@@ -549,9 +570,9 @@
     function getWellnessPlan(weaknesses,mental,physical){ let plan=`<ul>`; if(weaknesses.includes("Public Speaking")) plan+=`<li>🎤 Toastmasters or daily 1-min selfie video.</li>`; if(mental.includes("Anxious")||mental.includes("Stressed")) plan+=`<li>🧘 10-min mindfulness meditation (Calm, Headspace).</li>`; if(physical.includes("Low Stamina")) plan+=`<li>🏃 20-min daily walk, increase to 30 min cardio 4 times/week.</li>`; if(physical.includes("Eye Sight")) plan+=`<li>👓 Follow 20-20-20 rule: every 20 min look 20 feet away.</li>`; if(weaknesses.includes("Delays Tasks")) plan+=`<li>⏰ Use Pomodoro timer and break tasks into 15-minute chunks.</li>`; if(!plan.includes("<li>")) plan+=`<li>✅ Balanced routine – 8 hrs sleep, regular exercise, hobbies.</li>`; plan+=`</ul>`; return plan; }
 
     // ============================================================
-    // Main submission
+    // Main Submission
     // ============================================================
-    const SCRIPT_URL = "https://docs.google.com/spreadsheets/d/13I3XJNo_JLPYUO8qW2PS4E-48T-Uqr7saAgSyDbzwDw/edit?gid=0#gid=0"; // REPLACE WITH YOUR ACTUAL APPS SCRIPT URL
+    const SCRIPT_URL = "YOUR_GOOGLE_SCRIPT_URL"; // REPLACE WITH YOUR ACTUAL APPS SCRIPT URL
 
     async function submitAndGenerate() {
         let parentName = document.getElementById('parentName').value.trim();
@@ -578,6 +599,7 @@
         let currentClass = document.getElementById('currentClass').value.trim();
         let percentage = document.getElementById('percentage').value.trim();
         let rating = document.getElementById('ratingValue').value;
+        let feedbackText = document.getElementById('feedbackText').value.trim(); // ✅ NEW
 
         if(!parentName||!relationship||!childName||!childGender||!dob||!budget||!city||!alignment||!tvshow||!parentDesiredField||!studyHours||!currentClass||!percentage){ alert("Please fill all mandatory fields"); return; }
         if(rating=="0"){ alert("Please rate the app"); return; }
@@ -611,7 +633,7 @@
         let today = new Date();
         let formattedDate = today.toLocaleDateString('en-GB');
 
-        let payload = { timestamp: new Date().toISOString(), parentName, relationship, childName, childGender, dob, age, height, weight, interests, extracurricular, tvshow, strengths, weaknesses, mental, physical, budget, city, goal, alignment, parentDesiredField, studyHours, currentClass, percentage, rating, skillScore, careerPath: analysis.careerPath, fieldRecommendation, swot_s: analysis.S, swot_w: analysis.W, swot_o: analysis.O, swot_t: analysis.T, zodiac, astrologyMsg };
+        let payload = { timestamp: new Date().toISOString(), parentName, relationship, childName, childGender, dob, age, height, weight, interests, extracurricular, tvshow, strengths, weaknesses, mental, physical, budget, city, goal, alignment, parentDesiredField, studyHours, currentClass, percentage, rating, skillScore, careerPath: analysis.careerPath, fieldRecommendation, swot_s: analysis.S, swot_w: analysis.W, swot_o: analysis.O, swot_t: analysis.T, zodiac, astrologyMsg, feedback: feedbackText };
 
         let loadingDiv = document.getElementById('loading');
         let btn = document.querySelector('button');
@@ -621,6 +643,7 @@
 
         let resultDiv = document.getElementById('result');
         resultDiv.style.display = 'block';
+        let feedbackDisplay = feedbackText ? `<div class="feedback-box"><h4>💬 Your Feedback</h4><p style="font-style:italic; color:#94a3b8;">"${feedbackText}"</p></div>` : "";
         resultDiv.innerHTML = `<div id="reportContent">
             <div class="report-header"><div class="left"><p><strong>📅 Report Date:</strong> ${formattedDate}</p><p><strong>👶 Child:</strong> ${childName} (${childGender}, Age ${age})</p><p><strong>📚 Class:</strong> ${currentClass} | <strong>Percentage/CGPA:</strong> ${percentage}</p><p><strong>⏰ Daily Study Hours:</strong> ${studyHours}</p></div><div class="right"><p><strong>👨‍👩 Parent/Guardian:</strong> ${parentName}</p><p><strong>🔗 Relationship:</strong> ${relationship}</p></div></div>
             <h3>📊 Skill Score: ${skillScore}/100</h3>
@@ -633,6 +656,7 @@
             <div class="astrology-card">🌟 <strong>Astrology Insight (${zodiac}):</strong> ${astrologyMsg}<br><small>✨ Traditional belief – not scientific.</small></div>
             <h3>📊 SWOT Analysis</h3>
             <div class="swot-grid"><div class="swot-card strength-card"><h4>💪 Strengths</h4><p>${analysis.S}</p></div><div class="swot-card weakness-card"><h4>🔻 Weaknesses</h4><p>${analysis.W}</p></div><div class="swot-card opportunity-card"><h4>🌟 Opportunities</h4><p>${analysis.O}</p></div><div class="swot-card threat-card"><h4>⚠️ Threats</h4><p>${analysis.T}</p></div></div>
+            ${feedbackDisplay}
             <div class="financial-advice"><h4>💰 Financial Advice</h4><p>${financialAdvice}</p></div>
             <h3>🏫 Suggested Colleges / Institutes</h3>${collegeSuggestions}
             <h3>📅 5-Year Personalised Growth Roadmap</h3>${growthRoadmap}
