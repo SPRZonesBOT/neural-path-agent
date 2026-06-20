@@ -3,13 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Neural Path 2.0 - Landing</title>
+    
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="https://sprzonesbot.github.io/neural-path-agent/manifest.json">
+    <link rel="apple-touch-icon" href="https://sprzonesbot.github.io/neural-path-agent/icon-192.png">
+    <meta name="theme-color" content="#a855f7">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Neural Path">
+    
+    <title>Neural Path 2.0 - PWA</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
@@ -18,6 +23,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 20px;
         }
         .container {
             text-align: center;
@@ -30,6 +36,17 @@
             box-shadow: 0 25px 45px rgba(0,0,0,0.3);
             border: 1px solid rgba(255,255,255,0.2);
         }
+        .app-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #a855f7, #3b82f6);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
         h1 {
             font-size: 36px;
             background: linear-gradient(135deg, #a855f7, #3b82f6);
@@ -38,11 +55,7 @@
             color: transparent;
             margin-bottom: 20px;
         }
-        .sub {
-            font-size: 16px;
-            opacity: 0.8;
-            margin-bottom: 30px;
-        }
+        .sub { font-size: 16px; opacity: 0.8; margin-bottom: 30px; }
         .qr-box {
             background: white;
             padding: 20px;
@@ -50,26 +63,49 @@
             display: inline-block;
             margin: 10px auto;
         }
-        #qrcode {
-            display: flex;
-            justify-content: center;
+        #qrcode { display: flex; justify-content: center; }
+        .info { margin-top: 30px; font-size: 14px; color: #94a3b8; }
+        .install-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 14px 32px;
+            background: linear-gradient(135deg, #a855f7, #3b82f6);
+            border: none;
+            border-radius: 40px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
         }
-        .info {
-            margin-top: 30px;
-            font-size: 14px;
-            color: #94a3b8;
+        .install-btn:active { transform: scale(0.98); }
+        .note {
+            margin-top: 20px;
+            font-size: 12px;
+            background: #1e293b;
+            padding: 10px;
+            border-radius: 16px;
+            color: #cbd5e1;
+        }
+        @media (display-mode: standalone) {
+            .container { margin-top: 0; }
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 </head>
 <body>
 <div class="container">
-    <h1>🧠 NEURAL PATH 2.0</h1>
-    <div class="sub">Futuristic Career Agent for Your Child</div>
+    <div class="app-icon">🧠</div>
+    <h1>Neural Path 2.0</h1>
+    <div class="sub">World's Most Comprehensive AI Career Counselor</div>
     <div class="qr-box">
         <div id="qrcode"></div>
     </div>
-    <div class="info">📱 Scan this QR code with your phone's camera</div>
+    <div class="info">📱 Scan this QR code to open the question form</div>
+    
+    <!-- Install Button for PWA -->
+    <button class="install-btn" id="installBtn" style="display:none;">📲 Install App</button>
+    <div class="note">✅ Open in Chrome, click "Add to Home Screen" to install</div>
 </div>
 
 <script>
@@ -84,6 +120,35 @@
             correctLevel: QRCode.CorrectLevel.H
         });
     };
+
+    // Service Worker Registration
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('https://sprzonesbot.github.io/neural-path-agent/sw.js')
+            .then(function(reg) {
+                console.log('Service Worker registered successfully!');
+            })
+            .catch(function(err) {
+                console.log('Service Worker registration failed: ', err);
+            });
+    }
+
+    // PWA Install Prompt
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        document.getElementById('installBtn').style.display = 'block';
+    });
+
+    document.getElementById('installBtn').addEventListener('click', async () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const result = await deferredPrompt.userChoice;
+            console.log(`User chose to ${result.outcome}`);
+            deferredPrompt = null;
+            document.getElementById('installBtn').style.display = 'none';
+        }
+    });
 </script>
 </body>
 </html>
