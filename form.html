@@ -48,9 +48,7 @@
             font-size: 14px;
             outline: none;
             resize: vertical;
-        }
-        textarea {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: inherit;
         }
         .stars { display: flex; gap: 10px; font-size: 32px; cursor: pointer; justify-content: center; margin: 10px 0; }
         .star { color: #475569; transition: 0.1s; }
@@ -199,7 +197,7 @@
     <div class="sub">Complete Career Roadmap + Feedback</div>
 
     <form id="parentForm">
-        <!-- ===== ALL EXISTING FIELDS ===== -->
+        <!-- Basic Info -->
         <div class="form-group"><label class="main-label">👨‍👩 Parent/Guardian Name</label><input type="text" id="parentName" required placeholder="e.g., Rajesh Sharma"></div>
         <div class="form-group"><label class="main-label">Relationship to Child</label>
             <select id="relationship" required><option value="">Select</option><option value="Father">Father</option><option value="Mother">Mother</option><option value="Guardian">Guardian</option></select>
@@ -213,6 +211,7 @@
             <div style="display: flex; gap: 10px;"><input type="number" id="height" placeholder="Height (cm)" style="width:50%"><input type="number" id="weight" placeholder="Weight (kg)" style="width:50%"></div>
         </div>
         
+        <!-- Interests -->
         <div class="form-group"><label class="main-label">3. Favorite Activities / Subjects</label><button type="button" class="custom-select-btn" id="interestsBtn">Select options...</button><input type="hidden" id="interests" value=""></div>
         <div class="form-group"><label class="main-label">4. Extra Curricular Activities</label><button type="button" class="custom-select-btn" id="extracurricularBtn">Select options...</button><input type="hidden" id="extracurricular" value=""></div>
         <div class="form-group"><label class="main-label">5. Favorite TV Show / Web Series Genre</label>
@@ -399,7 +398,7 @@
     };
 
     // ============================================================
-    // Modal handling (unchanged)
+    // Modal handling
     // ============================================================
     let currentModalField = null;
     function openModal(fieldId) {
@@ -570,9 +569,10 @@
     function getWellnessPlan(weaknesses,mental,physical){ let plan=`<ul>`; if(weaknesses.includes("Public Speaking")) plan+=`<li>🎤 Toastmasters or daily 1-min selfie video.</li>`; if(mental.includes("Anxious")||mental.includes("Stressed")) plan+=`<li>🧘 10-min mindfulness meditation (Calm, Headspace).</li>`; if(physical.includes("Low Stamina")) plan+=`<li>🏃 20-min daily walk, increase to 30 min cardio 4 times/week.</li>`; if(physical.includes("Eye Sight")) plan+=`<li>👓 Follow 20-20-20 rule: every 20 min look 20 feet away.</li>`; if(weaknesses.includes("Delays Tasks")) plan+=`<li>⏰ Use Pomodoro timer and break tasks into 15-minute chunks.</li>`; if(!plan.includes("<li>")) plan+=`<li>✅ Balanced routine – 8 hrs sleep, regular exercise, hobbies.</li>`; plan+=`</ul>`; return plan; }
 
     // ============================================================
-    // Main Submission
     // ============================================================
-    const SCRIPT_URL = "YOUR_GOOGLE_SCRIPT_URL"; // REPLACE WITH YOUR ACTUAL APPS SCRIPT URL
+    //  🔥 IMPORTANT: Replace YOUR_GOOGLE_SCRIPT_URL with your actual URL
+    // ============================================================
+    const SCRIPT_URL = "YOUR_GOOGLE_SCRIPT_URL"; // 🔥 CHANGE THIS
 
     async function submitAndGenerate() {
         let parentName = document.getElementById('parentName').value.trim();
@@ -599,7 +599,7 @@
         let currentClass = document.getElementById('currentClass').value.trim();
         let percentage = document.getElementById('percentage').value.trim();
         let rating = document.getElementById('ratingValue').value;
-        let feedbackText = document.getElementById('feedbackText').value.trim(); // ✅ NEW
+        let feedbackText = document.getElementById('feedbackText').value.trim();
 
         if(!parentName||!relationship||!childName||!childGender||!dob||!budget||!city||!alignment||!tvshow||!parentDesiredField||!studyHours||!currentClass||!percentage){ alert("Please fill all mandatory fields"); return; }
         if(rating=="0"){ alert("Please rate the app"); return; }
@@ -639,7 +639,7 @@
         let btn = document.querySelector('button');
         loadingDiv.style.display = 'block';
         btn.disabled = true;
-        if(SCRIPT_URL && SCRIPT_URL !== "YOUR_GOOGLE_SCRIPT_URL"){ try { await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) }); console.log("Data sent"); } catch(e){ console.error(e); } } else { alert("⚠️ Google Sheet URL not set. Data not saved."); }
+        if(SCRIPT_URL && SCRIPT_URL !== "https://script.google.com/macros/s/AKfycbzyX6K3i6ZfsD02S8LwBeewTIAbflz159PLOOOtOIm3YcpRAhTznV5Ejw2rl6aSvEQ/exec"){ try { await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) }); console.log("Data sent"); } catch(e){ console.error(e); } } else { alert("⚠️ Google Sheet URL not set. Data not saved."); }
 
         let resultDiv = document.getElementById('result');
         resultDiv.style.display = 'block';
